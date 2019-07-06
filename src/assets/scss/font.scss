@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css?family=PT+Sans+Caption:400,700|PT+Sans:400,400i,700,700i');
+
+body {
+  font-family: 'PT Sans', sans-serif;
+}
+
+.h--caption {
+  font-family: 'PT Sans Caption', 'PT Sans', sans-serif;
+}
+
+.h1 {
+  font-size: 1.5em;
+  line-height: 1.44em;
+}
+
+.h2--bigger {
+  font-size: 1.38em;
+  line-height: 1.81em;
+}
+
+.h2 {
+  font-size: 1.13em;
+  line-height: 1.44em;
+}
+
+.h3 {
+  font-size: 1em;
+  line-height: 1.25em;
+}
+
+.h4 {
+  font-size: 0.94em;
+  line-height: 1.19em;
+}
+
+.h5 {
+  font-size: 0.88em;
+  line-height: 1.19em;
+}
+
+.h--italic {
+  font-style: italic;
+}
+
+.h--smaller {
+  font-size: smaller;
+}
+
+.h--lighter {
+  font-weight: lighter;
+}
+
+.h--bold {
+  font-weight: bold;
+}
+
+.h--center {
+  text-align: center;
+}

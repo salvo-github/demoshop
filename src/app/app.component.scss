@@ -1,0 +1,24 @@
+.wrapper {
+  min-height: 100%;
+  background-image: url(src/assets/img/bg.jpg);
+  background-repeat: repeat;
+  display: flex;
+  flex-direction: column;
+}
+
+.main {
+  display: flex;
+  flex: 1 1 auto;
+  justify-content: center;
+}
+
+.main__content {
+  padding: 0 1.25em;
+  max-width: 30em;
+  flex: 1 1 auto;
+  background-color: rgba(var(--default-rgba-black), 0.35);
+}
+
+.element--close {
+  display: none;
+}

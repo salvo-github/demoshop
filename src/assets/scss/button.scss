@@ -1,0 +1,37 @@
+.button {
+  border-radius: 5px;
+  color: var(--default-white);
+  text-align: center;
+}
+
+.button:disabled {
+  opacity: 0.5;
+}
+
+.button--primary {
+  background: linear-gradient(180deg, var(--button-primary-active) 0%, var(--button-primary) 100%);
+}
+
+.button--primary:active {
+  background: linear-gradient(0deg, var(--button-primary-active) 100%, var(--button-primary) 0%);
+  box-shadow: inset 2px 2px 4px 0 rgba(var(--default-rgba-black), 0.3);
+}
+
+.button--secondary {
+  background: linear-gradient(180deg, var(--button-secondary-active) 0%, var(--button-secondary) 100%);
+}
+
+.button--secondary:active {
+  background: linear-gradient(0deg, var(--button-secondary-active) 0%, var(--button-secondary) 100%);
+  box-shadow: inset 2px 2px 4px 0 rgba(var(--default-rgba-black), 0.5);
+}
+
+.button--regular {
+  height: 2.19em;
+  width: 7.5em;
+}
+
+.button--big {
+  height: 3.13em;
+  width: 10.63em;
+}
