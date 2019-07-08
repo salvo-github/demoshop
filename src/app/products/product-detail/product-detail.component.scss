@@ -1,0 +1,24 @@
+.pdp__card {
+  padding: 1.25em;
+  background-image: url(src/assets/img/modal-bg.png);
+  background-repeat: repeat;
+}
+
+.pdp__card .card__info {
+  background-image: unset;
+  padding: 0.88em 0;
+}
+
+.pdp__modal-textarea--height {
+  height: 8.19em;
+}
+
+.pdp__card--slider {
+  /* width: 27.5em;
+  height: 18.34em; */
+  /* max-width: 27.5em; */
+  background-color: white;
+  height: 20em;
+  /* height: 100%; */
+  /* max-width: 100%; */
+}

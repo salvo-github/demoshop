@@ -1,0 +1,72 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  // height: 100%;
+  background-image: url(src/assets/img/modal-bg.png);
+  background-repeat: repeat;
+}
+
+.figure__image {
+  display: block;
+  width: 100%;
+}
+
+.figure__caption {
+  position: relative;
+  margin-top: -1.88em;
+  height: 1.88em;
+  background-color: rgba(var(--default-rgba-black), 0.75);
+}
+
+.caption__vote {
+  height: 100%;
+  margin: 0 1.33em;
+  display: flex;
+  align-items: center;
+}
+
+.vote {
+  display: inline-block;
+  height: 1.03em;
+  width: 1.08em;
+  margin: 0 0.11em;
+}
+
+.vote--full::after {
+  content: url(src/assets/img/star-active.svg);
+}
+
+.vote--empty::after {
+  content: url(src/assets/img/star-inactive.svg);
+}
+
+.card__info {
+  flex-grow: 1;
+  color: var(--default-black);
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0.88em 1.25em;
+}
+
+.card__info-group {
+  flex: 1;
+  padding-bottom: 1.88em;
+}
+
+.card__info-title {
+  padding-bottom: 0.5em;
+  border-bottom: 0.111em solid var(--border-main);
+  margin-bottom: 0.5em;
+}
+
+.card__cta {
+  display: flex;
+  justify-content: space-between;
+}
+
+.card__info-price::before {
+  content: '$';
+  color: var(--theme-seconday-color);
+}
