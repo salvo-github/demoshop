@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductsService } from '../products.service';
 import { Product } from '../product.model';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 
 @Component({
   selector: 'app-products-list',
@@ -10,12 +10,16 @@ import { Product } from '../product.model';
 export class ProductsListComponent implements OnInit {
   products: Product[];
 
-  constructor(private productsService: ProductsService) {}
+  constructor(private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit() {
-    this.productsService.fetchProducts().subscribe((productsData) => {
-      this.products = productsData;
-      console.log(this.products);
+    this.route.data.subscribe((productsResolved: Data) => {
+      if (!productsResolved.productsList.length) {
+        this.router.navigate(['/page-not-found'], {
+          skipLocationChange: true
+        });
+      }
+      this.products = productsResolved.productsList;
     });
   }
 }

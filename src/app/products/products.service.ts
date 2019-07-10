@@ -1,12 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { tap } from 'rxjs/operators';
 import { Product } from './product.model';
 
 @Injectable({ providedIn: 'root' })
 export class ProductsService {
-  private products: Product[] = [];
-
   constructor(private http: HttpClient) {}
 
   fetchProduct(id: number) {

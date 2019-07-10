@@ -1,4 +1,4 @@
-<article class="card">
+<article class="card" *ngIf="product">
   <figure class="card__figure">
     <img src="{{ product.image }}" />
     <figcaption class="figure__caption">
@@ -22,7 +22,7 @@
     <div class="card__cta">
       <p class="h1 h--bold  card__info-price">{{ product.cost }}</p>
       <button class="button button--primary button--regular">
-        <span class="h5" [routerLink]="['/product-detail/', productIndex]"
+        <span class="h5" [routerLink]="['/product-detail/', product.id]"
           >Show More</span
         >
       </button>
