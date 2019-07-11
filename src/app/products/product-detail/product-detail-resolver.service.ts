@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import {
   Resolve,
   ActivatedRouteSnapshot,
-  RouterStateSnapshot,
-  Router
+  RouterStateSnapshot
 } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
@@ -12,11 +11,8 @@ import { Product } from '../product.model';
 import { ProductsService } from '../products.service';
 
 @Injectable({ providedIn: 'root' })
-export class ProductCardResolver implements Resolve<Product | null> {
-  constructor(
-    private productService: ProductsService,
-    private router: Router
-  ) {}
+export class ProductDetailResolver implements Resolve<Product | null> {
+  constructor(private productService: ProductsService) {}
 
   resolve(
     route: ActivatedRouteSnapshot,

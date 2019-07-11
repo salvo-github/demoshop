@@ -1,15 +1,15 @@
 <article class="card" *ngIf="product">
   <figure class="card__figure">
-    <img src="{{ product.image }}" />
+    <img class="figure__image" src="{{ product.image }}" />
     <figcaption class="figure__caption">
       <ul class="caption__vote">
         <li
           class="vote"
+          *ngFor="let count of [1, 1, 1, 1, 1]; let i = index"
           [ngClass]="{
             'vote--full': i <= product.rating,
             'vote--empty': i > product.rating
           }"
-          *ngFor="let count of [1, 1, 1, 1, 1]; let i = index"
         ></li>
       </ul>
     </figcaption>
@@ -21,10 +21,11 @@
     </div>
     <div class="card__cta">
       <p class="h1 h--bold  card__info-price">{{ product.cost }}</p>
-      <button class="button button--primary button--regular">
-        <span class="h5" [routerLink]="['/product-detail/', product.id]"
-          >Show More</span
-        >
+      <button
+        class="button button--primary button--regular"
+        [routerLink]="['/product-detail/', product.id]"
+      >
+        <span class="h5">Show More</span>
       </button>
     </div>
   </section>

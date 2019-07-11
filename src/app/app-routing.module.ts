@@ -4,19 +4,19 @@ import { ProductsListComponent } from './products/products-list/products-list.co
 import { ProductDetailComponent } from './products/product-detail/product-detail.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ProductsListResolver } from './products/products-list/products-list-resolver.service';
-import { ProductCardResolver } from './products/product-card/product-card-resolver.service';
+import { ProductDetailResolver } from './products/product-detail/product-detail-resolver.service';
 
 const routes: Routes = [
   { path: '', redirectTo: '/products-list', pathMatch: 'full' },
   {
     path: 'products-list',
     component: ProductsListComponent,
-    resolve: { productsList: ProductsListResolver }
+    resolve: { products: ProductsListResolver }
   },
   {
     path: 'product-detail/:id',
     component: ProductDetailComponent,
-    resolve: { product: ProductCardResolver }
+    resolve: { product: ProductDetailResolver }
   },
   { path: 'page-not-found', component: PageNotFoundComponent },
   { path: '**', component: PageNotFoundComponent }

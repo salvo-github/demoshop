@@ -5,7 +5,10 @@ import { ActivatedRoute, Data, Router } from '@angular/router';
 @Component({
   selector: 'app-products-list',
   templateUrl: './products-list.component.html',
-  styleUrls: ['./products-list.component.scss']
+  styleUrls: [
+    './products-list.component.scss',
+    '../../../assets/scss/mediaquery.scss'
+  ]
 })
 export class ProductsListComponent implements OnInit {
   products: Product[];
@@ -13,13 +16,11 @@ export class ProductsListComponent implements OnInit {
   constructor(private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit() {
-    this.route.data.subscribe((productsResolved: Data) => {
-      if (!productsResolved.productsList.length) {
-        this.router.navigate(['/page-not-found'], {
-          skipLocationChange: true
-        });
-      }
-      this.products = productsResolved.productsList;
-    });
+    if (!this.route.snapshot.data.products.length) {
+      return this.router.navigate(['/page-not-found'], {
+        skipLocationChange: true
+      });
+    }
+    this.products = this.route.snapshot.data.products;
   }
 }
