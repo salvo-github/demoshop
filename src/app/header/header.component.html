@@ -2,8 +2,11 @@
   <div class="header__content">
     <div class="header__logo"></div>
     <div class="header__login">
-      <p class="h4 header__login-status header__login-status--logged">
-        Hello, <span class="h--italic">John_Doe</span>
+      <p
+        class="h4 header__login-status header__login-status--logged"
+        *ngIf="getUsername()"
+      >
+        Hello, <span class="h--italic">{{ getUsername() }}</span>
       </p>
     </div>
   </div>

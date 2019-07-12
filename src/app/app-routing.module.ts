@@ -5,9 +5,16 @@ import { ProductDetailComponent } from './products/product-detail/product-detail
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ProductsListResolver } from './products/products-list/products-list-resolver.service';
 import { ProductDetailResolver } from './products/product-detail/product-detail-resolver.service';
+import { LoginComponent } from './user/login/login.component';
+import { LoginGuardService } from './user/login/login-guard.service';
 
 const routes: Routes = [
   { path: '', redirectTo: '/products-list', pathMatch: 'full' },
+  {
+    path: 'login',
+    component: LoginComponent,
+    canActivate: [LoginGuardService]
+  },
   {
     path: 'products-list',
     component: ProductsListComponent,

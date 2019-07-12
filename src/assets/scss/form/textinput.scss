@@ -1,0 +1,21 @@
+.textinput {
+  height: 2.19em;
+  width: 100%;
+  border-radius: 0.31em;
+  background-color: var(--default-white);
+  padding: 0 1em;
+}
+
+.textinput:focus {
+  outline: 0.13em solid var(--border-focus);
+}
+
+.textinput.ng-invalid.ng-touched {
+  outline: 0.13em solid var(--border-error);
+}
+
+.textinput-icon {
+  background-position: right 1.19em center;
+  background-repeat: no-repeat;
+  background-size: 1.88em;
+}

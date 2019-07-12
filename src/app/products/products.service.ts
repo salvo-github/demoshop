@@ -7,10 +7,10 @@ export class ProductsService {
   constructor(private http: HttpClient) {}
 
   fetchProduct(id: number) {
-    return this.http.get<Product>(`http://localhost:3000/products/${id}`);
+    return this.http.get<Product>(`http://localhost:3000/api/products/${id}`);
   }
 
   fetchProducts() {
-    return this.http.get<Product[]>('http://localhost:3000/products');
+    return this.http.get<Product[]>('http://localhost:3000/api/products');
   }
 }

@@ -1,0 +1,61 @@
+.tgl {
+  display: none;
+  /* opacity: 0; */
+}
+
+.tgl+.tgl-btn {
+  outline: 0;
+  display: block;
+  width: 42px;
+  height: 24px;
+  position: relative;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.tgl+.tgl-btn:after,
+.tgl+.tgl-btn:before {
+  position: relative;
+  display: block;
+  content: "";
+  width: 50%;
+  height: 100%;
+}
+
+.tgl+.tgl-btn:after {
+  left: 0;
+}
+
+.tgl+.tgl-btn:before {
+  display: none;
+}
+
+.tgl:checked+.tgl-btn:after {
+  left: 50%;
+}
+
+.tgl-light+.tgl-btn {
+  background: var(--default-white);
+  border: 1px solid var(--theme-seconday-color);
+  border-radius: 25px;
+  padding: 2px;
+  transition: all .4s ease;
+}
+
+.tgl-light+.tgl-btn:after {
+  border-radius: 50%;
+  background: var(--theme-seconday-color);
+  transition: all .2s ease;
+
+}
+
+.tgl-light:checked+.tgl-btn {
+  background: var(--theme-seconday-color);
+}
+
+.tgl-light:checked+.tgl-btn:after {
+  background: var(--default-white);
+}

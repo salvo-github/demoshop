@@ -1,15 +1,17 @@
 import { Component, OnInit } from '@angular/core';
+import { LoginService } from '../user/login/login.service';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  styleUrls: ['./header.component.scss', '../../assets/scss/mediaquery.scss']
 })
 export class HeaderComponent implements OnInit {
+  constructor(private loginService: LoginService) {}
 
-  constructor() { }
+  ngOnInit() {}
 
-  ngOnInit() {
+  getUsername(): string | null {
+    return this.loginService.getCurrentUserUsername();
   }
-
 }

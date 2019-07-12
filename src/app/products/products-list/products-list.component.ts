@@ -16,11 +16,8 @@ export class ProductsListComponent implements OnInit {
   constructor(private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit() {
-    if (!this.route.snapshot.data.products.length) {
-      return this.router.navigate(['/page-not-found'], {
-        skipLocationChange: true
-      });
+    if (this.route.snapshot.data.products.length) {
+      this.products = this.route.snapshot.data.products;
     }
-    this.products = this.route.snapshot.data.products;
   }
 }

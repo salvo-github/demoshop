@@ -1,0 +1,47 @@
+<div class="modal element--close" id="modal_login">
+  <div class="modal__header">
+    <h2 class="h2--bigger h--bold h--caption modal__title--elipsis">
+      Login to “Demo Shop”
+    </h2>
+  </div>
+  <div class="modal__body">
+    <div class="modal__main">
+      <form class="form" [formGroup]="loginForm">
+        <div class="form__field">
+          <p><label class="h3" for="username">Your login:</label></p>
+          <input
+            id="username"
+            type="text"
+            class="h5 textinput textinput-icon login__icon--username"
+            formControlName="username"
+          />
+        </div>
+        <div class="form__field">
+          <p><label class="h3" for="password">Your password::</label></p>
+          <input
+            id="password"
+            type="password"
+            class="h5 textinput textinput-icon login__icon--password"
+            formControlName="password"
+          />
+        </div>
+        <div class="modal__cta">
+          <span
+            class="h3 form__error-message"
+            *ngIf="loginForm.invalid && isSubmitted"
+            >Wrong login or password</span
+          >
+          <button
+            class="button button--primary button--big"
+            type="submit"
+            [disabled]="loginForm.invalid"
+            (click)="onSubmit()"
+          >
+            Submit
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="modal-overlay element--close" id="modal-overlay"></div>

@@ -1,5 +1,10 @@
-<div class="cards" *ngIf="products.length">
+<div class="cards" *ngIf="products && products.length; else noProducts">
   <div class="main__card" *ngFor="let product of products">
     <app-product-card class="nameclass" [product]="product"></app-product-card>
   </div>
 </div>
+<ng-template #noProducts
+  ><h1 class="h1 h--bold h--center" temp>
+    No products available!
+  </h1></ng-template
+>

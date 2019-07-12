@@ -1,0 +1,56 @@
+.radio__wrapper {
+  margin: 0.25em 0;
+}
+
+.radio {
+  display: none;
+}
+
+.radio+.radio__label,
+.radio:not(:checked)+.radio__label {
+  position: relative;
+  padding-left: 28px;
+  padding-right: 10px;
+  cursor: pointer;
+  line-height: 24px;
+  display: inline-block;
+}
+
+.radio:checked+.radio__label:before,
+.radio:not(:checked)+.radio__label:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 22px;
+  height: 22px;
+  border: 1px solid var(--theme-seconday-color);
+  border-radius: 100%;
+  background-color: var(--default-white);
+}
+
+.radio:checked+.radio__label:after,
+.radio:not(:checked)+.radio__label:after {
+  content: "";
+  width: 20px;
+  height: 20px;
+  background-color: var(--theme-seconday-color);
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  border-radius: 100%;
+  -webkit-transition: all 0.2s ease;
+  transition: all 0.2s ease;
+}
+
+.radio:not(:checked)+.radio__label:after {
+  opacity: 0;
+  -webkit-transform: scale(0);
+  transform: scale(0);
+}
+
+.radio:checked+.radio__label:after {
+  opacity: 1;
+  -webkit-transform: scale(1);
+  transform: scale(1);
+}

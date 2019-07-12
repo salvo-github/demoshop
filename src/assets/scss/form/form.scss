@@ -1,0 +1,22 @@
+@import url(./checkbox.scss);
+@import url(./textinput.scss);
+@import url(./radiobutton.scss);
+@import url(./select.scss);
+@import url(./range.scss);
+@import url(./textarea.scss);
+
+.form__field {
+  margin-bottom: 1.25em;
+}
+
+.form_field--image {
+  margin-top: 1.25em;
+}
+
+.form {
+  width: 100%;
+}
+
+.form__error-message {
+  color: var(--border-error);
+}

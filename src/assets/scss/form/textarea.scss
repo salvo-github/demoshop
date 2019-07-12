@@ -1,0 +1,12 @@
+.textarea {
+  width: 100%;
+  padding: 1em;
+  border-radius: 0.31em;
+  background-color: var(--default-white);
+  margin: 0.25em 0;
+  resize: none;
+}
+
+.textarea:focus {
+  outline: 0.13em solid var(--border-focus);
+}
