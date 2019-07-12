@@ -4,16 +4,16 @@ import {
   HttpRequest
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { LoginService } from './login/login.service';
+import { LoginService } from './user.service';
 
 @Injectable({ providedIn: 'root' })
 export class UserAuthInterceptorService implements HttpInterceptor {
-  constructor(private loginService: LoginService) {}
+  constructor(private userService: LoginService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
     if (req.url.indexOf('/login') === -1) {
-      const sessionTokenId = this.loginService.getSessionTokenId();
-      const currentUserSessionToken: string = this.loginService.getCurrentUserSessionToken();
+      const sessionTokenId = this.userService.getSessionTokenId();
+      const currentUserSessionToken: string = this.userService.getCurrentUserSessionToken();
 
       const modfiedReq = req.clone({
         headers: req.headers.append(sessionTokenId, currentUserSessionToken)

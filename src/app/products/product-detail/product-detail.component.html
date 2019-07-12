@@ -1,4 +1,12 @@
-<app-navigation></app-navigation>
+<nav class="h3 h--bold navigation">
+  <a class="h--underline navigation__back" [routerLink]="['/products-list']"
+    >Back</a
+  >
+  <p class="navigation__category" *ngIf="category">
+    <span class="h--lighter">Category: </span>{{ product.gender }} /
+    {{ category.name }}
+  </p>
+</nav>
 <div class="pdp__card">
   <app-product-card
     parentComponent="detail"

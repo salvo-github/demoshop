@@ -1,3 +1,22 @@
+.navigation {
+  height: 3.56em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navigation__back {
+  color: var(--default-white);
+}
+
+.navigation__category {
+  color: var(--default-white);
+}
+
+.navigation__category--std {
+  font-weight: normal;
+}
+
 .pdp__card {
   padding: 1.25em;
   background-image: url(src/assets/img/modal-bg.png);

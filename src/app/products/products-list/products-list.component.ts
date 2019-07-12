@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Product } from '../product.model';
 import { ActivatedRoute, Data, Router } from '@angular/router';
-import { LoginService } from 'src/app/user/login/login.service';
+import { LoginService } from 'src/app/user/user.service';
 
 @Component({
   selector: 'app-products-list',
@@ -17,13 +17,12 @@ export class ProductsListComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private loginService: LoginService
+    private userService: LoginService
   ) {}
 
   ngOnInit() {
     if (this.route.snapshot.data.products.length) {
       this.products = this.route.snapshot.data.products;
     }
-    console.log(this.loginService.isCurrentUserAdmin());
   }
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { LoginService } from '../user/login/login.service';
+import { LoginService } from '../user/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -7,15 +8,16 @@ import { LoginService } from '../user/login/login.service';
   styleUrls: ['./header.component.scss', '../../assets/scss/mediaquery.scss']
 })
 export class HeaderComponent implements OnInit {
-  constructor(private loginService: LoginService) {}
+  constructor(private userService: LoginService, private router: Router) {}
 
   ngOnInit() {}
 
   getUsername(): string | null {
-    return this.loginService.getCurrentUserUsername();
+    return this.userService.getCurrentUserUsername();
   }
 
   onLogout() {
-    this.loginService.logout();
+    this.userService.logout();
+    this.router.navigate(['/login']);
   }
 }

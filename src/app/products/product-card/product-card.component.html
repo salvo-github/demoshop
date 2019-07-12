@@ -25,6 +25,29 @@
     <div class="card__info-group">
       <h2 class="h2 h--bold card__info-title">{{ product.name }}</h2>
       <p class="h5 card__info-desc">{{ product.description }}</p>
+      <div *ngIf="parentComponent === 'detail' && isCurrentUserAdmin">
+        <br class="h3" />
+        <p class="h3 card__admin-action">
+          You can
+          <a class="card__admin-action--link" href="javascript:void(0);"
+            >add 5 more</a
+          >. You can also
+          <a
+            class="card__admin-action--link"
+            href="javascript:void(0);"
+            onclick="return toggleDisplay('modal__edit')"
+            >edit</a
+          >
+          details or
+          <a
+            class="card__admin-action--link"
+            href="javascript:void(0);"
+            onclick="return toggleDisplay('modal__delete');"
+            >delete</a
+          >
+          them.
+        </p>
+      </div>
     </div>
     <div class="card__cta" *ngIf="parentComponent === 'list'; else pdpTemplate">
       <p class="h1 h--bold  card__info-price">{{ product.cost }}</p>

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Product } from '../product.model';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { Category } from '../category.model';
 import { ProductsService } from '../products.service';
 
@@ -15,6 +15,7 @@ import { ProductsService } from '../products.service';
 export class ProductDetailComponent implements OnInit {
   product: Product;
   category: Category;
+  backUrl: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -29,11 +30,10 @@ export class ProductDetailComponent implements OnInit {
       });
     }
     this.product = this.route.snapshot.data.product;
+
     this.productService
       .fetchCategoryById(this.product.categoryId)
       .subscribe((categoryResponse) => {
-        console.log(categoryResponse);
-
         this.category = categoryResponse;
       });
   }

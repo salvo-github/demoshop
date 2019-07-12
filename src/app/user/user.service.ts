@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
-import { User } from '../user.model';
-import { UserRole } from '../user-role.model';
+import { User } from './user.model';
+import { UserRole } from './user-role.model';
 
 @Injectable({
   providedIn: 'root'
@@ -77,6 +77,6 @@ export class LoginService {
   }
 
   validateToken() {
-    return this.http.get('http://localhost:3000/api');
+    return this.http.get('http://localhost:3000/api/');
   }
 }

@@ -6,25 +6,26 @@ import {
   Router,
   UrlTree
 } from '@angular/router';
-import { LoginService } from '../user/login/login.service';
-import { catchError, map } from 'rxjs/operators';
+import { LoginService } from '../user/user.service';
+import { catchError, map, take } from 'rxjs/operators';
 import { of, Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class ProductsGuardService implements CanActivate {
-  constructor(private loginService: LoginService, private router: Router) {}
+  constructor(private userService: LoginService, private router: Router) {}
 
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean | UrlTree> | boolean | UrlTree {
-    return this.loginService.validateToken().pipe(
+    return this.userService.validateToken().pipe(
+      take(1),
       map((resp) => {
         return true;
       }),
       catchError((err) => {
-        if (err.status === 401) {
-          this.loginService.logout();
+        if (!err.status || err.status === 401) {
+          this.userService.logout();
           return of(this.router.createUrlTree(['/login']));
         }
         if (err.status === 404) {

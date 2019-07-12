@@ -16,6 +16,8 @@ export class ProductsService {
   }
 
   fetchCategoryById(id: number) {
-    return this.http.get<Category>(`http://localhost:3000/categories/${id}`);
+    return this.http.get<Category>(
+      `http://localhost:3000/api/categories/${id}`
+    );
   }
 }

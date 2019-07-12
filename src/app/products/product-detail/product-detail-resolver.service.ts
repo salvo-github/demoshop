@@ -19,9 +19,6 @@ export class ProductDetailResolver implements Resolve<Product | null> {
     state: RouterStateSnapshot
   ): Observable<Product | null> {
     return this.productService.fetchProduct(+route.paramMap.get('id')).pipe(
-      tap((productData) => {
-        console.log(productData);
-      }),
       catchError((err) => {
         return of(null);
       })

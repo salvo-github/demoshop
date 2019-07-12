@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { LoginService } from './login.service';
+import { LoginService } from '../user.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   isSubmitted = false;
 
-  constructor(private loginService: LoginService, private router: Router) {}
+  constructor(private userService: LoginService, private router: Router) {}
 
   ngOnInit() {
     this.loginForm = new FormGroup({
@@ -33,9 +33,8 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     const username = this.loginForm.value.username;
     const password = this.loginForm.value.password;
-    this.loginService.login(username, password).subscribe(
+    this.userService.login(username, password).subscribe(
       (res) => {
-        console.log(res);
         this.router.navigate(['/products-list']);
       },
       (err) => {

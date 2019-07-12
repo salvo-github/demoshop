@@ -33,20 +33,21 @@
 }
 
 .header__login-status {
+  display: inline-block;
   color: var(--default-white);
 }
 
-.header__login-status::after {
+.header__login-status + span {
   display: inline-block;
   padding-left: 0.5em;
   height: 1em;
-  width: 1em;
+  cursor: pointer;
 }
 
-.header__login-status--notlogged::after {
+.header__login-status--notlogged + span {
   content: url(src/assets/img/header-logout.svg);
 }
 
-.header__login-status--logged::after {
+.header__login-status--logged + span {
   content: url(src/assets/img/header-logout.svg);
 }
