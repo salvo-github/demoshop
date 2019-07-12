@@ -1,4 +1,11 @@
-<article class="card" *ngIf="product">
+<article
+  *ngIf="product"
+  [ngClass]="{ 'card--pdp': parentComponent === 'detail' }"
+  class="card"
+  [routerLink]="
+    parentComponent === 'list' ? ['/product-detail', product.id] : []
+  "
+>
   <figure class="card__figure">
     <img class="figure__image" src="{{ product.image }}" />
     <figcaption class="figure__caption">
@@ -19,7 +26,7 @@
       <h2 class="h2 h--bold card__info-title">{{ product.name }}</h2>
       <p class="h5 card__info-desc">{{ product.description }}</p>
     </div>
-    <div class="card__cta">
+    <div class="card__cta" *ngIf="parentComponent === 'list'; else pdpTemplate">
       <p class="h1 h--bold  card__info-price">{{ product.cost }}</p>
       <button
         class="button button--primary button--regular"
@@ -28,5 +35,21 @@
         <span class="h5">Show More</span>
       </button>
     </div>
+    <ng-template #pdpTemplate>
+      <div class="card__cta">
+        <p class="h1 h--bold  card__info-price">
+          {{ product.cost
+          }}<span class="h--lighter h--smaller card__info-price--extra"
+            >({{ product.count }} items left)</span
+          >
+        </p>
+        <button
+          class="button button--primary button--regular"
+          onclick="return toggleDisplay('modal__buy');"
+        >
+          <span class="h5">Buy</span>
+        </button>
+      </div>
+    </ng-template>
   </section>
 </article>

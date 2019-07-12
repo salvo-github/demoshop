@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Product } from '../product.model';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Category } from '../category.model';
+import { ProductsService } from '../products.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -12,8 +14,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class ProductDetailComponent implements OnInit {
   product: Product;
+  category: Category;
 
-  constructor(private route: ActivatedRoute, private router: Router) {}
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private productService: ProductsService
+  ) {}
 
   ngOnInit() {
     if (this.route.snapshot.data.product === null) {
@@ -22,5 +29,12 @@ export class ProductDetailComponent implements OnInit {
       });
     }
     this.product = this.route.snapshot.data.product;
+    this.productService
+      .fetchCategoryById(this.product.categoryId)
+      .subscribe((categoryResponse) => {
+        console.log(categoryResponse);
+
+        this.category = categoryResponse;
+      });
   }
 }

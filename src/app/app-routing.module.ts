@@ -7,6 +7,7 @@ import { ProductsListResolver } from './products/products-list/products-list-res
 import { ProductDetailResolver } from './products/product-detail/product-detail-resolver.service';
 import { LoginComponent } from './user/login/login.component';
 import { LoginGuardService } from './user/login/login-guard.service';
+import { ProductsGuardService } from './products/products-guard.service';
 
 const routes: Routes = [
   { path: '', redirectTo: '/products-list', pathMatch: 'full' },
@@ -18,11 +19,13 @@ const routes: Routes = [
   {
     path: 'products-list',
     component: ProductsListComponent,
+    canActivate: [ProductsGuardService],
     resolve: { products: ProductsListResolver }
   },
   {
     path: 'product-detail/:id',
     component: ProductDetailComponent,
+    canActivate: [ProductsGuardService],
     resolve: { product: ProductDetailResolver }
   },
   { path: 'page-not-found', component: PageNotFoundComponent },

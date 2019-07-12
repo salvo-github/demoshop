@@ -12,6 +12,7 @@ import { ProductDetailComponent } from './products/product-detail/product-detail
 import { ProductsListComponent } from './products/products-list/products-list.component';
 import { LoginComponent } from './user/login/login.component';
 import { UserAuthInterceptorService } from './user/user-auth-interceptor.service';
+import { NavigationComponent } from './products/navigation/navigation.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { UserAuthInterceptorService } from './user/user-auth-interceptor.service
     ProductDetailComponent,
     ProductCardComponent,
     PageNotFoundComponent,
-    LoginComponent
+    LoginComponent,
+    NavigationComponent
   ],
   imports: [
     BrowserModule,

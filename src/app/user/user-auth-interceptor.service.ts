@@ -11,7 +11,7 @@ export class UserAuthInterceptorService implements HttpInterceptor {
   constructor(private loginService: LoginService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
-    if (req.url.indexOf('login') === -1) {
+    if (req.url.indexOf('/login') === -1) {
       const sessionTokenId = this.loginService.getSessionTokenId();
       const currentUserSessionToken: string = this.loginService.getCurrentUserSessionToken();
 

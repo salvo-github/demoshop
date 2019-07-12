@@ -14,4 +14,8 @@ export class HeaderComponent implements OnInit {
   getUsername(): string | null {
     return this.loginService.getCurrentUserUsername();
   }
+
+  onLogout() {
+    this.loginService.logout();
+  }
 }

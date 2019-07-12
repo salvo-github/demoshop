@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Product } from '../product.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-product-card',
@@ -11,8 +12,9 @@ import { Product } from '../product.model';
 })
 export class ProductCardComponent implements OnInit {
   @Input() product: Product;
+  @Input() parentComponent: string;
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit() {}
 }

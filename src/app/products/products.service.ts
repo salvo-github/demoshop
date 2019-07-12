@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Product } from './product.model';
+import { Category } from './category.model';
 
 @Injectable({ providedIn: 'root' })
 export class ProductsService {
@@ -12,5 +13,9 @@ export class ProductsService {
 
   fetchProducts() {
     return this.http.get<Product[]>('http://localhost:3000/api/products');
+  }
+
+  fetchCategoryById(id: number) {
+    return this.http.get<Category>(`http://localhost:3000/categories/${id}`);
   }
 }
