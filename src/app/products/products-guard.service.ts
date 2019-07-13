@@ -2,24 +2,24 @@ import { Injectable } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
   CanActivate,
-  RouterStateSnapshot,
   Router,
+  RouterStateSnapshot,
+  UrlSegment,
   UrlTree
 } from '@angular/router';
-import { LoginService } from '../user/user.service';
-import { catchError, map, take } from 'rxjs/operators';
-import { of, Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { catchError, map, take, tap } from 'rxjs/operators';
+import { UserService } from '../user/user.service';
 
 @Injectable({ providedIn: 'root' })
 export class ProductsGuardService implements CanActivate {
-  constructor(private userService: LoginService, private router: Router) {}
+  constructor(private userService: UserService, private router: Router) {}
 
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean | UrlTree> | boolean | UrlTree {
     return this.userService.validateToken().pipe(
-      take(1),
       map((resp) => {
         return true;
       }),
@@ -28,10 +28,23 @@ export class ProductsGuardService implements CanActivate {
           this.userService.logout();
           return of(this.router.createUrlTree(['/login']));
         }
-        if (err.status === 404) {
-          return of(true);
-        }
       })
     );
+  }
+
+  canActivateChild(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): boolean {
+    if (this.userService.isCurrentUserAdmin()) {
+      return true;
+    } else {
+      const backUrl = route.parent.url.map((urlSegment: UrlSegment) => {
+        return urlSegment.path;
+      });
+      // https://github.com/angular/angular/issues/22763
+      this.router.navigate(backUrl);
+      return false;
+    }
   }
 }

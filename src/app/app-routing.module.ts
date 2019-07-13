@@ -1,13 +1,14 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { ProductsListComponent } from './products/products-list/products-list.component';
-import { ProductDetailComponent } from './products/product-detail/product-detail.component';
+import { RouterModule, Routes } from '@angular/router';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { ProductsListResolver } from './products/products-list/products-list-resolver.service';
 import { ProductDetailResolver } from './products/product-detail/product-detail-resolver.service';
-import { LoginComponent } from './user/login/login.component';
-import { LoginGuardService } from './user/login/login-guard.service';
+import { ProductDetailComponent } from './products/product-detail/product-detail.component';
+import { ProductEditComponent } from './products/product-detail/product-edit/product-edit.component';
 import { ProductsGuardService } from './products/products-guard.service';
+import { ProductsListResolver } from './products/products-list/products-list-resolver.service';
+import { ProductsListComponent } from './products/products-list/products-list.component';
+import { LoginGuardService } from './user/login/login-guard.service';
+import { LoginComponent } from './user/login/login.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/products-list', pathMatch: 'full' },
@@ -26,7 +27,15 @@ const routes: Routes = [
     path: 'product-detail/:id',
     component: ProductDetailComponent,
     canActivate: [ProductsGuardService],
-    resolve: { product: ProductDetailResolver }
+    resolve: { product: ProductDetailResolver },
+    canActivateChild: [ProductsGuardService],
+    children: [
+      {
+        path: 'edit',
+        component: ProductEditComponent,
+        resolve: { product: ProductDetailResolver }
+      }
+    ]
   },
   { path: 'page-not-found', component: PageNotFoundComponent },
   { path: '**', component: PageNotFoundComponent }

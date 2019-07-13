@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Product } from '../product.model';
 import { ActivatedRoute, Data, Router } from '@angular/router';
-import { LoginService } from 'src/app/user/user.service';
+import { UserService } from 'src/app/user/user.service';
 
 @Component({
   selector: 'app-products-list',
@@ -17,7 +17,7 @@ export class ProductsListComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private userService: LoginService
+    private userService: UserService
   ) {}
 
   ngOnInit() {

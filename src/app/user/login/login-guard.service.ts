@@ -5,11 +5,11 @@ import {
   RouterStateSnapshot,
   Router
 } from '@angular/router';
-import { LoginService } from '../user.service';
+import { UserService } from '../user.service';
 
 @Injectable({ providedIn: 'root' })
 export class LoginGuardService implements CanActivate {
-  constructor(private userService: LoginService, private router: Router) {}
+  constructor(private userService: UserService, private router: Router) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     const currentUserSessionToken = this.userService.getCurrentUserSessionToken();

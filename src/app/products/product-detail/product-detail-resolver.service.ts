@@ -17,11 +17,20 @@ export class ProductDetailResolver implements Resolve<Product | null> {
   resolve(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-  ): Observable<Product | null> {
-    return this.productService.fetchProduct(+route.paramMap.get('id')).pipe(
-      catchError((err) => {
-        return of(null);
-      })
+  ): Product | Observable<Product | null> {
+    const currentProduct = this.productService.getCurrentProduct();
+    const paramProductId = +(
+      route.paramMap.get('id') || route.parent.paramMap.get('id')
     );
+
+    if (currentProduct !== undefined && paramProductId === currentProduct.id) {
+      return currentProduct;
+    } else {
+      return this.productService.fetchProduct(paramProductId).pipe(
+        catchError((err) => {
+          return of(null);
+        })
+      );
+    }
   }
 }

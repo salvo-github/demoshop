@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Product } from '../product.model';
 import { Router } from '@angular/router';
-import { LoginService } from 'src/app/user/user.service';
+import { UserService } from 'src/app/user/user.service';
 
 @Component({
   selector: 'app-product-card',
@@ -16,7 +16,7 @@ export class ProductCardComponent implements OnInit {
   @Input() parentComponent: string;
   isCurrentUserAdmin = false;
 
-  constructor(private router: Router, private userService: LoginService) {}
+  constructor(private router: Router, private userService: UserService) {}
 
   ngOnInit() {
     this.getCurrentUserRole();

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { LoginService } from '../user.service';
+import { UserService } from '../user.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   isSubmitted = false;
 
-  constructor(private userService: LoginService, private router: Router) {}
+  constructor(private userService: UserService, private router: Router) {}
 
   ngOnInit() {
     this.loginForm = new FormGroup({

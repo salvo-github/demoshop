@@ -14,8 +14,8 @@
           class="vote"
           *ngFor="let count of [1, 1, 1, 1, 1]; let i = index"
           [ngClass]="{
-            'vote--full': i <= product.rating,
-            'vote--empty': i > product.rating
+            'vote--full': i < product.rating,
+            'vote--empty': i >= product.rating
           }"
         ></li>
       </ul>
@@ -29,22 +29,10 @@
         <br class="h3" />
         <p class="h3 card__admin-action">
           You can
-          <a class="card__admin-action--link" href="javascript:void(0);"
-            >add 5 more</a
-          >. You can also
-          <a
-            class="card__admin-action--link"
-            href="javascript:void(0);"
-            onclick="return toggleDisplay('modal__edit')"
-            >edit</a
-          >
+          <a class="card__admin-action--link">add 5 more</a>. You can also
+          <a class="card__admin-action--link" [routerLink]="['edit']">edit</a>
           details or
-          <a
-            class="card__admin-action--link"
-            href="javascript:void(0);"
-            onclick="return toggleDisplay('modal__delete');"
-            >delete</a
-          >
+          <a class="card__admin-action--link">delete</a>
           them.
         </p>
       </div>

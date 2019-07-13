@@ -1,0 +1,57 @@
+import { Component, OnInit, Input } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Category } from '../../category.model';
+import { ProductsService } from '../../products.service';
+import { Product } from '../../product.model';
+import { ActivatedRoute, Router } from '@angular/router';
+
+@Component({
+  selector: 'app-product-edit',
+  templateUrl: './product-edit.component.html',
+  styleUrls: [
+    './product-edit.component.scss',
+    '../../../../assets/scss/mediaquery.scss',
+    '../../../../assets/scss/modal.scss',
+    '../../../../assets/scss/form/form.scss'
+  ]
+})
+export class ProductEditComponent implements OnInit {
+  editForm: FormGroup;
+  genders = ['Man', 'Woman', 'Unisex'];
+  categories: Category[];
+  product: Product;
+
+  constructor(
+    private productsService: ProductsService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
+
+  ngOnInit() {
+    this.product = this.route.snapshot.data.product;
+
+    this.editForm = new FormGroup({
+      name: new FormControl(this.product.name, Validators.required),
+      category: new FormControl(this.product.categoryId),
+      gender: new FormControl(this.product.gender, [Validators.required]),
+      description: new FormControl(
+        this.product.description,
+        Validators.required
+      ),
+      image: new FormControl(this.product.image, Validators.required),
+      price: new FormControl(this.product.cost, Validators.required),
+      rating: new FormControl(this.product.rating, Validators.required)
+    });
+
+    this.productsService.fetchCategories().subscribe((categoriesData) => {
+      this.categories = categoriesData;
+    });
+  }
+
+  onSubmit() {
+    const editedProduct = Object.assign(this.product, this.editForm.value);
+    this.productsService.saveProduct(editedProduct).subscribe((resp) => {
+      this.router.navigate(['../'], { relativeTo: this.route });
+    });
+  }
+}

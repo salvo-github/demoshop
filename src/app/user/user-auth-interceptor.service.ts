@@ -4,11 +4,11 @@ import {
   HttpRequest
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { LoginService } from './user.service';
+import { UserService } from './user.service';
 
 @Injectable({ providedIn: 'root' })
 export class UserAuthInterceptorService implements HttpInterceptor {
-  constructor(private userService: LoginService) {}
+  constructor(private userService: UserService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
     if (req.url.indexOf('/login') === -1) {

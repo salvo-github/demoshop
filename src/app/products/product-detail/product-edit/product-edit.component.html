@@ -1,0 +1,115 @@
+<div class="modal" id="modal__edit">
+  <div class="modal__header">
+    <h2 class="h2--bigger h--bold h--caption modal__title--elipsis">
+      Edit "{{ product.name }}"
+    </h2>
+  </div>
+  <div class="modal__body">
+    <div class="modal__main">
+      <form class="form" [formGroup]="editForm" (ngSubmit)="onSubmit()">
+        <section class="column">
+          <div class="form__field">
+            <p><label class="h3" for="name">Name:</label></p>
+            <input
+              class="h5 textinput"
+              type="text"
+              formControlName="name"
+              id="name"
+            />
+          </div>
+          <div class="form__field">
+            <p><label class="h3" for="category">Category:</label></p>
+            <select
+              class="h5 select select--white select__arrow select__arrow--green"
+              formControlName="category"
+              id="category"
+              ><option
+                *ngFor="let category of categories"
+                [value]="category.id"
+                >{{ category.name }}</option
+              >
+            </select>
+          </div>
+          <div class="form__field">
+            <p class="h3">Gender:</p>
+            <ul class="radio__wrapper">
+              <li *ngFor="let gender of genders">
+                <input
+                  class="radio"
+                  type="radio"
+                  id="{{ gender }}"
+                  formControlName="gender"
+                  [value]="gender"
+                />
+                <label class="h5 radio__label" for="{{ gender }}">{{
+                  gender
+                }}</label>
+              </li>
+            </ul>
+          </div>
+          <div class="form__field">
+            <p><label class="h3" for="description">Description:</label></p>
+            <textarea
+              class="h5 pdp__modal-textarea--height textarea"
+              rows="5"
+              id="description"
+              formControlName="description"
+            ></textarea>
+          </div>
+        </section>
+        <section class="column">
+          <div class="form__field">
+            <p><label class="h3" for="image">Link to image:</label></p>
+            <input
+              class="h5 textinput"
+              type="url"
+              id="image"
+              formControlName="image"
+            />
+            <img
+              class="form_field--image"
+              [src]="editForm.value.image"
+              alt="product {{ product.id }} image"
+            />
+          </div>
+          <div class="form__field">
+            <p><label class="h3" for="price">Price:</label></p>
+            <input
+              class="h5 textinput"
+              type="number"
+              step="any"
+              id="price"
+              formControlName="price"
+            />
+          </div>
+          <div class="form__field">
+            <p><label class="h3" for="rating">Rating:</label></p>
+            <select
+              class="h5 select select--white select__arrow select__arrow--green"
+              id="rating"
+              formControlName="rating"
+            >
+              <option
+                *ngFor="let count of [1, 1, 1, 1, 1, 1]; let i = index"
+                [value]="i"
+                >{{ i }}</option
+              >
+            </select>
+          </div>
+        </section>
+        <div class="modal__cta">
+          <button
+            class="button button--secondary button--big"
+            [routerLink]="['/product-detail', product.id]"
+          >
+            Cancel
+          </button>
+          <button class="button button--primary button--big" type="submit">
+            Submit
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="modal-overlay" id="modal-overlay"></div>

@@ -7,7 +7,7 @@ import { UserRole } from './user-role.model';
 @Injectable({
   providedIn: 'root'
 })
-export class LoginService {
+export class UserService {
   private sessionTokenSessionId = 'session-token';
   private currentUserUsernameSessionId = 'current-user-username';
   private currentUserRoleIdSessionId = 'current-user-role';
@@ -62,6 +62,7 @@ export class LoginService {
   logout() {
     localStorage.removeItem(this.sessionTokenSessionId);
     localStorage.removeItem(this.currentUserUsernameSessionId);
+    localStorage.removeItem(this.currentUserRoleIdSessionId);
   }
 
   isCurrentUserAdmin(): boolean {
@@ -77,6 +78,7 @@ export class LoginService {
   }
 
   validateToken() {
-    return this.http.get('http://localhost:3000/api/');
+    // I use the `roles` endpoint to validate the token because the server doesn't have the proper endpoint
+    return this.http.get('http://localhost:3000/api/roles/0');
   }
 }
