@@ -9,10 +9,10 @@ import { ProductsService } from '../../products.service';
   selector: 'app-product-edit',
   templateUrl: './product-edit.component.html',
   styleUrls: [
-    './product-edit.component.scss',
-    '../../../../assets/scss/mediaquery.scss',
     '../../../../assets/scss/modal.scss',
-    '../../../../assets/scss/form/form.scss'
+    '../../../../assets/scss/form/form.scss',
+    './product-edit.component.scss',
+    '../../../../assets/scss/mediaquery.scss'
   ]
 })
 export class ProductEditComponent implements OnInit {
@@ -62,7 +62,6 @@ export class ProductEditComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.editForm.value);
     const editedProduct: Product = Object.assign(
       this.product,
       this.editForm.value

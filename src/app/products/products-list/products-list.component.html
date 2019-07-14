@@ -1,3 +1,86 @@
+<section class="filters">
+  <button
+    class="h5 button button--primary button--regular"
+    (click)="showFilters = !showFilters"
+  >
+    Filter options
+  </button>
+  <input
+    class="h5 textinput textinput-icon filters__icon--fbt textinput--narrower"
+    type="text"
+    name="filterbytext"
+    id="filterbytext"
+    form="filters__form_id"
+    placeholder="Filter by text..."
+  />
+  <div id="filters__content-id" class="filters__content" *ngIf="showFilters">
+    <form
+      id="filters__form_id"
+      class="form form__filters"
+      [formGroup]="filtersForm"
+    >
+      <div class="filters__field-wrapper">
+        <input
+          type="button"
+          class="h5 button button--secondary button--regular"
+          (click)="filtersForm.reset()"
+          style="vertical-align: center"
+          value="Reset filters"
+        />
+      </div>
+      <div class="filters__field-wrapper">
+        <p class="h3">Only available:</p>
+        <input
+          class="h5 tgl tgl-light"
+          type="checkbox"
+          id="availability"
+          formControlName="availability"
+        />
+        <label class="h5 tgl-btn" for="availability"></label>
+      </div>
+      <div class="filters__field-wrapper">
+        <p class="h3">Gender:</p>
+        <ul class="radio__wrapper">
+          <li *ngFor="let gender of genders">
+            <input
+              class="radio"
+              type="radio"
+              id="{{ gender }}"
+              formControlName="gender"
+              [value]="gender"
+            />
+            <label class="h5 radio__label" for="{{ gender }}">{{
+              gender
+            }}</label>
+          </li>
+        </ul>
+      </div>
+      <div class="filters__field-wrapper">
+        <p><label class="h3" for="category">Category:</label></p>
+        <select
+          class="h5 select select__arrow select__arrow--white select--green"
+          formControlName="categoryId"
+          id="category"
+        >
+          <option *ngFor="let category of categories" [value]="+category.id">{{
+            category.name
+          }}</option>
+        </select>
+      </div>
+      <!-- <div class="filters__form-field">
+        <p>Price Range</p>
+        <section class="range-slider">
+          <input value="500" min="500" max="50000" step="500" type="range">
+          <input value="50000" min="500" max="50000" step="500" type="range">
+        </section>
+      </div> -->
+      <!-- <div class="filters__form-field filters__form-field--noborder">
+        <input type="range" name="price" id="price">
+        <label class="checkbox__label" for="price">Price:</label>
+      </div> -->
+    </form>
+  </div>
+</section>
 <div class="cards" *ngIf="products && products.length; else noProducts">
   <div class="main__card" *ngFor="let product of products">
     <app-product-card

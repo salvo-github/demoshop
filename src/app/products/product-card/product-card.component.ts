@@ -15,14 +15,23 @@ export class ProductCardComponent implements OnInit {
   @Input() product: Product;
   @Input() parentComponent: string;
   isCurrentUserAdmin = false;
+  productAvailability: string;
 
   constructor(private router: Router, private userService: UserService) {}
 
   ngOnInit() {
     this.getCurrentUserRole();
+
+    this.setProductAvailability();
   }
 
   getCurrentUserRole(): void {
     this.isCurrentUserAdmin = this.userService.isCurrentUserAdmin();
+  }
+
+  setProductAvailability(): void {
+    const productQuantity = this.product.count - this.product.soldCount;
+    this.productAvailability =
+      productQuantity > 0 ? `${productQuantity} items left` : 'Sold Out';
   }
 }

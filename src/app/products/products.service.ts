@@ -1,14 +1,15 @@
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Product } from './product.model';
-import { Category } from './category.model';
+import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { Category } from './category.model';
+import { Product } from './product.model';
 
 @Injectable({ providedIn: 'root' })
 export class ProductsService {
   currentProduct: Product;
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private route: ActivatedRoute) {}
 
   fetchProduct(id: number) {
     return this.http
@@ -24,8 +25,17 @@ export class ProductsService {
     return this.currentProduct;
   }
 
-  fetchProducts() {
-    return this.http.get<Product[]>('http://localhost:3000/api/products');
+  fetchProducts(values: { [s: string]: any } = {}) {
+    let params = new HttpParams();
+    for (const key in values) {
+      if (values.hasOwnProperty(key) && !!values[key]) {
+        params = params.append(key, values[key]);
+      }
+    }
+
+    return this.http.get<Product[]>('http://localhost:3000/api/products', {
+      params
+    });
   }
 
   fetchCategoryById(id: number) {
