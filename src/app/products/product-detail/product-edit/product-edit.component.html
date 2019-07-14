@@ -18,14 +18,14 @@
             />
           </div>
           <div class="form__field">
-            <p><label class="h3" for="category">Category:</label></p>
+            <p><label class="h3" for="categoryId">Category:</label></p>
             <select
               class="h5 select select--white select__arrow select__arrow--green"
-              formControlName="category"
-              id="category"
+              formControlName="categoryId"
+              id="categoryId"
               ><option
                 *ngFor="let category of categories"
-                [value]="category.id"
+                [value]="+category.id"
                 >{{ category.name }}</option
               >
             </select>
@@ -73,13 +73,13 @@
             />
           </div>
           <div class="form__field">
-            <p><label class="h3" for="price">Price:</label></p>
+            <p><label class="h3" for="cost">Price:</label></p>
             <input
               class="h5 textinput"
               type="number"
               step="any"
-              id="price"
-              formControlName="price"
+              id="cost"
+              formControlName="cost"
             />
           </div>
           <div class="form__field">

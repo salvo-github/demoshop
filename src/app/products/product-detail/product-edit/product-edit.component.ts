@@ -1,9 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Category } from '../../category.model';
-import { ProductsService } from '../../products.service';
-import { Product } from '../../product.model';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Category } from '../../category.model';
+import { Product } from '../../product.model';
+import { ProductsService } from '../../products.service';
 
 @Component({
   selector: 'app-product-edit',
@@ -31,16 +31,21 @@ export class ProductEditComponent implements OnInit {
     this.product = this.route.snapshot.data.product;
 
     this.editForm = new FormGroup({
-      name: new FormControl(this.product.name, Validators.required),
-      category: new FormControl(this.product.categoryId),
+      name: new FormControl(this.product.name, [Validators.required]),
+      categoryId: new FormControl(this.product.categoryId, this.toNumber),
       gender: new FormControl(this.product.gender, [Validators.required]),
-      description: new FormControl(
-        this.product.description,
+      description: new FormControl(this.product.description, [
         Validators.required
-      ),
-      image: new FormControl(this.product.image, Validators.required),
-      price: new FormControl(this.product.cost, Validators.required),
-      rating: new FormControl(this.product.rating, Validators.required)
+      ]),
+      image: new FormControl(this.product.image, [Validators.required]),
+      cost: new FormControl(this.product.cost, [
+        Validators.required,
+        this.toNumber
+      ]),
+      rating: new FormControl(this.product.rating, [
+        Validators.required,
+        this.toNumber
+      ])
     });
 
     this.productsService.fetchCategories().subscribe((categoriesData) => {
@@ -48,8 +53,20 @@ export class ProductEditComponent implements OnInit {
     });
   }
 
+  toNumber(control: FormControl): { [s: string]: boolean } {
+    if (typeof control.value !== 'number') {
+      control.setValue(+control.value);
+      return null;
+    }
+    return null;
+  }
+
   onSubmit() {
-    const editedProduct = Object.assign(this.product, this.editForm.value);
+    console.log(this.editForm.value);
+    const editedProduct: Product = Object.assign(
+      this.product,
+      this.editForm.value
+    );
     this.productsService.saveProduct(editedProduct).subscribe((resp) => {
       this.router.navigate(['../'], { relativeTo: this.route });
     });
