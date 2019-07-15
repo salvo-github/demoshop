@@ -1,15 +1,24 @@
 import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
-import { tap, filter, map } from 'rxjs/operators';
+import { Observable, Subject, BehaviorSubject } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 import { Category } from './category.model';
 import { Product } from './product.model';
 
 @Injectable({ providedIn: 'root' })
 export class ProductsService {
-  currentProduct: Product;
-  private paginationLink: { [s: string]: string } = {};
+  private currentProduct: Product;
+  private paginationLinks = {
+    next: null,
+    prev: null,
+    first: null,
+    last: null
+  };
+  private paginationLinksSubject = new BehaviorSubject<{ [s: string]: string }>(
+    this.paginationLinks
+  );
+
   constructor(private http: HttpClient, private route: ActivatedRoute) {}
 
   fetchProduct(id: number) {
@@ -26,19 +35,23 @@ export class ProductsService {
     return this.currentProduct;
   }
 
-  fetchProducts(values: { [s: string]: any } = {}) {
+  fetchProducts(
+    valuesForFiltering: { [s: string]: any } = {},
+    page: string = '1',
+    limit: string = '5'
+  ) {
     let params = new HttpParams();
 
-    params = params.append('_page', '1');
-    params = params.append('_limit', '5');
+    params = params.append('_page', page);
+    params = params.append('_limit', limit);
 
     let onlyAvailable = false;
-    for (const key in values) {
-      if (values.hasOwnProperty(key) && !!values[key]) {
+    for (const key in valuesForFiltering) {
+      if (valuesForFiltering.hasOwnProperty(key) && !!valuesForFiltering[key]) {
         if (key === 'availability') {
           onlyAvailable = true;
         } else {
-          params = params.append(key, values[key]);
+          params = params.append(key, valuesForFiltering[key]);
         }
       }
     }
@@ -51,16 +64,12 @@ export class ProductsService {
       .pipe(
         tap(
           (responseData: HttpResponse<Product[]>): void => {
-            this.paginationLink['X-Total-Count'] = responseData.headers.get(
-              'X-Total-Count'
-            );
-            this.paginationLink['Link'] = responseData.headers.get('Link');
-            console.log(this.paginationLink);
+            this.setPaginationLinks(responseData.headers.get('Link'));
+            this.paginationLinksSubject.next(this.paginationLinks);
           }
         ),
         map(
           (responseData: HttpResponse<Product[]>): Product[] => {
-            console.log(responseData);
             const productsFiltered = responseData.body.filter(
               (product: Product) => {
                 if (onlyAvailable === true) {
@@ -91,5 +100,25 @@ export class ProductsService {
       `http://localhost:3000/api/products/${product.id}`,
       product
     );
+  }
+
+  setPaginationLinks(headerLink: string) {
+    const links = headerLink.split(', ');
+
+    for (const key in this.paginationLinks) {
+      if (this.paginationLinks.hasOwnProperty(key)) {
+        for (const link of links) {
+          const regExp = new RegExp(`<(.*)>; rel="${key}"`);
+          const $match = link.match(regExp);
+          if ($match !== null) {
+            this.paginationLinks[key] = $match[1];
+          }
+        }
+      }
+    }
+  }
+
+  getPaginationLinksSubject() {
+    return this.paginationLinksSubject;
   }
 }

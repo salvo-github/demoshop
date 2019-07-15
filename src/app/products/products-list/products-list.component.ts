@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Category } from '../category.model';
 import { Product } from '../product.model';
 import { ProductsService } from '../products.service';
+import { Subject, BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-products-list',
@@ -14,12 +15,14 @@ import { ProductsService } from '../products.service';
     '../../../assets/scss/mediaquery.scss'
   ]
 })
-export class ProductsListComponent implements OnInit {
+export class ProductsListComponent implements OnInit, OnDestroy {
   showFilters = false;
   products: Product[];
   filtersForm: FormGroup;
   categories: Category[];
   genders = ['Man', 'Woman', 'Unisex'];
+  paginationLinksSubject: BehaviorSubject<{ [s: string]: string }>;
+  paginationLinks: { [s: string]: string };
 
   constructor(
     private route: ActivatedRoute,
@@ -46,6 +49,13 @@ export class ProductsListComponent implements OnInit {
       )
     });
 
+    this.paginationLinksSubject = this.productsService.getPaginationLinksSubject();
+
+    this.paginationLinksSubject.subscribe((paginationLinks) => {
+      this.paginationLinks = paginationLinks;
+      console.log(paginationLinks);
+    });
+
     this.filtersForm.valueChanges.subscribe((values) => {
       this.router.navigate(this.route.snapshot.url, { queryParams: values });
 
@@ -55,5 +65,9 @@ export class ProductsListComponent implements OnInit {
           this.products = productsData;
         });
     });
+  }
+
+  ngOnDestroy() {
+    this.paginationLinksSubject.unsubscribe();
   }
 }
