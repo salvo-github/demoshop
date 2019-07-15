@@ -1,22 +1,23 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { tap, filter, map } from 'rxjs/operators';
 import { Category } from './category.model';
 import { Product } from './product.model';
 
 @Injectable({ providedIn: 'root' })
 export class ProductsService {
   currentProduct: Product;
+  private paginationLink: { [s: string]: string } = {};
   constructor(private http: HttpClient, private route: ActivatedRoute) {}
 
   fetchProduct(id: number) {
     return this.http
       .get<Product>(`http://localhost:3000/api/products/${id}`)
       .pipe(
-        tap((productData) => {
-          this.currentProduct = productData;
+        tap((value) => {
+          this.currentProduct = value;
         })
       );
   }
@@ -27,15 +28,52 @@ export class ProductsService {
 
   fetchProducts(values: { [s: string]: any } = {}) {
     let params = new HttpParams();
+
+    params = params.append('_page', '1');
+    params = params.append('_limit', '5');
+
+    let onlyAvailable = false;
     for (const key in values) {
       if (values.hasOwnProperty(key) && !!values[key]) {
-        params = params.append(key, values[key]);
+        if (key === 'availability') {
+          onlyAvailable = true;
+        } else {
+          params = params.append(key, values[key]);
+        }
       }
     }
 
-    return this.http.get<Product[]>('http://localhost:3000/api/products', {
-      params
-    });
+    return this.http
+      .get<Product[]>('http://localhost:3000/api/products', {
+        observe: 'response',
+        params
+      })
+      .pipe(
+        tap(
+          (responseData: HttpResponse<Product[]>): void => {
+            this.paginationLink['X-Total-Count'] = responseData.headers.get(
+              'X-Total-Count'
+            );
+            this.paginationLink['Link'] = responseData.headers.get('Link');
+            console.log(this.paginationLink);
+          }
+        ),
+        map(
+          (responseData: HttpResponse<Product[]>): Product[] => {
+            console.log(responseData);
+            const productsFiltered = responseData.body.filter(
+              (product: Product) => {
+                if (onlyAvailable === true) {
+                  return product.count - product.soldCount > 0;
+                } else {
+                  return true;
+                }
+              }
+            );
+            return productsFiltered;
+          }
+        )
+      );
   }
 
   fetchCategoryById(id: number) {

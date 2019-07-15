@@ -1,26 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import {
-  ActivatedRoute,
-  Router,
-  ParamMap,
-  NavigationEnd
-} from '@angular/router';
-
-import { Product } from '../product.model';
+import { FormControl, FormGroup } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Category } from '../category.model';
-
+import { Product } from '../product.model';
 import { ProductsService } from '../products.service';
-import { HttpParams } from '@angular/common/http';
-import {
-  take,
-  takeLast,
-  last,
-  publishLast,
-  tap,
-  distinctUntilChanged,
-  skip
-} from 'rxjs/operators';
 
 @Component({
   selector: 'app-products-list',
