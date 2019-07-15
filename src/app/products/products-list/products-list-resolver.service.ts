@@ -17,12 +17,12 @@ export class ProductsListResolver implements Resolve<Product[] | []> {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<Product[] | []> {
-    const queryParams: { [s: string]: any } = {};
+    const valuesForFiltering: { [s: string]: any } = {};
     for (const key of route.queryParamMap.keys) {
-      queryParams[key] = route.queryParamMap.get(key);
+      valuesForFiltering[key] = route.queryParamMap.get(key);
     }
 
-    return this.productsService.fetchProducts(queryParams).pipe(
+    return this.productsService.fetchProducts(valuesForFiltering).pipe(
       catchError((err) => {
         return of([]);
       })

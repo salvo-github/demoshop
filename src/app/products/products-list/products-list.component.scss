@@ -37,7 +37,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  align-items: center;
+  // align-items: center;
 }
 
 .main__card {
@@ -49,4 +49,13 @@
   width: 27.5em;
   height: 18.34em;
   background-color: white;
+}
+
+.product-list__pages-navigation {
+  display: flex;
+  justify-content: space-between;
+}
+
+.filters .button {
+  margin: 0 0.94em;
 }

@@ -37,6 +37,7 @@ export class ProductsService {
 
   fetchProducts(
     valuesForFiltering: { [s: string]: any } = {},
+    url: string = 'http://localhost:3000/api/products',
     page: string = '1',
     limit: string = '5'
   ) {
@@ -57,7 +58,7 @@ export class ProductsService {
     }
 
     return this.http
-      .get<Product[]>('http://localhost:3000/api/products', {
+      .get<Product[]>(url, {
         observe: 'response',
         params
       })
@@ -65,7 +66,6 @@ export class ProductsService {
         tap(
           (responseData: HttpResponse<Product[]>): void => {
             this.setPaginationLinks(responseData.headers.get('Link'));
-            this.paginationLinksSubject.next(this.paginationLinks);
           }
         ),
         map(
@@ -107,6 +107,7 @@ export class ProductsService {
 
     for (const key in this.paginationLinks) {
       if (this.paginationLinks.hasOwnProperty(key)) {
+        this.paginationLinks[key] = null;
         for (const link of links) {
           const regExp = new RegExp(`<(.*)>; rel="${key}"`);
           const $match = link.match(regExp);
@@ -116,6 +117,8 @@ export class ProductsService {
         }
       }
     }
+
+    this.paginationLinksSubject.next(this.paginationLinks);
   }
 
   getPaginationLinksSubject() {

@@ -1,7 +1,7 @@
 .card {
   display: flex;
   flex-direction: column;
-  // height: 100%;
+  height: 100%;
   background-image: url(src/assets/img/modal-bg.png);
   background-repeat: repeat;
 }
@@ -9,6 +9,9 @@
 .figure__image {
   display: block;
   width: 100%;
+  max-width: 100%;
+  width: auto;
+  height: auto;
 }
 
 .figure__caption {

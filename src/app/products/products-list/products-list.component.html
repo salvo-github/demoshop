@@ -20,15 +20,6 @@
       [formGroup]="filtersForm"
     >
       <div class="filters__field-wrapper">
-        <input
-          type="button"
-          class="h5 button button--secondary button--regular"
-          (click)="filtersForm.reset()"
-          style="vertical-align: center"
-          value="Reset filters"
-        />
-      </div>
-      <div class="filters__field-wrapper">
         <p class="h3">Only available:</p>
         <input
           class="h5 tgl tgl-light"
@@ -78,6 +69,20 @@
         <input type="range" name="price" id="price">
         <label class="checkbox__label" for="price">Price:</label>
       </div> -->
+      <div class="filters__field-wrapper">
+        <input
+          type="button"
+          class="h5 button button--secondary button--regular"
+          (click)="onResetFilters()"
+          value="Reset filters"
+        />
+        <input
+          type="button"
+          class="h5 button button--primary button--regular"
+          (click)="onApplyFilters()"
+          value="Apply filters"
+        />
+      </div>
     </form>
   </div>
 </section>
@@ -88,6 +93,22 @@
       [product]="product"
     ></app-product-card>
   </div>
+</div>
+<div class="product-list__pages-navigation">
+  <button
+    class="h5 button button--primary button--regular"
+    [disabled]="paginationLinks['prev'] === null"
+    (click)="fetchFilteredProducts({}, paginationLinks['prev'])"
+  >
+    Previous Page
+  </button>
+  <button
+    class="h5 button button--primary button--regular"
+    [disabled]="paginationLinks['next'] === null"
+    (click)="fetchFilteredProducts({}, paginationLinks['next'])"
+  >
+    Next Page
+  </button>
 </div>
 <ng-template #noProducts
   ><h1 class="h1 h--bold h--center" temp>

@@ -22,6 +22,7 @@ export class ProductsListComponent implements OnInit, OnDestroy {
   categories: Category[];
   genders = ['Man', 'Woman', 'Unisex'];
   paginationLinksSubject: BehaviorSubject<{ [s: string]: string }>;
+  paginationLinksSubscription;
   paginationLinks: { [s: string]: string };
 
   constructor(
@@ -39,6 +40,16 @@ export class ProductsListComponent implements OnInit, OnDestroy {
       this.categories = categoriesData;
     });
 
+    this.getPaginationLinks();
+
+    this.initForm();
+  }
+
+  ngOnDestroy() {
+    this.paginationLinksSubscription.unsubscribe();
+  }
+
+  initForm() {
     this.filtersForm = new FormGroup({
       availability: new FormControl(
         this.route.snapshot.queryParamMap.get('availability')
@@ -48,26 +59,43 @@ export class ProductsListComponent implements OnInit, OnDestroy {
         this.route.snapshot.queryParamMap.get('categoryId')
       )
     });
-
-    this.paginationLinksSubject = this.productsService.getPaginationLinksSubject();
-
-    this.paginationLinksSubject.subscribe((paginationLinks) => {
-      this.paginationLinks = paginationLinks;
-      console.log(paginationLinks);
-    });
-
-    this.filtersForm.valueChanges.subscribe((values) => {
-      this.router.navigate(this.route.snapshot.url, { queryParams: values });
-
-      this.productsService
-        .fetchProducts(values)
-        .subscribe((productsData: Product[]) => {
-          this.products = productsData;
-        });
-    });
   }
 
-  ngOnDestroy() {
-    this.paginationLinksSubject.unsubscribe();
+  onApplyFilters() {
+    this.fetchFilteredProducts(this.filtersForm.value);
+  }
+
+  onResetFilters() {
+    this.filtersForm.reset();
+
+    this.fetchFilteredProducts({});
+  }
+
+  fetchFilteredProducts(
+    valuesForFiltering: { [s: string]: any },
+    url?: string
+  ) {
+    this.router.navigate(this.route.snapshot.url, {
+      queryParams: valuesForFiltering
+    });
+
+    this.productsService
+      .fetchProducts(valuesForFiltering, url)
+      .subscribe((productsData: Product[]) => {
+        this.products = productsData;
+      });
+
+    this.showFilters = false;
+  }
+
+  getPaginationLinks() {
+    this.paginationLinksSubject = this.productsService.getPaginationLinksSubject();
+
+    this.paginationLinksSubscription = this.paginationLinksSubject.subscribe(
+      (paginationLinks) => {
+        this.paginationLinks = paginationLinks;
+        console.log(this.paginationLinks);
+      }
+    );
   }
 }
