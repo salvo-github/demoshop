@@ -113,6 +113,11 @@
     flex-basis: 33%;
   }
 
+  .main__card:nth-of-type(3n + 2):nth-last-of-type(1) {
+    margin-right: auto;
+    margin-left: 0.5%;
+  }
+
   .header__content {
     max-width: 75em;
   }

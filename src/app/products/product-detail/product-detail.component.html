@@ -1,5 +1,8 @@
 <nav class="h3 h--bold navigation">
-  <a class="h--underline navigation__back" [routerLink]="['/products-list']"
+  <a
+    class="h--underline navigation__back"
+    (click)="onGoBack()"
+    style="cursor: pointer"
     >Back</a
   >
   <p class="navigation__category" *ngIf="category">

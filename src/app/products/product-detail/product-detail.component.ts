@@ -1,7 +1,8 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { Product } from '../product.model';
-import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Category } from '../category.model';
+import { Product } from '../product.model';
 import { ProductsService } from '../products.service';
 
 @Component({
@@ -20,7 +21,8 @@ export class ProductDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private productService: ProductsService
+    private productService: ProductsService,
+    private location: Location
   ) {}
 
   ngOnInit() {
@@ -36,5 +38,9 @@ export class ProductDetailComponent implements OnInit {
       .subscribe((categoryResponse) => {
         this.category = categoryResponse;
       });
+  }
+
+  onGoBack() {
+    this.location.back();
   }
 }

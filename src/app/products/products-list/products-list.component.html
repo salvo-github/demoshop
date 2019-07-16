@@ -1,4 +1,4 @@
-<section class="filters">
+<section class="filters" [formGroup]="filtersForm">
   <button
     class="h5 button button--primary button--regular"
     (click)="showFilters = !showFilters"
@@ -8,16 +8,16 @@
   <input
     class="h5 textinput textinput-icon filters__icon--fbt textinput--narrower"
     type="text"
-    name="filterbytext"
-    id="filterbytext"
-    form="filters__form_id"
     placeholder="Filter by text..."
+    formControlName="q"
+    (keyup.enter)="onApplyFilters()"
   />
   <div id="filters__content-id" class="filters__content" *ngIf="showFilters">
     <form
       id="filters__form_id"
       class="form form__filters"
       [formGroup]="filtersForm"
+      (ngSubmit)="onApplyFilters()"
     >
       <div class="filters__field-wrapper">
         <p class="h3">Only available:</p>
@@ -53,6 +53,7 @@
           formControlName="categoryId"
           id="category"
         >
+          <option [value]="''">None</option>
           <option *ngFor="let category of categories" [value]="+category.id">{{
             category.name
           }}</option>
@@ -70,19 +71,26 @@
         <label class="checkbox__label" for="price">Price:</label>
       </div> -->
       <div class="filters__field-wrapper">
-        <input
+        <button
           type="button"
           class="h5 button button--secondary button--regular"
           (click)="onResetFilters()"
-          value="Reset filters"
-        />
-        <input
+        >
+          Reset filters
+        </button>
+        <button
           type="button"
           class="h5 button button--primary button--regular"
           (click)="onApplyFilters()"
-          value="Apply filters"
-        />
+        >
+          Apply filters
+        </button>
       </div>
+      <button
+        type="submit"
+        class="h5 button button--primary button--regular"
+        style="display: none"
+      ></button>
     </form>
   </div>
 </section>
@@ -111,7 +119,7 @@
   </button>
 </div>
 <ng-template #noProducts
-  ><h1 class="h1 h--bold h--center" temp>
+  ><h1 class="h1 h--bold h--center" style="color: var(--default-white)">
     No products available!
   </h1></ng-template
 >
