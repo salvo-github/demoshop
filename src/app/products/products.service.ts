@@ -48,7 +48,7 @@ export class ProductsService {
 
     let onlyAvailable = false;
     for (const key in valuesForFiltering) {
-      if (valuesForFiltering.hasOwnProperty(key) && !!valuesForFiltering[key]) {
+      if (valuesForFiltering.hasOwnProperty(key)) {
         if (key === 'availability') {
           onlyAvailable = true;
         } else {

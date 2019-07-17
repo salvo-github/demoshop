@@ -13,6 +13,7 @@ import { ProductsListComponent } from './products/products-list/products-list.co
 import { LoginComponent } from './user/login/login.component';
 import { UserAuthInterceptorService } from './user/user-auth-interceptor.service';
 import { ProductEditComponent } from './products/product-detail/product-edit/product-edit.component';
+import { ProductsFilterComponent } from './products/products-filter/products-filter.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { ProductEditComponent } from './products/product-detail/product-edit/pro
     ProductCardComponent,
     PageNotFoundComponent,
     LoginComponent,
-    ProductEditComponent
+    ProductEditComponent,
+    ProductsFilterComponent
   ],
   imports: [
     BrowserModule,

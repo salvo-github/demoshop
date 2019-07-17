@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { Category } from '../category.model';
@@ -21,14 +21,19 @@ export class ProductsListComponent implements OnInit, OnDestroy {
 
   showFilters = false;
   filtersForm: FormGroup;
+
+  // all the params map the query string for the api
   initialFiltersFormValue = {
     availability: false,
-    gender: null,
+    gender: 'None',
     categoryId: '',
+    cost_gte: '',
+    cost_lte: '',
+    rating: '',
     // q: api param for full text search
     q: null
   };
-  genders = ['Man', 'Woman', 'Unisex'];
+  genders = ['None', 'Man', 'Woman', 'Unisex'];
 
   paginationLinksSubject: BehaviorSubject<{ [s: string]: string }>;
   paginationLinksSubscription;
@@ -61,18 +66,47 @@ export class ProductsListComponent implements OnInit, OnDestroy {
   }
 
   initForm() {
-    this.filtersForm = new FormGroup({
-      availability: new FormControl(this.initialFiltersFormValue.availability),
-      gender: new FormControl(this.initialFiltersFormValue.gender),
-      categoryId: new FormControl(this.initialFiltersFormValue.categoryId),
-      q: new FormControl(this.initialFiltersFormValue.q)
-    });
+    this.filtersForm = new FormGroup(
+      {
+        availability: new FormControl(
+          this.route.snapshot.queryParamMap.get('availability') ||
+            this.initialFiltersFormValue.availability
+        ),
+        gender: new FormControl(
+          this.route.snapshot.queryParamMap.get('gender') ||
+            this.initialFiltersFormValue.gender
+        ),
+        categoryId: new FormControl(
+          this.route.snapshot.queryParamMap.get('categoryId') ||
+            this.initialFiltersFormValue.categoryId
+        ),
+        q: new FormControl(
+          this.route.snapshot.queryParamMap.get('q') ||
+            this.initialFiltersFormValue.q
+        ),
+        rating: new FormControl(
+          this.route.snapshot.queryParamMap.get('rating') ||
+            this.initialFiltersFormValue.rating
+        ),
+        cost_gte: new FormControl(
+          this.route.snapshot.queryParamMap.get('cost_gte') ||
+            this.initialFiltersFormValue.cost_gte
+        ),
+        cost_lte: new FormControl(
+          this.route.snapshot.queryParamMap.get('cost_lte') ||
+            this.initialFiltersFormValue.cost_lte
+        )
+      },
+      {
+        validators: [this.costValidator]
+      }
+    );
 
-    for (const param of this.route.snapshot.queryParamMap.keys) {
-      this.filtersForm.patchValue({
-        [param]: this.route.snapshot.queryParamMap.get(param)
-      });
-    }
+    // for (const param of this.route.snapshot.queryParamMap.keys) {
+    //   this.filtersForm.patchValue({
+    //     [param]: this.route.snapshot.queryParamMap.get(param)
+    //   });
+    // }
   }
 
   onApplyFilters() {
@@ -91,14 +125,7 @@ export class ProductsListComponent implements OnInit, OnDestroy {
     valuesForFiltering: { [s: string]: any },
     url?: string
   ) {
-    for (const key in valuesForFiltering) {
-      if (
-        valuesForFiltering.hasOwnProperty(key) &&
-        !!valuesForFiltering[key] === false
-      ) {
-        delete valuesForFiltering[key];
-      }
-    }
+    this.cleanValues(valuesForFiltering);
 
     this.router.navigate(this.route.snapshot.url, {
       queryParams: valuesForFiltering
@@ -113,6 +140,19 @@ export class ProductsListComponent implements OnInit, OnDestroy {
     this.showFilters = false;
   }
 
+  cleanValues(valuesForFiltering) {
+    for (const key in valuesForFiltering) {
+      if (
+        valuesForFiltering.hasOwnProperty(key) &&
+        (valuesForFiltering[key] === false ||
+          valuesForFiltering[key] === '' ||
+          valuesForFiltering[key] === null)
+      ) {
+        delete valuesForFiltering[key];
+      }
+    }
+  }
+
   getPaginationLinks() {
     this.paginationLinksSubject = this.productsService.getPaginationLinksSubject();
 
@@ -123,11 +163,14 @@ export class ProductsListComponent implements OnInit, OnDestroy {
     );
   }
 
-  fetchProductOnTimeout(filtersFormValues) {
-    clearTimeout(this.fetchProductsTimeout);
-    // check if it can be replaced with an observable
-    this.fetchProductsTimeout = setTimeout(() => {
-      this.fetchFilteredProducts(filtersFormValues);
-    }, 1000);
+  costValidator(group: FormGroup): { [s: string]: boolean } | null {
+    if (+group.value.cost_gte > +group.value.cost_lte) {
+      group.controls.cost_lte.setErrors({ lesser: "lesser then 'Price from'" });
+      group.controls.cost_gte.setErrors({ greater: "greater then 'Price to'" });
+      return { notvalid: true };
+    }
+    group.controls.cost_lte.setErrors(null);
+    group.controls.cost_gte.setErrors(null);
+    return null;
   }
 }

@@ -10,7 +10,7 @@
     type="text"
     placeholder="Filter by text..."
     formControlName="q"
-    (keyup.enter)="onApplyFilters()"
+    (keyup.enter)="filtersForm.valid ? onApplyFilters() : null"
   />
   <div id="filters__content-id" class="filters__content" *ngIf="showFilters">
     <form
@@ -38,7 +38,7 @@
               type="radio"
               id="{{ gender }}"
               formControlName="gender"
-              [value]="gender"
+              [value]="gender === 'None' ? '' : gender"
             />
             <label class="h5 radio__label" for="{{ gender }}">{{
               gender
@@ -59,18 +59,36 @@
           }}</option>
         </select>
       </div>
-      <!-- <div class="filters__form-field">
-        <p>Price Range</p>
-        <section class="range-slider">
-          <input value="500" min="500" max="50000" step="500" type="range">
-          <input value="50000" min="500" max="50000" step="500" type="range">
-        </section>
-      </div> -->
-      <!-- <div class="filters__form-field filters__form-field--noborder">
-        <input type="range" name="price" id="price">
-        <label class="checkbox__label" for="price">Price:</label>
-      </div> -->
       <div class="filters__field-wrapper">
+        <p><label class="h3" for="rating">Rating:</label></p>
+        <select
+          class="h5 select select__arrow select__arrow--white select--green"
+          id="rating"
+          formControlName="rating"
+        >
+          <option [value]="''">None</option>
+          <option *ngFor="let value of [0, 1, 2, 3, 4, 5]" [value]="value">{{
+            value
+          }}</option>
+        </select>
+      </div>
+      <div class="filters__field-wrapper">
+        <p class="h3">Price from:</p>
+        <input
+          type="number"
+          class="h5 textinput filters--error"
+          formControlName="cost_gte"
+        />
+      </div>
+      <div class="filters__field-wrapper">
+        <p class="h3">Price to:</p>
+        <input
+          type="number"
+          class="h5 textinput filters--error"
+          formControlName="cost_lte"
+        />
+      </div>
+      <div class="filters__field-wrapper filters__field-wrapper--buttons">
         <button
           type="button"
           class="h5 button button--secondary button--regular"
@@ -82,11 +100,13 @@
           type="button"
           class="h5 button button--primary button--regular"
           (click)="onApplyFilters()"
+          [disabled]="filtersForm.invalid"
         >
           Apply filters
         </button>
       </div>
       <button
+        *ngIf="filtersForm.valid"
         type="submit"
         class="h5 button button--primary button--regular"
         style="display: none"

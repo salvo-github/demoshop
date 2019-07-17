@@ -33,6 +33,15 @@
   border-bottom: unset;
 }
 
+.filters__field-wrapper--buttons {
+  display: flex;
+  justify-content: center;
+}
+
+.filters__field-wrapper .textinput.ng-invalid {
+  outline: 0.13em solid var(--border-error);
+}
+
 .cards {
   display: flex;
   flex-wrap: wrap;
