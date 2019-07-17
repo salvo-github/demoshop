@@ -1,1 +1,116 @@
-<p>products-filter works!</p>
+<section class="filters" [formGroup]="filtersForm">
+  <button
+    class="h5 button button--primary button--regular"
+    (click)="showFilters = !showFilters"
+  >
+    Filter options
+  </button>
+  <input
+    class="h5 textinput textinput-icon filters__icon--fbt textinput--narrower"
+    type="text"
+    placeholder="Filter by text..."
+    formControlName="q"
+    (keyup.enter)="filtersForm.valid ? onApplyFilters() : null"
+  />
+  <div id="filters__content-id" class="filters__content" *ngIf="showFilters">
+    <form
+      id="filters__form_id"
+      class="form form__filters"
+      [formGroup]="filtersForm"
+      (ngSubmit)="onApplyFilters()"
+    >
+      <div class="filters__field-wrapper">
+        <p class="h3">Only available:</p>
+        <input
+          class="h5 tgl tgl-light"
+          type="checkbox"
+          id="availability"
+          formControlName="availability"
+        />
+        <label class="h5 tgl-btn" for="availability"></label>
+      </div>
+      <div class="filters__field-wrapper">
+        <p class="h3">Gender:</p>
+        <ul class="radio__wrapper">
+          <li *ngFor="let gender of genders">
+            <input
+              class="radio"
+              type="radio"
+              id="{{ gender }}"
+              formControlName="gender"
+              [value]="gender === 'None' ? '' : gender"
+            />
+            <label class="h5 radio__label" for="{{ gender }}">{{
+              gender
+            }}</label>
+          </li>
+        </ul>
+      </div>
+      <div class="filters__field-wrapper">
+        <p><label class="h3" for="category">Category:</label></p>
+        <select
+          class="h5 select select__arrow select__arrow--white select--green"
+          formControlName="categoryId"
+          id="category"
+        >
+          <option [value]="''">None</option>
+          <option *ngFor="let category of categories" [value]="+category.id">{{
+            category.name
+          }}</option>
+        </select>
+      </div>
+      <div class="filters__field-wrapper">
+        <p><label class="h3" for="rating">Rating:</label></p>
+        <select
+          class="h5 select select__arrow select__arrow--white select--green"
+          id="rating"
+          formControlName="rating"
+        >
+          <option [value]="''">None</option>
+          <option *ngFor="let value of [0, 1, 2, 3, 4, 5]" [value]="value">{{
+            value
+          }}</option>
+        </select>
+      </div>
+      <div class="filters__field-wrapper">
+        <p class="h3">Price from:</p>
+        <input
+          type="number"
+          class="h5 textinput filters--error"
+          formControlName="cost_gte"
+        />
+      </div>
+      <div class="filters__field-wrapper">
+        <p class="h3">Price to:</p>
+        <input
+          type="number"
+          class="h5 textinput filters--error"
+          formControlName="cost_lte"
+        />
+      </div>
+      <div class="filters__field-wrapper filters__field-wrapper--buttons">
+        <button
+          type="button"
+          class="h5 button button--secondary button--regular"
+          (click)="onResetFilters()"
+        >
+          Reset filters
+        </button>
+        <button
+          type="button"
+          class="h5 button button--primary button--regular"
+          (click)="onApplyFilters()"
+          [disabled]="filtersForm.invalid"
+        >
+          Apply filters
+        </button>
+      </div>
+      <button
+        *ngIf="filtersForm.valid"
+        type="submit"
+        class="h5 button button--primary button--regular"
+        style="display: none"
+      ></button>
+    </form>
+  </div>
+</section>

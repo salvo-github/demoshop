@@ -1,0 +1,47 @@
+.filters {
+  position: relative;
+  padding: 0.94em 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.filters__icon--fbt {
+  background-image: url(src/assets/img/search.svg);
+}
+
+.textinput--narrower {
+  width: 14.69em;
+}
+
+.filters__content {
+  position: absolute;
+  z-index: 1;
+  padding: 0 1.25em;
+  margin: 2.94em 0;
+  width: 100%;
+  border-radius: 0.94em;
+  background-color: var(--default-white);
+  box-shadow: 0 0.13em 0.25em 0 rgba(0, 0, 0, 0.5);
+}
+
+.filters__field-wrapper {
+  padding: 1.25em 0;
+  border-bottom: 0.03em solid var(--theme-seconday-color);
+}
+
+.filters .filters__field-wrapper:last-child {
+  border-bottom: unset;
+}
+
+.filters__field-wrapper--buttons {
+  display: flex;
+  justify-content: center;
+}
+
+.filters__field-wrapper .textinput.ng-invalid {
+  outline: 0.13em solid var(--border-error);
+}
+
+.filters .button {
+  margin: 0 0.94em;
+}
