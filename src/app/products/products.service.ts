@@ -97,6 +97,9 @@ export class ProductsService {
   }
 
   saveProduct(product: Product) {
+    if (product.id === undefined) {
+      return this.http.post(`http://localhost:3000/api/products`, product);
+    }
     return this.http.patch(
       `http://localhost:3000/api/products/${product.id}`,
       product

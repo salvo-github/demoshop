@@ -15,6 +15,7 @@ import { UserAuthInterceptorService } from './user/user-auth-interceptor.service
 import { ProductEditComponent } from './products/product-detail/product-edit/product-edit.component';
 import { ProductsFilterComponent } from './products/products-filter/products-filter.component';
 import { ProductDeleteComponent } from './products/product-detail/product-delete/product-delete.component';
+import { ProductBuyComponent } from './products/product-detail/product-buy/product-buy.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { ProductDeleteComponent } from './products/product-detail/product-delete
     LoginComponent,
     ProductEditComponent,
     ProductsFilterComponent,
-    ProductDeleteComponent
+    ProductDeleteComponent,
+    ProductBuyComponent
   ],
   imports: [
     BrowserModule,

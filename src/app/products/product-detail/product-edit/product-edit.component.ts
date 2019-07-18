@@ -28,7 +28,7 @@ export class ProductEditComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.product = this.route.snapshot.data.product;
+    this.product = this.route.snapshot.data.product || new Product();
 
     this.editForm = new FormGroup({
       name: new FormControl(this.product.name, [Validators.required]),
@@ -66,8 +66,10 @@ export class ProductEditComponent implements OnInit {
       this.product,
       this.editForm.value
     );
-    this.productsService.saveProduct(editedProduct).subscribe((resp) => {
-      this.router.navigate(['../'], { relativeTo: this.route });
-    });
+    this.productsService
+      .saveProduct(editedProduct)
+      .subscribe((productResponse: Product) => {
+        this.router.navigate(['/product-detail', productResponse.id]);
+      });
   }
 }

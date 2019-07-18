@@ -1,5 +1,5 @@
 export class Product {
-  id: number;
+  id?: number;
   categoryId: number;
   cost: number;
   count: number;
@@ -11,7 +11,6 @@ export class Product {
   soldCount: number;
 
   constructor(
-    id: number = 0,
     categoryId: number = 0,
     cost: number = 0,
     count: number = 0,
@@ -22,7 +21,6 @@ export class Product {
     rating: number = 0,
     soldCount: number = 0
   ) {
-    this.id = id;
     this.categoryId = categoryId;
     this.cost = cost;
     this.count = count;
