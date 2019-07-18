@@ -1,7 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Product } from '../product.model';
 import { Router } from '@angular/router';
+import { RouteRef } from 'src/app/route.model';
 import { UserService } from 'src/app/user/user.service';
+import { Product } from '../product.model';
 
 @Component({
   selector: 'app-product-card',
@@ -16,6 +17,8 @@ export class ProductCardComponent implements OnInit {
   @Input() parentComponent: string;
   isCurrentUserAdmin = false;
   productAvailability: string;
+  onBuying = false;
+  RouteRef = RouteRef;
 
   constructor(private router: Router, private userService: UserService) {}
 

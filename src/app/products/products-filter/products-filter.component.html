@@ -1,17 +1,19 @@
 <section class="filters" [formGroup]="filtersForm">
-  <button
-    class="h5 button button--primary button--regular"
-    (click)="showFilters = !showFilters"
-  >
-    Filter options
-  </button>
-  <input
-    class="h5 textinput textinput-icon filters__icon--fbt textinput--narrower"
-    type="text"
-    placeholder="Filter by text..."
-    formControlName="q"
-    (keyup.enter)="filtersForm.valid ? onApplyFilters() : null"
-  />
+  <div>
+    <button
+      class="h5 button button--primary button--regular"
+      (click)="showFilters = !showFilters"
+    >
+      Filter options
+    </button>
+    <input
+      class="h5 textinput textinput-icon filters__icon--fbt textinput--narrower"
+      type="text"
+      placeholder="Filter by text..."
+      formControlName="q"
+      (keyup.enter)="filtersForm.valid ? onApplyFilters() : null"
+    />
+  </div>
   <div class="filters__content" *ngIf="showFilters">
     <form
       id="filters__form_id"

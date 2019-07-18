@@ -1,1 +1,23 @@
-<p>product-buy works!</p>
+<div class="modal">
+  <div class="modal__header">
+    <h2 class="h2--bigger h--bold h--caption modal__title--elipsis">
+      Thank you!
+    </h2>
+  </div>
+  <div class="modal__body">
+    <div class="modal__main">
+      <p class="h1 h--caption h--center">
+        You successfully purchased this item.
+      </p>
+    </div>
+    <div class="modal__cta">
+      <button
+        class="button button--primary button--big"
+        (click)="afterBuying()"
+      >
+        Continue shopping
+      </button>
+    </div>
+  </div>
+</div>
+<div class="modal-overlay"></div>

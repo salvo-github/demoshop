@@ -15,7 +15,7 @@ export class LoginGuardService implements CanActivate {
     const currentUserSessionToken = this.userService.getCurrentUserSessionToken();
 
     if (currentUserSessionToken) {
-      this.router.navigate(['/products-list']);
+      this.router.navigate(['/']);
       return false;
     }
 

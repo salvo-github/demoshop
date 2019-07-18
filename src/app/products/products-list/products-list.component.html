@@ -1,4 +1,13 @@
-<app-products-filter></app-products-filter>
+<nav class="product-list__nav">
+  <button
+    class="h5 button button--primary button--regular"
+    *ngIf="isCurrentUserAdmin"
+    [routerLink]="['new']"
+  >
+    Add product
+  </button>
+  <app-products-filter></app-products-filter>
+</nav>
 <div class="cards" *ngIf="products && products.length; else noProducts">
   <div class="main__card" *ngFor="let product of products">
     <app-product-card

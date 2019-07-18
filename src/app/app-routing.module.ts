@@ -12,17 +12,18 @@ import { LoginComponent } from './user/login/login.component';
 import { ProductDeleteComponent } from './products/product-detail/product-delete/product-delete.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/products-list', pathMatch: 'full' },
+  { path: '', redirectTo: '/products', pathMatch: 'full' },
   {
     path: 'login',
     component: LoginComponent,
     canActivate: [LoginGuardService]
   },
   {
-    path: 'products-list',
+    path: 'products',
     component: ProductsListComponent,
     canActivate: [ProductsGuardService],
     resolve: { products: ProductsListResolver },
+    canActivateChild: [ProductsGuardService],
     children: [
       {
         path: 'new',
@@ -31,7 +32,7 @@ const routes: Routes = [
     ]
   },
   {
-    path: 'product-detail/:id',
+    path: 'product/:id',
     component: ProductDetailComponent,
     canActivate: [ProductsGuardService],
     resolve: { product: ProductDetailResolver },

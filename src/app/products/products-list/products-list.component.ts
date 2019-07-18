@@ -3,6 +3,7 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { Product } from '../product.model';
 import { ProductsService } from '../products.service';
+import { UserService } from 'src/app/user/user.service';
 
 @Component({
   selector: 'app-products-list',
@@ -19,9 +20,12 @@ export class ProductsListComponent implements OnInit, OnDestroy {
   paginationLinksSubscription;
   paginationLinks: { [s: string]: string };
 
+  isCurrentUserAdmin = false;
+
   constructor(
     private route: ActivatedRoute,
-    private productsService: ProductsService
+    private productsService: ProductsService,
+    private userService: UserService
   ) {}
 
   ngOnInit() {
@@ -39,6 +43,8 @@ export class ProductsListComponent implements OnInit, OnDestroy {
     });
 
     this.getPaginationLinks();
+
+    this.getCurrentUserRole();
   }
 
   ngOnDestroy() {
@@ -64,5 +70,9 @@ export class ProductsListComponent implements OnInit, OnDestroy {
         this.paginationLinks = paginationLinks;
       }
     );
+  }
+
+  getCurrentUserRole(): void {
+    this.isCurrentUserAdmin = this.userService.isCurrentUserAdmin();
   }
 }

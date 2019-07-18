@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from '../../product.model';
 import { ProductsService } from '../../products.service';
+import { RouteRef } from 'src/app/route.model';
 
 @Component({
   selector: 'app-product-delete',
@@ -10,6 +11,7 @@ import { ProductsService } from '../../products.service';
 })
 export class ProductDeleteComponent implements OnInit {
   product: Product;
+  RouteRef = RouteRef;
 
   constructor(
     private route: ActivatedRoute,
@@ -23,7 +25,7 @@ export class ProductDeleteComponent implements OnInit {
 
   onDelete() {
     this.productService.deleteProduct(this.product).subscribe((resp) => {
-      this.router.navigate(['/products-list']);
+      this.router.navigate([RouteRef.products]);
     });
   }
 }

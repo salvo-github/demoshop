@@ -3,7 +3,7 @@
   [ngClass]="{ 'card--pdp': parentComponent === 'detail' }"
   class="card"
   [routerLink]="
-    parentComponent === 'list' ? ['/product-detail', product.id] : []
+    parentComponent === 'list' ? [RouteRef.product, product.id] : []
   "
 >
   <figure class="card__figure">
@@ -43,7 +43,7 @@
       <p class="h1 h--bold  card__info-price">{{ product.cost }}</p>
       <button
         class="button button--primary button--regular"
-        [routerLink]="['/product-detail/', product.id]"
+        [routerLink]="['/product/', product.id]"
       >
         <span class="h5">Show More</span>
       </button>
@@ -58,11 +58,16 @@
         </p>
         <button
           class="button button--primary button--regular"
-          onclick="return toggleDisplay('modal__buy');"
+          (click)="onBuying = !onBuying"
         >
           <span class="h5">Buy</span>
         </button>
       </div>
+      <app-product-buy
+        *ngIf="onBuying"
+        [product]="product"
+        (closeModal)="onBuying = !onBuying"
+      ></app-product-buy>
     </ng-template>
   </section>
 </article>

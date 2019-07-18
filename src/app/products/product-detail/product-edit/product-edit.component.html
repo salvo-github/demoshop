@@ -86,9 +86,9 @@
               formControlName="rating"
             >
               <option
-                *ngFor="let count of [1, 1, 1, 1, 1, 1]; let i = index"
-                [value]="i"
-                >{{ i }}</option
+                *ngFor="let rating of [0, 1, 2, 3, 4, 5]"
+                [value]="rating"
+                >{{ rating }}</option
               >
             </select>
           </div>
@@ -96,7 +96,7 @@
         <div class="modal__cta">
           <button
             class="button button--secondary button--big"
-            [routerLink]="['/product-detail', product.id]"
+            [routerLink]="['../']"
           >
             Cancel
           </button>
