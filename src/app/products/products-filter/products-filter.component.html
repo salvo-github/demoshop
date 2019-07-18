@@ -12,7 +12,7 @@
     formControlName="q"
     (keyup.enter)="filtersForm.valid ? onApplyFilters() : null"
   />
-  <div id="filters__content-id" class="filters__content" *ngIf="showFilters">
+  <div class="filters__content" *ngIf="showFilters">
     <form
       id="filters__form_id"
       class="form form__filters"

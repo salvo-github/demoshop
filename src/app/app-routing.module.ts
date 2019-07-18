@@ -9,6 +9,7 @@ import { ProductsListResolver } from './products/products-list/products-list-res
 import { ProductsListComponent } from './products/products-list/products-list.component';
 import { LoginGuardService } from './user/login/login-guard.service';
 import { LoginComponent } from './user/login/login.component';
+import { ProductDeleteComponent } from './products/product-detail/product-delete/product-delete.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/products-list', pathMatch: 'full' },
@@ -21,7 +22,13 @@ const routes: Routes = [
     path: 'products-list',
     component: ProductsListComponent,
     canActivate: [ProductsGuardService],
-    resolve: { products: ProductsListResolver }
+    resolve: { products: ProductsListResolver },
+    children: [
+      {
+        path: 'new',
+        component: ProductEditComponent
+      }
+    ]
   },
   {
     path: 'product-detail/:id',
@@ -33,6 +40,11 @@ const routes: Routes = [
       {
         path: 'edit',
         component: ProductEditComponent,
+        resolve: { product: ProductDetailResolver }
+      },
+      {
+        path: 'delete',
+        component: ProductDeleteComponent,
         resolve: { product: ProductDetailResolver }
       }
     ]

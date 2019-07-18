@@ -14,6 +14,7 @@ import { LoginComponent } from './user/login/login.component';
 import { UserAuthInterceptorService } from './user/user-auth-interceptor.service';
 import { ProductEditComponent } from './products/product-detail/product-edit/product-edit.component';
 import { ProductsFilterComponent } from './products/products-filter/products-filter.component';
+import { ProductDeleteComponent } from './products/product-detail/product-delete/product-delete.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { ProductsFilterComponent } from './products/products-filter/products-fil
     PageNotFoundComponent,
     LoginComponent,
     ProductEditComponent,
-    ProductsFilterComponent
+    ProductsFilterComponent,
+    ProductDeleteComponent
   ],
   imports: [
     BrowserModule,

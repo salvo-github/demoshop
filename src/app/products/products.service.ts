@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable, Subject, BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { Category } from './category.model';
 import { Product } from './product.model';
@@ -26,6 +26,7 @@ export class ProductsService {
       .get<Product>(`http://localhost:3000/api/products/${id}`)
       .pipe(
         tap((value) => {
+          // when the user is in edit page che current product will be referenced
           this.currentProduct = value;
         })
       );
@@ -102,6 +103,20 @@ export class ProductsService {
     );
   }
 
+  deleteProduct(product: Product) {
+    return this.http.delete(`http://localhost:3000/api/products/${product.id}`);
+  }
+
+  // This function recover the pagination link set by the server in the 'Link' property
+  // and add every link in the property object 'paginationLinks'
+  //
+  // The server return a single string with for links for pagination: prev, next, first, last
+  // eg:
+  // <http://localhost:3000/api/products?_page=1&_limit=5&_page=1&_limit=5&_page=1&_limit=5&_page=1&_limit=5>; rel="first", <http://loc...
+  //
+  // the method use a reg exp to take the link inside '<' '>'
+  //
+  // the link mapping (prev, next, ecc) are inside the paginationLinks object
   setPaginationLinks(headerLink: string) {
     const links = headerLink.split(', ');
 

@@ -58,17 +58,17 @@
     border-top: 0.063em solid var(--border-light);
   }
 
-  .modal:not(#modal_login) {
+  .modal:not(.modal_login) {
     width: 45.63em;
   }
 
-  #modal__edit .form {
+  .modal__edit .form {
     display: flex;
     flex-flow: wrap row;
     justify-content: space-between;
   }
 
-  #modal__edit .column {
+  .modal__edit .column {
     width: 48%;
   }
 
