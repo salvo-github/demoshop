@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { Product } from '../product.model';
 import { ProductsService } from '../products.service';
 import { UserService } from 'src/app/user/user.service';
@@ -19,6 +19,8 @@ export class ProductsListComponent implements OnInit, OnDestroy {
   paginationLinksSubject: BehaviorSubject<{ [s: string]: string }>;
   paginationLinksSubscription;
   paginationLinks: { [s: string]: string };
+
+  onDeleteSubjectSubscription;
 
   isCurrentUserAdmin = false;
 
@@ -45,10 +47,25 @@ export class ProductsListComponent implements OnInit, OnDestroy {
     this.getPaginationLinks();
 
     this.getCurrentUserRole();
+
+    this.onDeleteSubjectSubscription = this.productsService
+      .getOnDeleteSubject()
+      .subscribe((deletedProduct: Product) => {
+        console.log('onsubscription');
+
+        this.products = this.products.filter((product: Product) => {
+          if (product.id === deletedProduct.id) {
+            return false;
+          }
+          return true;
+        });
+      });
   }
 
   ngOnDestroy() {
+    console.log('ondestroy');
     this.paginationLinksSubscription.unsubscribe();
+    this.onDeleteSubjectSubscription.unsubscribe();
   }
 
   fetchFilteredProducts(

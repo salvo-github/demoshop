@@ -26,6 +26,7 @@ export class ProductDeleteComponent implements OnInit {
   onDelete() {
     this.productService.deleteProduct(this.product).subscribe((resp) => {
       this.router.navigate([RoutesRef.products]);
+      this.productService.getOnDeleteSubject().next(this.product);
     });
   }
 
@@ -36,11 +37,5 @@ export class ProductDeleteComponent implements OnInit {
       }
     );
     this.router.navigate(backUrl);
-    // console.log(this.route.snapshot.url.toString());
-    // console.log(this.route.snapshot.url);
-    // if (this.route.snapshot.url.toString().includes(RoutesRef.products)) {
-    //   this.router.navigate(['../..']);
-    // }
-    // this.router.navigate(['..']);
   }
 }

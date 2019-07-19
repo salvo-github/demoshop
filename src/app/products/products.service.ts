@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { Category } from './category.model';
 import { Product } from './product.model';
@@ -18,6 +18,8 @@ export class ProductsService {
   private paginationLinksSubject = new BehaviorSubject<{ [s: string]: string }>(
     this.paginationLinks
   );
+
+  private onDeleteSubject: Subject<Product> = new Subject<Product>();
 
   constructor(private http: HttpClient, private route: ActivatedRoute) {}
 
@@ -145,5 +147,9 @@ export class ProductsService {
 
   getPaginationLinksSubject() {
     return this.paginationLinksSubject;
+  }
+
+  getOnDeleteSubject() {
+    return this.onDeleteSubject;
   }
 }
