@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { RoutesRef } from 'src/app/routes-ref.model';
 import { UserService } from 'src/app/user/user.service';
 import { Product } from '../product.model';
+import { ProductsService } from '../products.service';
 
 @Component({
   selector: 'app-product-card',
@@ -19,7 +19,10 @@ export class ProductCardComponent implements OnInit {
   onBuying = false;
   RoutesRef = RoutesRef;
 
-  constructor(private router: Router, private userService: UserService) {}
+  constructor(
+    private userService: UserService,
+    private productService: ProductsService
+  ) {}
 
   ngOnInit() {
     this.getCurrentUserRole();
@@ -32,5 +35,11 @@ export class ProductCardComponent implements OnInit {
   getProductAvailability(): string {
     const productQuantity = this.product.count - this.product.soldCount;
     return productQuantity > 0 ? `${productQuantity} items left` : 'Sold Out';
+  }
+
+  // used to delete a product from product list page
+  onDeleteHandler($event) {
+    this.productService.setCurrentProduct(this.product);
+    $event.stopPropagation();
   }
 }

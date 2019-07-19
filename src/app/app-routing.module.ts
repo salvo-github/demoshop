@@ -28,6 +28,11 @@ const routes: Routes = [
       {
         path: 'new',
         component: ProductEditComponent
+      },
+      {
+        path: 'delete/:id',
+        component: ProductDeleteComponent,
+        resolve: { product: ProductDetailResolver }
       }
     ]
   },

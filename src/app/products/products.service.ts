@@ -32,6 +32,10 @@ export class ProductsService {
       );
   }
 
+  setCurrentProduct(product: Product) {
+    this.currentProduct = product;
+  }
+
   getCurrentProduct() {
     return this.currentProduct;
   }

@@ -11,10 +11,7 @@
       </p>
     </div>
     <div class="modal__cta">
-      <button
-        class="button button--secondary button--big"
-        [routerLink]="['../']"
-      >
+      <button class="button button--secondary button--big" (click)="onCancel()">
         Cancel
       </button>
       <button class="button button--primary button--big" (click)="onDelete()">

@@ -45,8 +45,8 @@
           <a
             class="card__admin-action--link"
             style="cursor: pointer;"
-            (click)="$event.stopPropagation()"
-            [routerLink]="['delete']"
+            (click)="onDeleteHandler($event)"
+            [routerLink]="['delete', product.id]"
             >delete</a
           >
           this product.
