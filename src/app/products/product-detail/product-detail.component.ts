@@ -34,6 +34,7 @@ export class ProductDetailComponent implements OnInit, DoCheck {
     this.product = this.route.snapshot.data.product;
   }
 
+  // update the cateogry after a product is edited
   ngDoCheck() {
     if (
       this.category === undefined ||

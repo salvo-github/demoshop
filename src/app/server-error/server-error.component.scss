@@ -1,4 +1,4 @@
-.page-not-found {
+.server-error {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -7,6 +7,6 @@
   height: 100%;
 }
 
-.page-not-found__message {
+.server-error__message {
   font-size: 11em;
 }

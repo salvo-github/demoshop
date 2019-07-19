@@ -16,6 +16,8 @@ import { ProductEditComponent } from './products/product-detail/product-edit/pro
 import { ProductsFilterComponent } from './products/products-filter/products-filter.component';
 import { ProductDeleteComponent } from './products/product-detail/product-delete/product-delete.component';
 import { ProductBuyComponent } from './products/product-detail/product-buy/product-buy.component';
+import { ServerErrorComponent } from './server-error/server-error.component';
+import { ErrorInterceptorService } from './error-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,8 @@ import { ProductBuyComponent } from './products/product-detail/product-buy/produ
     ProductEditComponent,
     ProductsFilterComponent,
     ProductDeleteComponent,
-    ProductBuyComponent
+    ProductBuyComponent,
+    ServerErrorComponent
   ],
   imports: [
     BrowserModule,
@@ -39,6 +42,11 @@ import { ProductBuyComponent } from './products/product-detail/product-buy/produ
     ReactiveFormsModule
   ],
   providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorInterceptorService,
+      multi: true
+    },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: UserAuthInterceptorService,

@@ -10,6 +10,7 @@ import { ProductsListComponent } from './products/products-list/products-list.co
 import { LoginGuardService } from './user/login/login-guard.service';
 import { LoginComponent } from './user/login/login.component';
 import { ProductDeleteComponent } from './products/product-detail/product-delete/product-delete.component';
+import { ServerErrorComponent } from './server-error/server-error.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/products', pathMatch: 'full' },
@@ -55,6 +56,7 @@ const routes: Routes = [
       }
     ]
   },
+  { path: 'server-error', component: ServerErrorComponent },
   { path: 'page-not-found', component: PageNotFoundComponent },
   { path: '**', component: PageNotFoundComponent }
 ];

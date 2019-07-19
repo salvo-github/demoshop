@@ -7,9 +7,10 @@ import {
   UrlSegment,
   UrlTree
 } from '@angular/router';
-import { Observable, of } from 'rxjs';
+import { Observable, of, EMPTY } from 'rxjs';
 import { catchError, map, take, tap } from 'rxjs/operators';
 import { UserService } from '../user/user.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable({ providedIn: 'root' })
 export class ProductsGuardService implements CanActivate {
@@ -24,10 +25,11 @@ export class ProductsGuardService implements CanActivate {
         return true;
       }),
       catchError((err) => {
-        if (!err.status || err.status === 401) {
+        if (err instanceof HttpErrorResponse && err.status === 401) {
           this.userService.logout();
-          return of(this.router.createUrlTree(['/login']));
+          this.router.navigate(['/login']);
         }
+        return EMPTY;
       })
     );
   }

@@ -12,13 +12,15 @@ export class UserAuthInterceptorService implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
     if (req.url.indexOf('/login') === -1) {
-      const sessionTokenId = this.userService.getSessionTokenId();
       const currentUserSessionToken: string = this.userService.getCurrentUserSessionToken();
 
-      const modfiedReq = req.clone({
-        headers: req.headers.append(sessionTokenId, currentUserSessionToken)
-      });
-      return next.handle(modfiedReq);
+      // https://stackoverflow.com/questions/50213883/angular-typeerror-cannot-read-property-length-of-null-in-promise-subscribe
+      if (currentUserSessionToken !== null) {
+        const sessionTokenId = this.userService.getSessionTokenId();
+        req = req.clone({
+          headers: req.headers.append(sessionTokenId, currentUserSessionToken)
+        });
+      }
     }
     return next.handle(req);
   }
