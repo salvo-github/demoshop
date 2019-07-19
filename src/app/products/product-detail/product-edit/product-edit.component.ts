@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Category } from '../../category.model';
 import { Product } from '../../product.model';
 import { ProductsService } from '../../products.service';
-import { RouteRef } from 'src/app/route.model';
+import { RoutesRef } from 'src/app/routes-ref.model';
 
 @Component({
   selector: 'app-product-edit',
@@ -70,7 +70,7 @@ export class ProductEditComponent implements OnInit {
     this.productsService
       .saveProduct(editedProduct)
       .subscribe((productResponse: Product) => {
-        this.router.navigate([RouteRef.product, productResponse.id]);
+        this.router.navigate([RoutesRef.product, productResponse.id]);
       });
   }
 }

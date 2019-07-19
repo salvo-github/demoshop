@@ -10,12 +10,19 @@ import { ProductsService } from '../../products.service';
 export class ProductBuyComponent implements OnInit {
   @Input() product: Product;
   @Output() closeModal = new EventEmitter<boolean>();
+  selled = false;
+  onBuyingMessage = 'The Product is out of stock';
 
   constructor(private productService: ProductsService) {}
 
   ngOnInit() {
-    this.product.soldCount += 1;
-    this.productService.saveProduct(this.product);
+    if (this.product.count - this.product.soldCount > 0) {
+      this.product.soldCount += 1;
+      this.productService.saveProduct(this.product).subscribe(() => {
+        this.selled = true;
+        this.onBuyingMessage = 'You successfully purchased this item.';
+      });
+    }
   }
 
   afterBuying() {

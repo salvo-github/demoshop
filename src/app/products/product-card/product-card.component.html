@@ -3,7 +3,7 @@
   [ngClass]="{ 'card--pdp': parentComponent === 'detail' }"
   class="card"
   [routerLink]="
-    parentComponent === 'list' ? [RouteRef.product, product.id] : []
+    parentComponent === 'list' ? [RoutesRef.product, product.id] : []
   "
 >
   <figure class="card__figure">
@@ -38,12 +38,26 @@
           them.
         </p>
       </div>
+      <div *ngIf="parentComponent === 'list' && isCurrentUserAdmin">
+        <br class="h3" />
+        <p class="h3 card__admin-action">
+          You can
+          <a
+            class="card__admin-action--link"
+            style="cursor: pointer;"
+            (click)="$event.stopPropagation()"
+            [routerLink]="['delete']"
+            >delete</a
+          >
+          this product.
+        </p>
+      </div>
     </div>
     <div class="card__cta" *ngIf="parentComponent === 'list'; else pdpTemplate">
       <p class="h1 h--bold  card__info-price">{{ product.cost }}</p>
       <button
         class="button button--primary button--regular"
-        [routerLink]="['/product/', product.id]"
+        [routerLink]="[RoutesRef.product, product.id]"
       >
         <span class="h5">Show More</span>
       </button>
@@ -53,7 +67,7 @@
         <p class="h1 h--bold  card__info-price">
           {{ product.cost
           }}<span class="h--lighter h--smaller card__info-price--extra">
-            ({{ productAvailability }})</span
+            ({{ getProductAvailability() }})</span
           >
         </p>
         <button

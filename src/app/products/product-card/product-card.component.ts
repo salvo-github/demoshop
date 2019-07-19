@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { RouteRef } from 'src/app/route.model';
+import { RoutesRef } from 'src/app/routes-ref.model';
 import { UserService } from 'src/app/user/user.service';
 import { Product } from '../product.model';
 
@@ -16,25 +16,21 @@ export class ProductCardComponent implements OnInit {
   @Input() product: Product;
   @Input() parentComponent: string;
   isCurrentUserAdmin = false;
-  productAvailability: string;
   onBuying = false;
-  RouteRef = RouteRef;
+  RoutesRef = RoutesRef;
 
   constructor(private router: Router, private userService: UserService) {}
 
   ngOnInit() {
     this.getCurrentUserRole();
-
-    this.setProductAvailability();
   }
 
   getCurrentUserRole(): void {
     this.isCurrentUserAdmin = this.userService.isCurrentUserAdmin();
   }
 
-  setProductAvailability(): void {
+  getProductAvailability(): string {
     const productQuantity = this.product.count - this.product.soldCount;
-    this.productAvailability =
-      productQuantity > 0 ? `${productQuantity} items left` : 'Sold Out';
+    return productQuantity > 0 ? `${productQuantity} items left` : 'Sold Out';
   }
 }
