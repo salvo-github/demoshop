@@ -5,6 +5,11 @@
   justify-content: space-between;
 }
 
+.filters__buttons {
+  display: flex;
+  align-items: center;
+}
+
 .filters__icon--fbt {
   background-image: url(src/assets/img/search.svg);
 }

@@ -51,8 +51,6 @@ export class ProductsListComponent implements OnInit, OnDestroy {
     this.onDeleteSubjectSubscription = this.productsService
       .getOnDeleteSubject()
       .subscribe((deletedProduct: Product) => {
-        console.log('onsubscription');
-
         this.products = this.products.filter((product: Product) => {
           if (product.id === deletedProduct.id) {
             return false;
@@ -63,7 +61,6 @@ export class ProductsListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    console.log('ondestroy');
     this.paginationLinksSubscription.unsubscribe();
     this.onDeleteSubjectSubscription.unsubscribe();
   }
