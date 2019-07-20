@@ -2,7 +2,7 @@
   background-image: url(../../../assets/img/login-inactive.svg);
 }
 
-.login__icon--username.ng-invalid.ng-touched {
+.login__icon--username.ng-invalid.ng-touched:not(:focus) {
   background-image: url(../../../assets/img/login-invalid.svg);
 }
 
