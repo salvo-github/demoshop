@@ -25,8 +25,8 @@ export class ProductsFilterComponent implements OnInit {
     availability: false,
     gender: '',
     categoryId: '',
-    cost_gte: '',
-    cost_lte: '',
+    cost_gte: null,
+    cost_lte: null,
     rating: '',
     // q: api param for full text search
     q: null
@@ -114,9 +114,17 @@ export class ProductsFilterComponent implements OnInit {
   }
 
   costValidator(group: FormGroup): { [s: string]: boolean } | null {
-    if (+group.value.cost_gte > +group.value.cost_lte) {
-      group.controls.cost_lte.setErrors({ lesser: 'lesser then "Price from"' });
-      group.controls.cost_gte.setErrors({ greater: 'greater then "Price to"' });
+    if (
+      group.value.cost_lte !== null &&
+      group.value.cost_gte !== null &&
+      +group.value.cost_gte > +group.value.cost_lte
+    ) {
+      group.controls.cost_gte.setErrors({
+        greater: '"Price from" cannot be greater then "Price to"'
+      });
+      group.controls.cost_lte.setErrors({
+        lesser: '"Price to" cannot be lesser then "Price from"'
+      });
       return { notvalid: true };
     }
     group.controls.cost_lte.setErrors(null);

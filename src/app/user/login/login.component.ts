@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../user.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
+import { throwError } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -38,9 +40,13 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['/']);
       },
       (err) => {
-        this.loginForm.reset();
-        this.loginForm.markAllAsTouched();
-        this.isSubmitted = true;
+        if (err instanceof HttpErrorResponse && err.status === 400) {
+          this.loginForm.reset();
+          this.loginForm.markAllAsTouched();
+          this.isSubmitted = true;
+        } else {
+          return throwError(err);
+        }
       }
     );
   }

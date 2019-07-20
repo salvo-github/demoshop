@@ -10,6 +10,6 @@
   background-image: url(../../../assets/img/password-inactive.svg);
 }
 
-.login__icon--password.ng-invalid.ng-touched {
+.login__icon--password.ng-invalid.ng-touched:not(:focus) {
   background-image: url(../../../assets/img/password-invalid.svg);
 }

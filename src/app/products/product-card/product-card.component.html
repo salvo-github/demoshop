@@ -67,12 +67,17 @@
         <p class="h1 h--bold  card__info-price">
           {{ product.cost
           }}<span class="h--lighter h--smaller card__info-price--extra">
-            ({{ getProductAvailability() }})</span
+            ({{
+              getProductAvailability() > 0
+                ? getProductAvailability() + ' items left'
+                : 'Sold Out'
+            }})</span
           >
         </p>
         <button
           class="button button--primary button--regular"
           (click)="onBuying = !onBuying"
+          [disabled]="getProductAvailability() < 1"
         >
           <span class="h5">Buy</span>
         </button>

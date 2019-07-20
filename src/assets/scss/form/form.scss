@@ -22,3 +22,7 @@
 .form__error-message {
   color: var(--border-error);
 }
+
+input:focus ~ .form__error-message {
+  display: none;
+}

@@ -15,6 +15,33 @@
             class="h5 textinput textinput-icon login__icon--username"
             formControlName="username"
           />
+          <p
+            class="h3 form__error-message"
+            *ngIf="
+              loginForm.get('username').touched &&
+              loginForm.get('username').hasError('minlength')
+            "
+          >
+            The username must be at least 3 letters
+          </p>
+          <p
+            class="h3 form__error-message"
+            *ngIf="
+              loginForm.get('username').touched &&
+              loginForm.get('username').hasError('required')
+            "
+          >
+            The username is required
+          </p>
+          <p
+            class="h3 form__error-message"
+            *ngIf="
+              loginForm.get('username').touched &&
+              loginForm.get('username').hasError('pattern')
+            "
+          >
+            The username must contain only English letters
+          </p>
         </div>
         <div class="form__field">
           <p><label class="h3" for="password">Your password::</label></p>
@@ -24,6 +51,15 @@
             class="h5 textinput textinput-icon login__icon--password"
             formControlName="password"
           />
+          <span
+            class="h3 form__error-message"
+            *ngIf="
+              loginForm.get('password').touched &&
+              loginForm.get('password').hasError('required')
+            "
+          >
+            The password is required
+          </span>
         </div>
         <div class="modal__cta">
           <span

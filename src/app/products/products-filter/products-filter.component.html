@@ -31,7 +31,7 @@
         />
         <label class="h5 tgl-btn" for="availability"></label>
       </div>
-      <div class="filters__field-wrapper">
+      <div class="filters__field-wrapper filters__field-wrapper__radiobutton">
         <p class="h3">Gender:</p>
         <ul class="radio__wrapper">
           <li *ngFor="let gender of genders">
@@ -78,17 +78,29 @@
         <p class="h3">Price from:</p>
         <input
           type="number"
-          class="h5 textinput filters--error"
+          class="h5 textinput filters__textinput"
           formControlName="cost_gte"
         />
+        <span
+          class="h3 form__error-message"
+          *ngIf="filtersForm.get('cost_gte').hasError('greater')"
+        >
+          {{ filtersForm.get('cost_gte').getError('greater') }}
+        </span>
       </div>
       <div class="filters__field-wrapper">
         <p class="h3">Price to:</p>
         <input
           type="number"
-          class="h5 textinput filters--error"
+          class="h5 textinput filters__textinput"
           formControlName="cost_lte"
         />
+        <span
+          class="h3 form__error-message"
+          *ngIf="filtersForm.get('cost_lte').hasError('lesser')"
+        >
+          {{ filtersForm.get('cost_lte').getError('lesser') }}
+        </span>
       </div>
       <div class="filters__field-wrapper filters__field-wrapper--buttons">
         <button

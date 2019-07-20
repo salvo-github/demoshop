@@ -32,9 +32,8 @@ export class ProductCardComponent implements OnInit {
     this.isCurrentUserAdmin = this.userService.isCurrentUserAdmin();
   }
 
-  getProductAvailability(): string {
-    const productQuantity = this.product.count - this.product.soldCount;
-    return productQuantity > 0 ? `${productQuantity} items left` : 'Sold Out';
+  getProductAvailability(): number {
+    return this.product.count - this.product.soldCount;
   }
 
   // used to delete a product from product list page

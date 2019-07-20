@@ -5,6 +5,10 @@
   justify-content: space-between;
 }
 
+.filters__textinput {
+  outline: 0.13em solid var(--border-focus);
+}
+
 .filters__buttons {
   display: flex;
   align-items: center;
@@ -43,7 +47,7 @@
   justify-content: center;
 }
 
-.filters__field-wrapper .textinput.ng-invalid {
+.filters__field-wrapper .textinput.ng-invalid:not(:focus) {
   outline: 0.13em solid var(--border-error);
 }
 

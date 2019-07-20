@@ -33,7 +33,16 @@
   }
 
   .filters__field-wrapper {
-    flex: 0 1 32%;
+    flex: 1 1 24%;
+    padding: 1em;
+  }
+
+  .filters__field-wrapper__radiobutton {
+    flex-basis: auto;
+  }
+
+  .filters__field-wrapper--buttons {
+    justify-content: flex-start;
   }
 
   .card--pdp.card {
