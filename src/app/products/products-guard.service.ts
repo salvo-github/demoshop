@@ -7,15 +7,18 @@ import {
   UrlSegment,
   UrlTree
 } from '@angular/router';
-import { Observable, of, EMPTY } from 'rxjs';
-import { catchError, map, take, tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { UserService } from '../user/user.service';
-import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable({ providedIn: 'root' })
 export class ProductsGuardService implements CanActivate {
   constructor(private userService: UserService, private router: Router) {}
 
+  /**
+   * @description
+   * If the token it's invalid for the server a 404 error will be throw and managed in @see ErrorInterceptorService
+   */
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
@@ -23,17 +26,14 @@ export class ProductsGuardService implements CanActivate {
     return this.userService.validateToken().pipe(
       map((resp) => {
         return true;
-      }),
-      catchError((err) => {
-        if (err instanceof HttpErrorResponse && err.status === 401) {
-          this.userService.logout();
-          this.router.navigate(['/login']);
-        }
-        return EMPTY;
       })
     );
   }
 
+  /**
+   * @description
+   * The user must be an administrator to continue navigation
+   */
   canActivateChild(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot

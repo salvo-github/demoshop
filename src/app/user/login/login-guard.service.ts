@@ -11,6 +11,10 @@ import { UserService } from '../user.service';
 export class LoginGuardService implements CanActivate {
   constructor(private userService: UserService, private router: Router) {}
 
+  /**
+   * @description
+   * If the session token for the current user exist he can't navigate to login page
+   */
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     const currentUserSessionToken = this.userService.getCurrentUserSessionToken();
 

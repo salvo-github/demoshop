@@ -23,31 +23,58 @@ export class ProductsService {
 
   constructor(private http: HttpClient, private route: ActivatedRoute) {}
 
+  /**
+   * @description
+   * Retrieve the product from the server and store it in [currentProduct]
+   * @param id the product id to fetch
+   */
   fetchProduct(id: number) {
     return this.http
       .get<Product>(`http://localhost:3000/api/products/${id}`)
       .pipe(
         tap((value) => {
-          // when the user is in edit page che current product will be referenced
-          this.currentProduct = value;
+          // when the user is in edit page the current product will be referenced
+          this.setCurrentProduct(value);
         })
       );
   }
 
+  /**
+   * @description
+   * When detail page it's loaded the current product it's saved
+   * (used to performe eg edit without retrieve the same product from the server)
+   * @param product the product to set
+   */
   setCurrentProduct(product: Product) {
     this.currentProduct = product;
   }
 
-  getCurrentProduct() {
+  /**
+   * @description
+   * Retrieve the current product without fetch it from the server
+   */
+  getCurrentProduct(): Product {
     return this.currentProduct;
   }
 
+  /**
+   * @description
+   * This method will retrieve the products from the server
+   *
+   * @param valuesForFiltering this object it's used to pass the params to the server and retrieve the filtered products
+   * @param url this param it's used for the pagination because the server in the response add the links
+   * for next, prev, first and last pages.
+   * @param page the page to retrieve from the server
+   * @param limit the max amount of products to retrieve
+   *
+   * @
+   */
   fetchProducts(
     valuesForFiltering: { [s: string]: any } = {},
     url: string = 'http://localhost:3000/api/products',
     page: string = '1',
     limit: string = '5'
-  ) {
+  ): Observable<Product[]> {
     let params = new HttpParams();
 
     params = params.append('_page', page);
@@ -102,6 +129,13 @@ export class ProductsService {
     return this.http.get<Category[]>('http://localhost:3000/api/categories');
   }
 
+  /**
+   * @description
+   * This function will create a new product if the product parameter does not have an id,
+   * otherwise the existing product will be updated.
+   *
+   * @param product the product to update or add
+   */
   saveProduct(product: Product) {
     if (product.id === undefined) {
       return this.http.post(`http://localhost:3000/api/products`, product);
@@ -115,17 +149,18 @@ export class ProductsService {
   deleteProduct(product: Product) {
     return this.http.delete(`http://localhost:3000/api/products/${product.id}`);
   }
-
-  // This function recover the pagination link set by the server in the 'Link' property
-  // and add every link in the property object 'paginationLinks'
-  //
-  // The server return a single string with for links for pagination: prev, next, first, last
-  // eg:
-  // <http://localhost:3000/api/products?_page=1&_limit=5&_page=1&_limit=5&_page=1&_limit=5&_page=1&_limit=5>; rel="first", <http://loc...
-  //
-  // the method use a reg exp to take the link inside '<' '>'
-  //
-  // the link mapping (prev, next, ecc) are inside the paginationLinks object
+  /**
+   * @description
+   * This function recover the pagination link set by the server in the 'Link' property
+   * and add every link in the property object ```paginationLinks```
+   * The server return a single string with for links for pagination: ```prev```, ```next```, ```first```, ```last```
+   * the method use a reg exp to take the link inside ```< >```
+   * the link mapping (prev, next, ecc) are inside the ```paginationLinks``` object
+   *
+   * @param headerLink \<http://localhost:3000/api/products?
+   * _page=1&_limit=5&_page=1&_limit=5&_page=1&_limit=5&_page=1&_limit=5>; rel="first",
+   * <http://loc...
+   */
   setPaginationLinks(headerLink: string) {
     const links = headerLink.split(', ');
 
@@ -142,14 +177,22 @@ export class ProductsService {
       }
     }
 
-    this.paginationLinksSubject.next(this.paginationLinks);
+    this.getPaginationLinksSubject().next(this.paginationLinks);
   }
 
-  getPaginationLinksSubject() {
+  /**
+   * @description
+   * A behavior subject is used because independently from when it is subscribed the last value emitted is recovered
+   */
+  getPaginationLinksSubject(): BehaviorSubject<{ [s: string]: string }> {
     return this.paginationLinksSubject;
   }
 
-  getOnDeleteSubject() {
+  /**
+   * @description
+   * It is used to manage the removal of the card from the list of products when the associated product is deleted
+   */
+  getOnDeleteSubject(): Subject<Product> {
     return this.onDeleteSubject;
   }
 }

@@ -9,12 +9,16 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { EMPTY, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { emptyScheduled } from 'rxjs/internal/observable/empty';
+import { UserService } from './user/user.service';
 
 @Injectable({ providedIn: 'root' })
 export class ErrorInterceptorService implements HttpInterceptor {
   [x: string]: any;
-  constructor(private router: Router, private location: Location) {}
+  constructor(
+    private router: Router,
+    private location: Location,
+    private userService: UserService
+  ) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
     return next.handle(req).pipe(
@@ -22,6 +26,15 @@ export class ErrorInterceptorService implements HttpInterceptor {
         const path = this.location.path();
 
         if (err instanceof HttpErrorResponse) {
+          if (err.status === 400) {
+            this.router.navigate(['/login']);
+            return EMPTY;
+          }
+          if (err.status === 401) {
+            this.userService.logout();
+            this.router.navigate(['/login']);
+            return EMPTY;
+          }
           if (err.status === 404) {
             this.router.navigate(['/page-not-found'], {
               skipLocationChange: true
