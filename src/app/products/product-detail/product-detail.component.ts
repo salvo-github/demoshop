@@ -37,8 +37,9 @@ export class ProductDetailComponent implements OnInit, DoCheck {
   // update the cateogry after a product is edited
   ngDoCheck() {
     if (
-      this.category === undefined ||
-      this.category.id !== this.product.categoryId
+      this.product &&
+      (this.category === undefined ||
+        this.category.id !== this.product.categoryId)
     ) {
       this.getProductCategory();
     }

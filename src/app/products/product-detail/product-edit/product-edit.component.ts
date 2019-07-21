@@ -5,6 +5,7 @@ import { Category } from '../../category.model';
 import { Product } from '../../product.model';
 import { ProductsService } from '../../products.service';
 import { RoutesRef } from 'src/app/routes-ref.model';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-product-edit',
@@ -25,7 +26,8 @@ export class ProductEditComponent implements OnInit {
   constructor(
     private productsService: ProductsService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private location: Location
   ) {}
 
   ngOnInit() {
@@ -38,7 +40,10 @@ export class ProductEditComponent implements OnInit {
       description: new FormControl(this.product.description, [
         Validators.required
       ]),
-      image: new FormControl(this.product.image, [Validators.required]),
+      image: new FormControl(this.product.image, [
+        Validators.required,
+        Validators.pattern(this.getUrlPattern())
+      ]),
       cost: new FormControl(this.product.cost, [
         Validators.required,
         this.toNumber
@@ -72,5 +77,18 @@ export class ProductEditComponent implements OnInit {
       .subscribe((productResponse: Product) => {
         this.router.navigate([RoutesRef.product, productResponse.id]);
       });
+  }
+
+  onCancel() {
+    if (this.product.id) {
+      this.router.navigate(['../']);
+    } else {
+      this.router.navigate([RoutesRef.products]);
+    }
+  }
+
+  getUrlPattern() {
+    const expression = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
+    return new RegExp(expression);
   }
 }

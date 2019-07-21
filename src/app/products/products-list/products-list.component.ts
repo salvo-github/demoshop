@@ -4,6 +4,7 @@ import { BehaviorSubject, Subject } from 'rxjs';
 import { Product } from '../product.model';
 import { ProductsService } from '../products.service';
 import { UserService } from 'src/app/user/user.service';
+import { RoutesRef } from 'src/app/routes-ref.model';
 
 @Component({
   selector: 'app-products-list',
@@ -23,6 +24,8 @@ export class ProductsListComponent implements OnInit, OnDestroy {
   onDeleteSubjectSubscription;
 
   isCurrentUserAdmin = false;
+
+  RoutesRef = RoutesRef;
 
   constructor(
     private route: ActivatedRoute,

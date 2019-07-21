@@ -11,6 +11,7 @@ import { LoginGuardService } from './user/login/login-guard.service';
 import { LoginComponent } from './user/login/login.component';
 import { ProductDeleteComponent } from './products/product-detail/product-delete/product-delete.component';
 import { ServerErrorComponent } from './server-error/server-error.component';
+import { ProductAddQuantityComponent } from './products/product-detail/product-add-quantity/product-add-quantity.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/products', pathMatch: 'full' },
@@ -38,6 +39,18 @@ const routes: Routes = [
     ]
   },
   {
+    path: 'product',
+    component: ProductDetailComponent,
+    canActivate: [ProductsGuardService],
+    canActivateChild: [ProductsGuardService],
+    children: [
+      {
+        path: 'new',
+        component: ProductEditComponent
+      }
+    ]
+  },
+  {
     path: 'product/:id',
     component: ProductDetailComponent,
     canActivate: [ProductsGuardService],
@@ -52,6 +65,11 @@ const routes: Routes = [
       {
         path: 'delete',
         component: ProductDeleteComponent,
+        resolve: { product: ProductDetailResolver }
+      },
+      {
+        path: 'add',
+        component: ProductAddQuantityComponent,
         resolve: { product: ProductDetailResolver }
       }
     ]

@@ -24,12 +24,19 @@
   <section class="card__info">
     <div class="card__info-group">
       <h2 class="h2 h--bold card__info-title">{{ product.name }}</h2>
-      <p class="h5 card__info-desc">{{ product.description }}</p>
+      <p
+        class="h5"
+        [ngClass]="{ 'card__info-desc': parentComponent === 'list' }"
+      >
+        {{ product.description }}
+      </p>
       <div *ngIf="parentComponent === 'detail' && isCurrentUserAdmin">
         <br class="h3" />
         <p class="h3 card__admin-action">
           You can
-          <a class="card__admin-action--link">add 5 more</a>. You can also
+          <a class="card__admin-action--link" [routerLink]="['add']"
+            >add 5 more</a
+          >. You can also
           <a class="card__admin-action--link" [routerLink]="['edit']">edit</a>
           details or
           <a class="card__admin-action--link" [routerLink]="['delete']"

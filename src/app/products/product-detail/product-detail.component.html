@@ -5,12 +5,12 @@
     style="cursor: pointer"
     >Back</a
   >
-  <p class="navigation__category" *ngIf="category">
+  <p class="navigation__category" *ngIf="product && category">
     <span class="h--lighter">Category: </span>{{ product.gender }} /
     {{ category.name }}
   </p>
 </nav>
-<div class="pdp__card">
+<div class="pdp__card" *ngIf="product">
   <app-product-card
     parentComponent="detail"
     [product]="product"

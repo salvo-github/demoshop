@@ -23,6 +23,7 @@
   color: var(--border-error);
 }
 
-input:focus ~ .form__error-message {
+input:focus ~ .form__error-message,
+textarea:focus ~ .form__error-message {
   display: none;
 }

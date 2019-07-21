@@ -19,6 +19,7 @@ import { ProductBuyComponent } from './products/product-detail/product-buy/produ
 import { ServerErrorComponent } from './server-error/server-error.component';
 import { ErrorInterceptorService } from './error-interceptor.service';
 import { ImagePlaceholderDirective } from './shared/image-placeholder.directive';
+import { ProductAddQuantityComponent } from './products/product-detail/product-add-quantity/product-add-quantity.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { ImagePlaceholderDirective } from './shared/image-placeholder.directive'
     ProductDeleteComponent,
     ProductBuyComponent,
     ServerErrorComponent,
-    ImagePlaceholderDirective
+    ImagePlaceholderDirective,
+    ProductAddQuantityComponent
   ],
   imports: [
     BrowserModule,

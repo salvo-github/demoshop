@@ -9,7 +9,6 @@
 .figure__image {
   display: block;
   max-width: 100%;
-  max-height: 15.65em;
   width: auto;
   height: auto;
   margin: 0 auto 0;
@@ -63,6 +62,12 @@
   padding-bottom: 0.5em;
   border-bottom: 0.111em solid var(--border-main);
   margin-bottom: 0.5em;
+}
+
+.card__info-desc {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .card__cta {

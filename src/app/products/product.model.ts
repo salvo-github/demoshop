@@ -15,7 +15,7 @@ export class Product {
     cost: number = 0,
     count: number = 0,
     description: string = '',
-    gender: string = '',
+    gender: string = 'Unisex',
     image: string = '',
     name: string = '',
     rating: number = 0,

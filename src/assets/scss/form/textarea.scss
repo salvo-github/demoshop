@@ -10,3 +10,7 @@
 .textarea:focus {
   outline: 0.13em solid var(--border-focus);
 }
+
+.textarea.ng-invalid.ng-touched:not(:focus) {
+  outline: 0.13em solid var(--border-error);
+}
