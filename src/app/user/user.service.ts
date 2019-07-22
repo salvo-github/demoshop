@@ -82,11 +82,15 @@ export class UserService {
         }
       )
       .subscribe((resp) => {
-        localStorage.removeItem(this.sessionTokenSessionId);
-        localStorage.removeItem(this.currentUserUsernameSessionId);
-        localStorage.removeItem(this.currentUserRoleIdSessionId);
+        this.invalidateUserInfoFromLocalStorage();
         this.router.navigate(['/login']);
       });
+  }
+
+  invalidateUserInfoFromLocalStorage() {
+    localStorage.removeItem(this.sessionTokenSessionId);
+    localStorage.removeItem(this.currentUserUsernameSessionId);
+    localStorage.removeItem(this.currentUserRoleIdSessionId);
   }
 
   isCurrentUserAdmin(): boolean {
