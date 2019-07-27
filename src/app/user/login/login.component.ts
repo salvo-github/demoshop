@@ -8,12 +8,7 @@ import { throwError } from 'rxjs';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: [
-    './login.component.scss',
-    '../../../assets/scss/mediaquery.scss',
-    '../../../assets/scss/modal.scss',
-    '../../../assets/scss/form/form.scss'
-  ]
+  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;

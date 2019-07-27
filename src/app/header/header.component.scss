@@ -1,12 +1,14 @@
+@import 'palettes';
+
 .header {
-  border: 0 solid var(--border-common);
+  border: 0 solid $border-common;
   width: 100%;
   background: linear-gradient(
     180deg,
-    var(--theme-main-color-shade) 0%,
-    var(--theme-main-color) 100%
+    $theme-main-color-shade 0%,
+    $theme-main-color 100%
   );
-  box-shadow: 0 0.19em 0 0 rgba(var(--theme-main-color-rgba-shadow), 0.5);
+  box-shadow: 0 0.19em 0 0 $theme-main-color-rgba-shadow, 0.5;
   flex: 0 0 2.81em;
   display: flex;
 }
@@ -23,7 +25,7 @@
 
 .header__logo::after {
   padding-left: 1.5em;
-  content: url(src/assets/img/logo.svg);
+  content: url(/assets/img/logo.svg);
   height: 1.5em;
   width: 1.5em;
 }
@@ -34,7 +36,7 @@
 
 .header__login-status {
   display: inline-block;
-  color: var(--default-white);
+  color: $default-white;
 }
 
 .header__login-status + span {
@@ -45,9 +47,9 @@
 }
 
 .header__login-status--notlogged + span {
-  content: url(src/assets/img/header-logout.svg);
+  content: url(/assets/img/header-logout.svg);
 }
 
 .header__login-status--logged + span {
-  content: url(src/assets/img/header-logout.svg);
+  content: url(/assets/img/header-logout.svg);
 }

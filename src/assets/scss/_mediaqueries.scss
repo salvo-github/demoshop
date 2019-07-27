@@ -65,7 +65,7 @@
 
   .card--pdp .card__cta {
     padding-top: 0.78em;
-    border-top: 0.063em solid var(--border-light);
+    border-top: 0.063em solid $border-light;
   }
 
   .modal:not(.modal_login) {

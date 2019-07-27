@@ -2,17 +2,17 @@
   height: 2.19em;
   width: 100%;
   border-radius: 0.31em;
-  background-color: var(--default-white);
+  background-color: $default-white;
   padding: 0 1em;
   margin: 0.25em 0;
 }
 
 .textinput:focus {
-  outline: 0.13em solid var(--border-focus);
+  outline: 0.13em solid $border-focus;
 }
 
 .textinput.ng-invalid.ng-touched:not(:focus) {
-  outline: 0.13em solid var(--border-error);
+  outline: 0.13em solid $border-error;
 }
 
 .textinput-icon {

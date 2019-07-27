@@ -1,3 +1,5 @@
+@import 'palettes';
+
 .navigation {
   height: 3.56em;
   display: flex;
@@ -6,11 +8,11 @@
 }
 
 .navigation__back {
-  color: var(--default-white);
+  color: $default-white;
 }
 
 .navigation__category {
-  color: var(--default-white);
+  color: $default-white;
 }
 
 .navigation__category--std {

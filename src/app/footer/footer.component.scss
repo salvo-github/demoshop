@@ -1,15 +1,17 @@
+@import 'palettes';
+
 .footer {
   flex: 0 0 2.81em;
   width: 100%;
-  border: 0 solid var(--border-common);
-  background-color: var(--theme-main-color);
+  border: 0 solid $border-common;
+  background-color: $theme-main-color;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .footer__company-info {
-  color: var(--default-white);
+  color: $default-white;
 }
 
 .footer__company-info--quoted {

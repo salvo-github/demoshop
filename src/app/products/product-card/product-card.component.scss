@@ -1,3 +1,5 @@
+@import 'palettes';
+
 .card {
   display: flex;
   flex-direction: column;
@@ -18,7 +20,7 @@
   position: relative;
   margin-top: -1.88em;
   height: 1.88em;
-  background-color: rgba(var(--default-rgba-black), 0.75);
+  background-color: $default-rgba-black, 0.75;
 }
 
 .caption__vote {
@@ -45,7 +47,7 @@
 
 .card__info {
   flex-grow: 1;
-  color: var(--default-black);
+  color: $default-black;
   align-self: stretch;
   display: flex;
   flex-direction: column;
@@ -60,7 +62,7 @@
 
 .card__info-title {
   padding-bottom: 0.5em;
-  border-bottom: 0.111em solid var(--border-main);
+  border-bottom: 0.111em solid $border-main;
   margin-bottom: 0.5em;
 }
 
@@ -77,5 +79,5 @@
 
 .card__info-price::before {
   content: '$';
-  color: var(--theme-seconday-color);
+  color: $theme-seconday-color;
 }

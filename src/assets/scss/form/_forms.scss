@@ -1,9 +1,9 @@
-@import url(./checkbox.scss);
-@import url(./textinput.scss);
-@import url(./radiobutton.scss);
-@import url(./select.scss);
-@import url(./range.scss);
-@import url(./textarea.scss);
+@import 'checkboxs';
+@import 'textinputs';
+@import 'radiobuttons';
+@import 'selects';
+@import 'ranges';
+@import 'textareas';
 
 .form__field {
   margin-bottom: 1.25em;
@@ -20,7 +20,7 @@
 }
 
 .form__error-message {
-  color: var(--border-error);
+  color: $border-error;
 }
 
 input:focus ~ .form__error-message,

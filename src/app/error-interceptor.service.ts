@@ -28,7 +28,7 @@ export class ErrorInterceptorService implements HttpInterceptor {
         if (err instanceof HttpErrorResponse) {
           if (err.status === 400) {
             this.router.navigate(['/login']);
-            return EMPTY;
+            throwError(err);
           }
           if (err.status === 401) {
             this.userService.invalidateUserInfoFromLocalStorage();

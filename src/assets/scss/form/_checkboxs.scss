@@ -39,8 +39,8 @@
 }
 
 .tgl-light + .tgl-btn {
-  background: var(--default-white);
-  border: 1px solid var(--theme-seconday-color);
+  background: $default-white;
+  border: 1px solid $theme-seconday-color;
   border-radius: 25px;
   padding: 2px;
   transition: all 0.4s ease;
@@ -48,14 +48,14 @@
 
 .tgl-light + .tgl-btn:after {
   border-radius: 50%;
-  background: var(--theme-seconday-color);
+  background: $theme-seconday-color;
   transition: all 0.2s ease;
 }
 
 .tgl-light:checked + .tgl-btn {
-  background: var(--theme-seconday-color);
+  background: $theme-seconday-color;
 }
 
 .tgl-light:checked + .tgl-btn:after {
-  background: var(--default-white);
+  background: $default-white;
 }

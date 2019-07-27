@@ -1,3 +1,6 @@
+@import 'palettes';
+@import 'form/forms';
+
 .filters {
   position: relative;
   padding: 0.94em 0;
@@ -6,7 +9,7 @@
 }
 
 .filters__textinput {
-  outline: 0.13em solid var(--border-focus);
+  outline: 0.13em solid $border-focus;
 }
 
 .filters__buttons {
@@ -15,7 +18,7 @@
 }
 
 .filters__icon--fbt {
-  background-image: url(src/assets/img/search.svg);
+  background-image: url(/assets/img/search.svg);
 }
 
 .textinput--narrower {
@@ -29,13 +32,13 @@
   margin: 2.94em 0;
   width: 100%;
   border-radius: 0.94em;
-  background-color: var(--default-white);
+  background-color: $default-white;
   box-shadow: 0 0.13em 0.25em 0 rgba(0, 0, 0, 0.5);
 }
 
 .filters__field-wrapper {
   padding: 1.25em 0;
-  border-bottom: 0.03em solid var(--theme-seconday-color);
+  border-bottom: 0.03em solid $theme-seconday-color;
 }
 
 .filters .filters__field-wrapper:last-child {
@@ -48,7 +51,7 @@
 }
 
 .filters__field-wrapper .textinput.ng-invalid:not(:focus) {
-  outline: 0.13em solid var(--border-error);
+  outline: 0.13em solid $border-error;
 }
 
 .filters .button {

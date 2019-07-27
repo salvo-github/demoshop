@@ -7,11 +7,7 @@ import { ProductsService } from '../products.service';
 @Component({
   selector: 'app-products-filter',
   templateUrl: './products-filter.component.html',
-  styleUrls: [
-    '../../../assets/scss/form/form.scss',
-    './products-filter.component.scss',
-    '../../../assets/scss/mediaquery.scss'
-  ]
+  styleUrls: ['./products-filter.component.scss']
 })
 export class ProductsFilterComponent implements OnInit {
   showFilters = false;

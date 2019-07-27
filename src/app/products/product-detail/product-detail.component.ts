@@ -8,10 +8,7 @@ import { ProductsService } from '../products.service';
 @Component({
   selector: 'app-product-detail',
   templateUrl: './product-detail.component.html',
-  styleUrls: [
-    './product-detail.component.scss',
-    '../../../assets/scss/mediaquery.scss'
-  ]
+  styleUrls: ['./product-detail.component.scss']
 })
 export class ProductDetailComponent implements OnInit, DoCheck {
   product: Product;

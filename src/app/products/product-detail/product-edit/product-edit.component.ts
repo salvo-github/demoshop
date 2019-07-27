@@ -10,12 +10,7 @@ import { Location } from '@angular/common';
 @Component({
   selector: 'app-product-edit',
   templateUrl: './product-edit.component.html',
-  styleUrls: [
-    '../../../../assets/scss/modal.scss',
-    '../../../../assets/scss/form/form.scss',
-    './product-edit.component.scss',
-    '../../../../assets/scss/mediaquery.scss'
-  ]
+  styleUrls: ['./product-edit.component.scss']
 })
 export class ProductEditComponent implements OnInit {
   editForm: FormGroup;
