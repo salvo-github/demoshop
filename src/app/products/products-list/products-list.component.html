@@ -10,10 +10,7 @@
 </nav>
 <div class="cards" *ngIf="products && products.length; else noProducts">
   <div class="main__card" *ngFor="let product of products">
-    <app-product-card
-      parentComponent="list"
-      [product]="product"
-    ></app-product-card>
+    <app-card-list [product]="product"></app-card-list>
   </div>
 </div>
 <div class="product-list__pages-navigation">

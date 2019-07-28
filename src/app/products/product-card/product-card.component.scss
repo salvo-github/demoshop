@@ -16,35 +16,6 @@
   margin: 0 auto 0;
 }
 
-.figure__caption {
-  position: relative;
-  margin-top: -1.88em;
-  height: 1.88em;
-  background-color: rgba($default-rgba-black, 0.75);
-}
-
-.caption__vote {
-  height: 100%;
-  margin: 0 1.33em;
-  display: flex;
-  align-items: center;
-}
-
-.vote {
-  display: inline-block;
-  height: 1.03em;
-  width: 1.08em;
-  margin: 0 0.11em;
-}
-
-.vote--full::after {
-  content: url(src/assets/img/star-active.svg);
-}
-
-.vote--empty::after {
-  content: url(src/assets/img/star-inactive.svg);
-}
-
 .card__info {
   flex-grow: 1;
   color: $default-black;

@@ -17,28 +17,19 @@
           />
           <p
             class="h3 form__error-message"
-            *ngIf="
-              loginForm.get('username').touched &&
-              loginForm.get('username').hasError('minlength')
-            "
+            *ngIf="controlHasError('username', 'minlength')"
           >
             The username must be at least 3 letters
           </p>
           <p
             class="h3 form__error-message"
-            *ngIf="
-              loginForm.get('username').touched &&
-              loginForm.get('username').hasError('required')
-            "
+            *ngIf="controlHasError('username', 'required')"
           >
             The username is required
           </p>
           <p
             class="h3 form__error-message"
-            *ngIf="
-              loginForm.get('username').touched &&
-              loginForm.get('username').hasError('pattern')
-            "
+            *ngIf="controlHasError('username', 'pattern')"
           >
             The username must contain only English letters
           </p>
@@ -53,10 +44,7 @@
           />
           <span
             class="h3 form__error-message"
-            *ngIf="
-              loginForm.get('password').touched &&
-              loginForm.get('password').hasError('required')
-            "
+            *ngIf="controlHasError('password', 'required')"
           >
             The password is required
           </span>

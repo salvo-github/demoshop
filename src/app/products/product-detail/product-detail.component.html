@@ -11,9 +11,6 @@
   </p>
 </nav>
 <div class="pdp__card" *ngIf="product">
-  <app-product-card
-    parentComponent="detail"
-    [product]="product"
-  ></app-product-card>
+  <app-card-pdp [product]="product"></app-card-pdp>
 </div>
 <router-outlet></router-outlet>

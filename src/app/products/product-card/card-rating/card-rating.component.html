@@ -1,0 +1,12 @@
+<figcaption class="figure__caption">
+  <ul class="caption__vote">
+    <li
+      class="vote"
+      *ngFor="let count of maxRatingArray; let i = index"
+      [ngClass]="{
+        'vote--full': i < rating,
+        'vote--empty': i >= rating
+      }"
+    ></li>
+  </ul>
+</figcaption>

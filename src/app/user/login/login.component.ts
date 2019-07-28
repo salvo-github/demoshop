@@ -45,4 +45,11 @@ export class LoginComponent implements OnInit {
       }
     );
   }
+
+  controlHasError(control: string, error: string): boolean {
+    return (
+      this.loginForm.get(control).touched &&
+      this.loginForm.get(control).hasError(error)
+    );
+  }
 }

@@ -10,20 +10,19 @@ import { ProductsService } from '../products.service';
   styleUrls: ['./product-card.component.scss']
 })
 export class ProductCardComponent implements OnInit {
-  @Input() product: Product;
-  @Input() parentComponent: string;
-  isCurrentUserAdmin = false;
-  onBuying = false;
-  RoutesRef = RoutesRef;
+  protected product: Product;
+  protected isCurrentUserAdmin = false;
+  protected onBuying = false;
+  protected RoutesRef = RoutesRef;
 
   constructor(
-    private userService: UserService,
-    private productService: ProductsService
-  ) {}
-
-  ngOnInit() {
+    protected userService: UserService,
+    protected productService: ProductsService
+  ) {
     this.getCurrentUserRole();
   }
+
+  ngOnInit() {}
 
   getCurrentUserRole(): void {
     this.isCurrentUserAdmin = this.userService.isCurrentUserAdmin();
@@ -37,5 +36,10 @@ export class ProductCardComponent implements OnInit {
   onDeleteHandler($event) {
     this.productService.setCurrentProduct(this.product);
     $event.stopPropagation();
+  }
+
+  toggleModal() {
+    this.onBuying = !this.onBuying;
+    return this.onBuying;
   }
 }

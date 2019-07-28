@@ -127,4 +127,9 @@ export class ProductsFilterComponent implements OnInit {
     group.controls.cost_gte.setErrors(null);
     return null;
   }
+
+  toggleFilters() {
+    this.showFilters = !this.showFilters;
+    return this.showFilters;
+  }
 }

@@ -20,13 +20,12 @@
               formControlName="name"
               id="name"
             />
-            <div
-              *ngIf="
-                !editForm.get('name').touched ||
-                  !editForm.get('name').hasError('required');
-                else field__error
-              "
-            ></div>
+            <p
+              class="h3 form__error-message"
+              *ngIf="controlHasError('name', 'required')"
+            >
+              This field is required
+            </p>
           </div>
           <div class="form__field">
             <p><label class="h3" for="categoryId">Category:</label></p>
@@ -66,13 +65,12 @@
               id="description"
               formControlName="description"
             ></textarea>
-            <div
-              *ngIf="
-                !editForm.get('description').touched ||
-                  !editForm.get('description').hasError('required');
-                else field__error
-              "
-            ></div>
+            <p
+              class="h3 form__error-message"
+              *ngIf="controlHasError('description', 'required')"
+            >
+              This field is required
+            </p>
           </div>
         </section>
         <section class="column">
@@ -84,19 +82,15 @@
               id="image"
               formControlName="image"
             />
-            <div
-              *ngIf="
-                !editForm.get('image').touched ||
-                  !editForm.get('image').hasError('required');
-                else field__error
-              "
-            ></div>
             <p
               class="h3 form__error-message"
-              *ngIf="
-                editForm.get('image').touched &&
-                editForm.get('image').hasError('pattern')
-              "
+              *ngIf="controlHasError('image', 'required')"
+            >
+              This field is required
+            </p>
+            <p
+              class="h3 form__error-message"
+              *ngIf="controlHasError('image', 'pattern')"
             >
               This must be an url
             </p>
@@ -147,10 +141,5 @@
     </div>
   </div>
 </div>
-<ng-template #field__error
-  ><p class="h3 form__error-message">
-    This field is required
-  </p></ng-template
->
 
 <div class="modal-overlay"></div>

@@ -21,8 +21,7 @@ export class ProductEditComponent implements OnInit {
   constructor(
     private productsService: ProductsService,
     private route: ActivatedRoute,
-    private router: Router,
-    private location: Location
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -85,5 +84,12 @@ export class ProductEditComponent implements OnInit {
   getUrlPattern() {
     const expression = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
     return new RegExp(expression);
+  }
+
+  controlHasError(control: string, error: string): boolean {
+    return (
+      this.editForm.get(control).touched &&
+      this.editForm.get(control).hasError(error)
+    );
   }
 }
