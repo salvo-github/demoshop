@@ -22,7 +22,7 @@
     $button-primary-active 100%,
     $button-primary 0%
   );
-  box-shadow: inset 2px 2px 4px 0 $default-rgba-black, 0.3;
+  box-shadow: inset 2px 2px 4px 0 rgba($default-rgba-black, 0.3);
 }
 
 .button--secondary {
@@ -39,7 +39,7 @@
     $button-secondary-active 0%,
     $button-secondary 100%
   );
-  box-shadow: inset 2px 2px 4px 0 $default-rgba-black, 0.5;
+  box-shadow: inset 2px 2px 4px 0 rgba($default-rgba-black, 0.5);
 }
 
 .button--regular {

@@ -20,7 +20,7 @@
   position: relative;
   margin-top: -1.88em;
   height: 1.88em;
-  background-color: $default-rgba-black, 0.75;
+  background-color: rgba($default-rgba-black, 0.75);
 }
 
 .caption__vote {
@@ -81,3 +81,5 @@
   content: '$';
   color: $theme-seconday-color;
 }
+
+@import 'mediaqueries';

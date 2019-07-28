@@ -1,5 +1,5 @@
 @import 'palettes';
-@import 'form/forms';
+@import 'forms';
 
 .filters {
   position: relative;
@@ -33,7 +33,7 @@
   width: 100%;
   border-radius: 0.94em;
   background-color: $default-white;
-  box-shadow: 0 0.13em 0.25em 0 rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0.13em 0.25em 0 rgba($default-rgba-black, 0.5);
 }
 
 .filters__field-wrapper {
@@ -57,3 +57,5 @@
 .filters .button {
   margin: 0 0.94em;
 }
+
+@import 'mediaqueries';
