@@ -1,6 +1,8 @@
 <div class="modal modal__edit">
   <div class="modal__header">
-    <h2 class="h2--bigger h--bold h--caption modal__title--elipsis">
+    <h2
+      class="h2--bigger font__style--weight-bold font__style--font-family--caption modal__title--elipsis"
+    >
       {{
         product.name.length > 0
           ? 'Edit "' + product.name + '"'
@@ -17,12 +19,12 @@
             <input
               class="h5 textinput"
               type="text"
-              formControlName="name"
+              [formControlName]="editFormFields.name"
               id="name"
             />
             <p
               class="h3 form__error-message"
-              *ngIf="controlHasError('name', 'required')"
+              *ngIf="controlHasError(editFormFields.name, 'required')"
             >
               This field is required
             </p>
@@ -31,7 +33,7 @@
             <p><label class="h3" for="categoryId">Category:</label></p>
             <select
               class="h5 select select--white select__arrow select__arrow--green"
-              formControlName="categoryId"
+              [formControlName]="editFormFields.categoryId"
               id="categoryId"
               ><option
                 *ngFor="let category of categories"
@@ -48,7 +50,7 @@
                   class="radio"
                   type="radio"
                   id="{{ gender }}"
-                  formControlName="gender"
+                  [formControlName]="editFormFields.gender"
                   [value]="gender"
                 />
                 <label class="h5 radio__label" for="{{ gender }}">{{
@@ -63,11 +65,11 @@
               class="h5 pdp__modal-textarea--height textarea"
               rows="5"
               id="description"
-              formControlName="description"
+              [formControlName]="editFormFields.description"
             ></textarea>
             <p
               class="h3 form__error-message"
-              *ngIf="controlHasError('description', 'required')"
+              *ngIf="controlHasError(editFormFields.description, 'required')"
             >
               This field is required
             </p>
@@ -80,21 +82,24 @@
               class="h5 textinput"
               type="url"
               id="image"
-              formControlName="image"
+              [formControlName]="editFormFields.image"
             />
             <p
               class="h3 form__error-message"
-              *ngIf="controlHasError('image', 'required')"
+              *ngIf="controlHasError(editFormFields.image, 'required')"
             >
               This field is required
             </p>
             <p
               class="h3 form__error-message"
-              *ngIf="controlHasError('image', 'pattern')"
+              *ngIf="controlHasError(editFormFields.image, 'pattern')"
             >
               This must be an url
             </p>
-            <img class="form_field--image" [src]="editForm.value.image" />
+            <img
+              class="form_field--image"
+              [src]="editForm.get(editFormFields.image).value"
+            />
           </div>
           <div class="form__field">
             <p><label class="h3" for="cost">Price:</label></p>
@@ -103,7 +108,7 @@
               type="number"
               step="any"
               id="cost"
-              formControlName="cost"
+              [formControlName]="editFormFields.cost"
             />
           </div>
           <div class="form__field">
@@ -111,7 +116,7 @@
             <select
               class="h5 select select--white select__arrow select__arrow--green"
               id="rating"
-              formControlName="rating"
+              [formControlName]="editFormFields.rating"
             >
               <option
                 *ngFor="let rating of [0, 1, 2, 3, 4, 5]"

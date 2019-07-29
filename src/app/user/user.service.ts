@@ -16,6 +16,7 @@ export class UserService {
   private currentUserUsernameSessionId = 'current-user-username';
   /** Used as key */
   private currentUserRoleIdSessionId = 'current-user-role';
+
   currentUser: User;
 
   constructor(private http: HttpClient, private router: Router) {}
@@ -69,7 +70,7 @@ export class UserService {
     return this.sessionTokenSessionId;
   }
 
-  logout() {
+  logout(): void {
     this.http
       .post(
         'http://localhost:3000/api/logout',
@@ -87,22 +88,18 @@ export class UserService {
       });
   }
 
-  invalidateUserInfoFromLocalStorage() {
+  invalidateUserInfoFromLocalStorage(): void {
     localStorage.removeItem(this.sessionTokenSessionId);
     localStorage.removeItem(this.currentUserUsernameSessionId);
     localStorage.removeItem(this.currentUserRoleIdSessionId);
   }
 
   isCurrentUserAdmin(): boolean {
-    const currentUserRoleId = +localStorage.getItem(
-      this.currentUserRoleIdSessionId
+    const currentUserRoleId = parseFloat(
+      localStorage.getItem(this.currentUserRoleIdSessionId)
     );
 
     return currentUserRoleId === UserRole.admin;
-  }
-
-  getCurrentUserRole(): null | number {
-    return;
   }
 
   /**

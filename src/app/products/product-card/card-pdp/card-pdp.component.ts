@@ -10,7 +10,8 @@ import { ProductsService } from '../../products.service';
   styleUrls: ['./card-pdp.component.scss']
 })
 export class CardPdpComponent extends ProductCardComponent implements OnInit {
-  @Input() product: Product;
+  @Input() protected product: Product;
+  protected onBuying = false;
 
   constructor(
     protected userService: UserService,
@@ -20,4 +21,12 @@ export class CardPdpComponent extends ProductCardComponent implements OnInit {
   }
 
   ngOnInit() {}
+
+  toggleModal(): void {
+    this.onBuying = !this.onBuying;
+  }
+
+  getProductAvailability(): number {
+    return this.product.count - this.product.soldCount;
+  }
 }

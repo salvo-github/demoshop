@@ -1,52 +1,66 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { UserService } from '../user.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
-import { throwError } from 'rxjs';
+import { throwError, Subscription } from 'rxjs';
+import { LoginFormFields } from './login-form-fields.model';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
-  loginForm: FormGroup;
-  isSubmitted = false;
+export class LoginComponent implements OnInit, OnDestroy {
+  public loginForm: FormGroup;
+  public isSubmitted = false;
+  public loginFormFields = LoginFormFields;
+  private loginSubscription: Subscription;
 
   constructor(private userService: UserService, private router: Router) {}
 
   ngOnInit() {
     this.loginForm = new FormGroup({
-      username: new FormControl(null, [
+      [this.loginFormFields.username]: new FormControl(null, [
         Validators.required,
         Validators.minLength(3),
         Validators.pattern('^[A-Za-z]+$')
       ]),
-      password: new FormControl(null, [Validators.required])
+      [this.loginFormFields.password]: new FormControl(null, [
+        Validators.required
+      ])
     });
   }
 
-  onSubmit() {
-    const username = this.loginForm.value.username;
-    const password = this.loginForm.value.password;
-    this.userService.login(username, password).subscribe(
-      (res) => {
-        this.router.navigate(['/']);
-      },
-      (err) => {
-        if (err instanceof HttpErrorResponse && err.status === 400) {
-          this.loginForm.reset();
-          this.loginForm.markAllAsTouched();
-          this.isSubmitted = true;
-        } else {
-          return throwError(err);
-        }
-      }
-    );
+  ngOnDestroy() {
+    if (this.loginSubscription) {
+      this.loginSubscription.unsubscribe();
+    }
   }
 
-  controlHasError(control: string, error: string): boolean {
+  public onSubmit() {
+    const username = this.loginForm.get(this.loginFormFields.username).value;
+    const password = this.loginForm.get(this.loginFormFields.password).value;
+
+    this.loginSubscription = this.userService
+      .login(username, password)
+      .subscribe(
+        (res) => {
+          this.router.navigate(['/']);
+        },
+        (err) => {
+          if (err instanceof HttpErrorResponse && err.status === 400) {
+            this.loginForm.reset();
+            this.loginForm.markAllAsTouched();
+            this.isSubmitted = true;
+          } else {
+            return throwError(err);
+          }
+        }
+      );
+  }
+
+  public controlHasError(control: string, error: string): boolean {
     return (
       this.loginForm.get(control).touched &&
       this.loginForm.get(control).hasError(error)

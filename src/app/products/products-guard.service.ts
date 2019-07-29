@@ -40,14 +40,15 @@ export class ProductsGuardService implements CanActivate {
   ): boolean {
     if (this.userService.isCurrentUserAdmin()) {
       return true;
-    } else {
-      // create an array of strings instead of urlSegment
-      const backUrl = route.parent.url.map((urlSegment: UrlSegment) => {
-        return urlSegment.path;
-      });
-      // https://github.com/angular/angular/issues/22763
-      this.router.navigate(backUrl);
-      return false;
     }
+
+    // create an array of strings instead of urlSegment
+    const backUrl = route.parent.url.map((urlSegment: UrlSegment) => {
+      return urlSegment.path;
+    });
+
+    // https://github.com/angular/angular/issues/22763
+    this.router.navigate(backUrl);
+    return false;
   }
 }

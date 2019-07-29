@@ -5,7 +5,9 @@
   </figure>
   <section class="card__info">
     <div class="card__info-group">
-      <h2 class="h2 h--bold card__info-title">{{ product.name }}</h2>
+      <h2 class="h2 font__style--weight-bold card__info-title">
+        {{ product.name }}
+      </h2>
       <p class="h5">
         {{ product.description }}
       </p>
@@ -13,22 +15,20 @@
         <br class="h3" />
         <p class="h3 card__admin-action">
           You can
-          <a class="card__admin-action--link" [routerLink]="['add']"
-            >add 5 more</a
-          >. You can also
-          <a class="card__admin-action--link" [routerLink]="['edit']">edit</a>
+          <a [routerLink]="['add']">add 5 more</a>. You can also
+          <a [routerLink]="['edit']">edit</a>
           details or
-          <a class="card__admin-action--link" [routerLink]="['delete']"
-            >delete</a
-          >
+          <a [routerLink]="['delete']">delete</a>
           them.
         </p>
       </div>
     </div>
     <div class="card__cta">
-      <p class="h1 h--bold  card__info-price">
+      <p class="h1 font__style--weight-bold  card__info-price">
         {{ product.cost
-        }}<span class="h--lighter h--smaller card__info-price--extra">
+        }}<span
+          class="font__style--weight-lighter font__style--smaller card__info-price--extra"
+        >
           ({{
             getProductAvailability() > 0
               ? getProductAvailability() + ' items left'
@@ -47,7 +47,7 @@
     <app-product-buy
       *ngIf="onBuying"
       [product]="product"
-      (closeModal)="toggleModal()"
+      (closeModal)="toggleModal($event)"
     ></app-product-buy>
   </section>
 </article>

@@ -1,0 +1,21 @@
+@import 'palettes';
+
+.navigation {
+  height: 3.56em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navigation__back {
+  color: $default-white;
+  cursor: pointer;
+}
+
+.navigation__category {
+  color: $default-white;
+}
+
+.navigation__category--std {
+  font-weight: normal;
+}

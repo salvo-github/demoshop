@@ -1,15 +1,4 @@
-<nav class="h3 h--bold navigation">
-  <a
-    class="h--underline navigation__back"
-    (click)="onGoBack()"
-    style="cursor: pointer"
-    >Back</a
-  >
-  <p class="navigation__category" *ngIf="product && category">
-    <span class="h--lighter">Category: </span>{{ product.gender }} /
-    {{ category.name }}
-  </p>
-</nav>
+<app-product-detail-header [product]="product"></app-product-detail-header>
 <div class="pdp__card" *ngIf="product">
   <app-card-pdp [product]="product"></app-card-pdp>
 </div>

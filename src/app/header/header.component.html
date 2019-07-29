@@ -6,7 +6,10 @@
         class="h4 header__login-status header__login-status--logged"
         *ngIf="getUsername()"
       >
-        Hello, <span class="h--italic">{{ getUsername() }}</span>
+        Hello,
+        <span class="font__style--font-family--caption">{{
+          getUsername()
+        }}</span>
       </p>
       <span (click)="onLogout()"></span>
     </div>

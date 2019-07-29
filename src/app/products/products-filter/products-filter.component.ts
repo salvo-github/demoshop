@@ -1,23 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Category } from '../category.model';
 import { ProductsService } from '../products.service';
+import { Subscription } from 'rxjs';
+import { FilterFormFields } from './filter-form-fields.model';
 
 @Component({
   selector: 'app-products-filter',
   templateUrl: './products-filter.component.html',
   styleUrls: ['./products-filter.component.scss']
 })
-export class ProductsFilterComponent implements OnInit {
-  showFilters = false;
+export class ProductsFilterComponent implements OnInit, OnDestroy {
+  public showFilters = false;
 
-  categories: Category[];
+  public categories: Category[];
 
-  filtersForm: FormGroup;
-  genders = ['None', 'Man', 'Woman', 'Unisex'];
+  public filtersForm: FormGroup;
+  public genders = ['None', 'Man', 'Woman', 'Unisex'];
+
   // all the params map the query string for the api
-  initialFiltersFormValue = {
+  private initialFiltersFormValue = {
     availability: false,
     gender: '',
     categoryId: '',
@@ -27,6 +30,9 @@ export class ProductsFilterComponent implements OnInit {
     // q: api param for full text search
     q: null
   };
+  public filterFormFields = FilterFormFields;
+
+  private fetchCategoriesSubscription: Subscription;
 
   constructor(
     private route: ActivatedRoute,
@@ -35,43 +41,55 @@ export class ProductsFilterComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.productsService.fetchCategories().subscribe((categoriesData) => {
-      this.categories = categoriesData;
-    });
+    this.fetchCategoriesSubscription = this.productsService
+      .fetchCategories()
+      .subscribe((categoriesData) => {
+        this.categories = categoriesData;
+      });
 
     this.initForm();
+  }
+
+  ngOnDestroy() {
+    if (this.fetchCategoriesSubscription) {
+      this.fetchCategoriesSubscription.unsubscribe();
+    }
   }
 
   initForm() {
     this.filtersForm = new FormGroup(
       {
-        availability: new FormControl(
-          this.route.snapshot.queryParamMap.get('availability') ||
-            this.initialFiltersFormValue.availability
+        [this.filterFormFields.availability]: new FormControl(
+          this.route.snapshot.queryParamMap.get(
+            this.filterFormFields.availability
+          ) || this.initialFiltersFormValue[this.filterFormFields.availability]
         ),
-        gender: new FormControl(
-          this.route.snapshot.queryParamMap.get('gender') ||
-            this.initialFiltersFormValue.gender
+        [this.filterFormFields.gender]: new FormControl(
+          this.route.snapshot.queryParamMap.get(this.filterFormFields.gender) ||
+            this.initialFiltersFormValue[this.filterFormFields.gender]
         ),
-        categoryId: new FormControl(
-          this.route.snapshot.queryParamMap.get('categoryId') ||
-            this.initialFiltersFormValue.categoryId
+        [this.filterFormFields.categoryId]: new FormControl(
+          this.route.snapshot.queryParamMap.get(
+            this.filterFormFields.categoryId
+          ) || this.initialFiltersFormValue[this.filterFormFields.categoryId]
         ),
-        q: new FormControl(
-          this.route.snapshot.queryParamMap.get('q') ||
-            this.initialFiltersFormValue.q
+        [this.filterFormFields.q]: new FormControl(
+          this.route.snapshot.queryParamMap.get(this.filterFormFields.q) ||
+            this.initialFiltersFormValue[this.filterFormFields.q]
         ),
-        rating: new FormControl(
-          this.route.snapshot.queryParamMap.get('rating') ||
-            this.initialFiltersFormValue.rating
+        [this.filterFormFields.rating]: new FormControl(
+          this.route.snapshot.queryParamMap.get(this.filterFormFields.rating) ||
+            this.initialFiltersFormValue[this.filterFormFields.rating]
         ),
-        cost_gte: new FormControl(
-          this.route.snapshot.queryParamMap.get('cost_gte') ||
-            this.initialFiltersFormValue.cost_gte
+        [this.filterFormFields.cost_gte]: new FormControl(
+          this.route.snapshot.queryParamMap.get(
+            this.filterFormFields.cost_gte
+          ) || this.initialFiltersFormValue[this.filterFormFields.cost_gte]
         ),
-        cost_lte: new FormControl(
-          this.route.snapshot.queryParamMap.get('cost_lte') ||
-            this.initialFiltersFormValue.cost_lte
+        [this.filterFormFields.cost_lte]: new FormControl(
+          this.route.snapshot.queryParamMap.get(
+            this.filterFormFields.cost_lte
+          ) || this.initialFiltersFormValue[this.filterFormFields.cost_lte]
         )
       },
       {
@@ -81,6 +99,10 @@ export class ProductsFilterComponent implements OnInit {
   }
 
   onApplyFilters() {
+    if (this.filtersForm.invalid) {
+      return false;
+    }
+
     this.cleanEmptyValues(this.filtersForm.value);
 
     this.router.navigate(this.route.snapshot.url, {
@@ -98,12 +120,7 @@ export class ProductsFilterComponent implements OnInit {
 
   cleanEmptyValues(filtersFormValues) {
     for (const key in filtersFormValues) {
-      if (
-        filtersFormValues.hasOwnProperty(key) &&
-        (filtersFormValues[key] === false ||
-          filtersFormValues[key] === '' ||
-          filtersFormValues[key] === null)
-      ) {
+      if (filtersFormValues.hasOwnProperty(key) && !filtersFormValues[key]) {
         delete filtersFormValues[key];
       }
     }
@@ -128,8 +145,7 @@ export class ProductsFilterComponent implements OnInit {
     return null;
   }
 
-  toggleFilters() {
+  toggleFilters(): void {
     this.showFilters = !this.showFilters;
-    return this.showFilters;
   }
 }

@@ -1,0 +1,10 @@
+<nav class="h3 font__style--weight-bold navigation">
+  <a class="font__style--underline navigation__back" (click)="onGoBack()"
+    >Back</a
+  >
+  <p class="navigation__category" *ngIf="product && category">
+    <span class="font__style--weight-lighter">Category: </span
+    >{{ product.gender }} /
+    {{ category.name }}
+  </p>
+</nav>

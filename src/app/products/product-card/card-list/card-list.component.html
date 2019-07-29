@@ -5,7 +5,9 @@
   </figure>
   <section class="card__info">
     <div class="card__info-group">
-      <h2 class="h2 h--bold card__info-title">{{ product.name }}</h2>
+      <h2 class="h2 font__style--weight-bold card__info-title">
+        {{ product.name }}
+      </h2>
       <p class="h5 card__info-desc">
         {{ product.description }}
       </p>
@@ -14,8 +16,6 @@
         <p class="h3 card__admin-action">
           You can
           <a
-            class="card__admin-action--link"
-            style="cursor: pointer;"
             (click)="onDeleteHandler($event)"
             [routerLink]="['delete', product.id]"
             >delete</a
@@ -25,7 +25,9 @@
       </div>
     </div>
     <div class="card__cta">
-      <p class="h1 h--bold  card__info-price">{{ product.cost }}</p>
+      <p class="h1 font__style--weight-bold  card__info-price">
+        {{ product.cost }}
+      </p>
       <button
         class="button button--primary button--regular"
         [routerLink]="getLinkToDetailPage()"

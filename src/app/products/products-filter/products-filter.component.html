@@ -10,8 +10,8 @@
       class="h5 textinput textinput-icon filters__icon--fbt textinput--narrower"
       type="text"
       placeholder="Filter by text..."
-      formControlName="q"
-      (keyup.enter)="filtersForm.valid ? onApplyFilters() : null"
+      [formControlName]="filterFormFields.q"
+      (keyup.enter)="onApplyFilters()"
     />
   </div>
   <div class="filters__content" *ngIf="showFilters">
@@ -27,7 +27,7 @@
           class="h5 tgl tgl-light"
           type="checkbox"
           id="availability"
-          formControlName="availability"
+          [formControlName]="filterFormFields.availability"
         />
         <label class="h5 tgl-btn" for="availability"></label>
       </div>
@@ -39,7 +39,7 @@
               class="radio"
               type="radio"
               id="{{ gender }}"
-              formControlName="gender"
+              [formControlName]="filterFormFields.gender"
               [value]="gender === 'None' ? '' : gender"
             />
             <label class="h5 radio__label" for="{{ gender }}">{{
@@ -52,7 +52,7 @@
         <p><label class="h3" for="category">Category:</label></p>
         <select
           class="h5 select select__arrow select__arrow--white select--green"
-          formControlName="categoryId"
+          [formControlName]="filterFormFields.categoryId"
           id="category"
         >
           <option [value]="''">None</option>
@@ -66,7 +66,7 @@
         <select
           class="h5 select select__arrow select__arrow--white select--green"
           id="rating"
-          formControlName="rating"
+          [formControlName]="filterFormFields.rating"
         >
           <option [value]="''">None</option>
           <option *ngFor="let value of [0, 1, 2, 3, 4, 5]" [value]="value">{{
@@ -79,13 +79,13 @@
         <input
           type="number"
           class="h5 textinput filters__textinput"
-          formControlName="cost_gte"
+          [formControlName]="filterFormFields.cost_gte"
         />
         <span
           class="h3 form__error-message"
-          *ngIf="filtersForm.get('cost_gte').hasError('greater')"
+          *ngIf="filtersForm.get(filterFormFields.cost_gte).hasError('greater')"
         >
-          {{ filtersForm.get('cost_gte').getError('greater') }}
+          {{ filtersForm.get(filterFormFields.cost_gte).getError('greater') }}
         </span>
       </div>
       <div class="filters__field-wrapper">
@@ -93,13 +93,13 @@
         <input
           type="number"
           class="h5 textinput filters__textinput"
-          formControlName="cost_lte"
+          [formControlName]="filterFormFields.cost_lte"
         />
         <span
           class="h3 form__error-message"
-          *ngIf="filtersForm.get('cost_lte').hasError('lesser')"
+          *ngIf="filtersForm.get(filterFormFields.cost_lte).hasError('lesser')"
         >
-          {{ filtersForm.get('cost_lte').getError('lesser') }}
+          {{ filtersForm.get(filterFormFields.cost_lte).getError('lesser') }}
         </span>
       </div>
       <div class="filters__field-wrapper filters__field-wrapper--buttons">
@@ -122,8 +122,7 @@
       <button
         *ngIf="filtersForm.valid"
         type="submit"
-        class="h5 button button--primary button--regular"
-        style="display: none"
+        class="h5 button button--primary button--regular filter__submit-button"
       ></button>
     </form>
   </div>

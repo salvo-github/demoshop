@@ -8,11 +8,14 @@ import { ErrorInterceptorService } from './error-interceptor.service';
 import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { CardListComponent } from './products/product-card/card-list/card-list.component';
+import { CardPdpComponent } from './products/product-card/card-pdp/card-pdp.component';
 import { CardRatingComponent } from './products/product-card/card-rating/card-rating.component';
 import { ProductCardComponent } from './products/product-card/product-card.component';
 import { ProductAddQuantityComponent } from './products/product-detail/product-add-quantity/product-add-quantity.component';
 import { ProductBuyComponent } from './products/product-detail/product-buy/product-buy.component';
 import { ProductDeleteComponent } from './products/product-detail/product-delete/product-delete.component';
+import { ProductDetailHeaderComponent } from './products/product-detail/product-detail-header/product-detail-header.component';
 import { ProductDetailComponent } from './products/product-detail/product-detail.component';
 import { ProductEditComponent } from './products/product-detail/product-edit/product-edit.component';
 import { ProductsFilterComponent } from './products/products-filter/products-filter.component';
@@ -21,8 +24,6 @@ import { ServerErrorComponent } from './server-error/server-error.component';
 import { ImagePlaceholderDirective } from './shared/image-placeholder.directive';
 import { LoginComponent } from './user/login/login.component';
 import { UserAuthInterceptorService } from './user/user-auth-interceptor.service';
-import { CardListComponent } from './products/product-card/card-list/card-list.component';
-import { CardPdpComponent } from './products/product-card/card-pdp/card-pdp.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { CardPdpComponent } from './products/product-card/card-pdp/card-pdp.comp
     ProductAddQuantityComponent,
     CardRatingComponent,
     CardListComponent,
-    CardPdpComponent
+    CardPdpComponent,
+    ProductDetailHeaderComponent
   ],
   imports: [
     BrowserModule,

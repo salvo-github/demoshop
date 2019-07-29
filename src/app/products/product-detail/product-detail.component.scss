@@ -1,24 +1,5 @@
 @import 'palettes';
 
-.navigation {
-  height: 3.56em;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.navigation__back {
-  color: $default-white;
-}
-
-.navigation__category {
-  color: $default-white;
-}
-
-.navigation__category--std {
-  font-weight: normal;
-}
-
 .pdp__card {
   padding: 1.25em;
   background-image: url(src/assets/img/modal-bg.png);
@@ -35,11 +16,6 @@
 }
 
 .pdp__card--slider {
-  /* width: 27.5em;
-  height: 18.34em; */
-  /* max-width: 27.5em; */
   background-color: white;
   height: 20em;
-  /* height: 100%; */
-  /* max-width: 100%; */
 }

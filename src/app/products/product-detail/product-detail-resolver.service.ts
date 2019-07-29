@@ -19,18 +19,18 @@ export class ProductDetailResolver implements Resolve<Product | null> {
     state: RouterStateSnapshot
   ): Product | Observable<Product | null> {
     const currentProduct = this.productService.getCurrentProduct();
-    const paramProductId = +(
+    const paramProductId = parseFloat(
       route.paramMap.get('id') || route.parent.paramMap.get('id')
     );
 
     if (currentProduct !== undefined && paramProductId === currentProduct.id) {
       return currentProduct;
-    } else {
-      return this.productService.fetchProduct(paramProductId).pipe(
-        catchError((err) => {
-          return of(null);
-        })
-      );
     }
+
+    return this.productService.fetchProduct(paramProductId).pipe(
+      catchError((err) => {
+        return of(null);
+      })
+    );
   }
 }

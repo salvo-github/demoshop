@@ -108,9 +108,8 @@ export class ProductsService {
               (product: Product) => {
                 if (onlyAvailable === true) {
                   return product.count - product.soldCount > 0;
-                } else {
-                  return true;
                 }
+                return true;
               }
             );
             return productsFiltered;

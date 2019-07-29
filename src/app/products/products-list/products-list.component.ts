@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject, Subject, Subscription } from 'rxjs';
 import { Product } from '../product.model';
 import { ProductsService } from '../products.service';
 import { UserService } from 'src/app/user/user.service';
@@ -14,8 +14,9 @@ import { RoutesRef } from 'src/app/routes-ref.model';
 export class ProductsListComponent implements OnInit, OnDestroy {
   products: Product[];
 
-  paginationLinksSubject: BehaviorSubject<{ [s: string]: string }>;
-  paginationLinksSubscription;
+  private paginationLinksSubject: BehaviorSubject<{ [s: string]: string }>;
+  private paginationLinksSubscription: Subscription;
+  private fetchProductsSubscription: Subscription;
   paginationLinks: { [s: string]: string };
 
   onDeleteSubjectSubscription;
@@ -61,15 +62,22 @@ export class ProductsListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.paginationLinksSubscription.unsubscribe();
-    this.onDeleteSubjectSubscription.unsubscribe();
+    if (this.paginationLinksSubscription) {
+      this.paginationLinksSubscription.unsubscribe();
+    }
+    if (this.onDeleteSubjectSubscription) {
+      this.onDeleteSubjectSubscription.unsubscribe();
+    }
+    if (this.fetchProductsSubscription) {
+      this.fetchProductsSubscription.unsubscribe();
+    }
   }
 
   fetchFilteredProducts(
     valuesForFiltering: { [s: string]: any },
     url?: string
   ) {
-    this.productsService
+    this.fetchProductsSubscription = this.productsService
       .fetchProducts(valuesForFiltering, url)
       .subscribe((productsData: Product[]) => {
         this.products = productsData;

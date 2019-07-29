@@ -1,5 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { RoutesRef } from 'src/app/routes-ref.model';
+import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/user/user.service';
 import { Product } from '../product.model';
 import { ProductsService } from '../products.service';
@@ -12,8 +11,6 @@ import { ProductsService } from '../products.service';
 export class ProductCardComponent implements OnInit {
   protected product: Product;
   protected isCurrentUserAdmin = false;
-  protected onBuying = false;
-  protected RoutesRef = RoutesRef;
 
   constructor(
     protected userService: UserService,
@@ -28,18 +25,9 @@ export class ProductCardComponent implements OnInit {
     this.isCurrentUserAdmin = this.userService.isCurrentUserAdmin();
   }
 
-  getProductAvailability(): number {
-    return this.product.count - this.product.soldCount;
-  }
-
   // used to delete a product from product list page
-  onDeleteHandler($event) {
+  onDeleteHandler($event: MouseEvent): void {
     this.productService.setCurrentProduct(this.product);
     $event.stopPropagation();
-  }
-
-  toggleModal() {
-    this.onBuying = !this.onBuying;
-    return this.onBuying;
   }
 }
