@@ -45,7 +45,7 @@ export class ProductBuyComponent implements OnInit, OnDestroy {
     }
   }
 
-  protected afterBuying(): void {
+  public afterBuying(): void {
     this.closeModal.emit(true);
   }
 }

@@ -69,10 +69,10 @@ export class ProductsListComponent implements OnInit, OnDestroy {
     }
   }
 
-  private fetchFilteredProducts(
+  public fetchFilteredProducts(
     valuesForFiltering: { [s: string]: any },
     url?: string
-  ) {
+  ): void {
     this.fetchProductsSubscription = this.productsService
       .fetchProducts(valuesForFiltering, url)
       .subscribe((productsData: Product[]) => {
@@ -80,7 +80,7 @@ export class ProductsListComponent implements OnInit, OnDestroy {
       });
   }
 
-  public getPaginationLinks() {
+  public getPaginationLinks(): void {
     this.paginationLinksSubject = this.productsService.getPaginationLinksSubject();
 
     this.paginationLinksSubscription = this.paginationLinksSubject.subscribe(
@@ -90,11 +90,11 @@ export class ProductsListComponent implements OnInit, OnDestroy {
     );
   }
 
-  protected getCurrentUserRole(): void {
+  public getCurrentUserRole(): void {
     this.isCurrentUserAdmin = this.userService.isCurrentUserAdmin();
   }
 
-  private getNewProductRoute(): string[] {
+  public getNewProductRoute(): string[] {
     return [RoutesRef.product, 'new'];
   }
 }

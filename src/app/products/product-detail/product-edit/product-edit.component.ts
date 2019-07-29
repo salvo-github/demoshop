@@ -85,7 +85,7 @@ export class ProductEditComponent implements OnInit, OnDestroy {
     return null;
   }
 
-  protected onSubmit() {
+  public onSubmit() {
     const editedProduct: Product = Object.assign(
       this.product,
       this.editForm.value
@@ -97,7 +97,7 @@ export class ProductEditComponent implements OnInit, OnDestroy {
       });
   }
 
-  protected onCancel(): void {
+  public onCancel(): void {
     if (this.product.id) {
       this.router.navigate(['../'], { relativeTo: this.route });
     } else {
@@ -105,12 +105,12 @@ export class ProductEditComponent implements OnInit, OnDestroy {
     }
   }
 
-  protected getUrlPattern() {
+  public getUrlPattern(): RegExp {
     const expression = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
     return new RegExp(expression);
   }
 
-  protected controlHasError(control: string, error: string): boolean {
+  public controlHasError(control: string, error: string): boolean {
     return (
       this.editForm.get(control).touched &&
       this.editForm.get(control).hasError(error)

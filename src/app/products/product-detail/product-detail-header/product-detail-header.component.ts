@@ -41,7 +41,7 @@ export class ProductDetailHeaderComponent
     }
   }
 
-  protected getProductCategory(): void {
+  public getProductCategory(): void {
     this.fetchCategoryByIdSubscription = this.productService
       .fetchCategoryById(this.product.categoryId)
       .subscribe((categoryResponse) => {
@@ -49,7 +49,7 @@ export class ProductDetailHeaderComponent
       });
   }
 
-  protected onGoBack(): void {
+  public onGoBack(): void {
     this.router.navigate([RoutesRef.products]);
   }
 }

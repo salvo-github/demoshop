@@ -1,14 +1,10 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {
-  HttpClient,
-  HttpErrorResponse,
-  HttpResponse
-} from '@angular/common/http';
-import { tap } from 'rxjs/operators';
-import { User } from './user.model';
-import { UserRole } from './user-role.model';
 import { Router } from '@angular/router';
-import { EMPTY, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
+import { UserRole } from './user-role.model';
+import { User } from './user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -21,15 +17,13 @@ export class UserService {
   /** Used as key */
   private currentUserRoleIdSessionId = 'current-user-role';
 
-  currentUser: User;
-
-  constructor(private http: HttpClient, private router: Router) {}
+  public constructor(private http: HttpClient, private router: Router) {}
 
   /**
    * @description
    * If it's successful retrieve the session token
    */
-  login(login: string, password: string) {
+  public login(login: string, password: string) {
     return this.http
       .post(
         'http://localhost:3000/api/login',
@@ -44,6 +38,7 @@ export class UserService {
       )
       .pipe(
         tap((res) => {
+          console.log(res);
           const sessionToken = res.headers.get(this.sessionTokenSessionId);
 
           localStorage.setItem(this.sessionTokenSessionId, sessionToken);
@@ -62,19 +57,19 @@ export class UserService {
       );
   }
 
-  getCurrentUserSessionToken(): string | null {
+  public getCurrentUserSessionToken(): string | null {
     return localStorage.getItem(this.sessionTokenSessionId);
   }
 
-  getCurrentUserUsername(): string | null {
+  public getCurrentUserUsername(): string | null {
     return localStorage.getItem(this.currentUserUsernameSessionId);
   }
 
-  getSessionTokenId(): string {
+  public getSessionTokenId(): string {
     return this.sessionTokenSessionId;
   }
 
-  logout(): void {
+  public logout(): void {
     this.http
       .post(
         'http://localhost:3000/api/logout',
@@ -92,13 +87,13 @@ export class UserService {
       });
   }
 
-  invalidateUserInfoFromLocalStorage(): void {
+  public invalidateUserInfoFromLocalStorage(): void {
     localStorage.removeItem(this.sessionTokenSessionId);
     localStorage.removeItem(this.currentUserUsernameSessionId);
     localStorage.removeItem(this.currentUserRoleIdSessionId);
   }
 
-  isCurrentUserAdmin(): boolean {
+  public isCurrentUserAdmin(): boolean {
     const currentUserRoleId = parseFloat(
       localStorage.getItem(this.currentUserRoleIdSessionId)
     );
@@ -112,7 +107,7 @@ export class UserService {
    * If the current user token it's not valid the serve returns 401.
    * Based on that the user will be redirect to login page, otherwise he will be able to continue to the route
    */
-  validateToken(): Observable<UserRole> {
+  public validateToken(): Observable<UserRole> {
     // I use the `roles` endpoint to validate the token because the server doesn't have the proper endpoint
     return this.http.get<UserRole>('http://localhost:3000/api/roles/0');
   }

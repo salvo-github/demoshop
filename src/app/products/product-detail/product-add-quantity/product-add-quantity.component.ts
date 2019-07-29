@@ -29,7 +29,7 @@ export class ProductAddQuantityComponent implements OnInit, OnDestroy {
     }
   }
 
-  protected onUpdate() {
+  public onUpdate(): void {
     this.product.count += 5;
     this.saveProductSubscription = this.productService
       .saveProduct(this.product)
@@ -38,11 +38,11 @@ export class ProductAddQuantityComponent implements OnInit, OnDestroy {
       });
   }
 
-  protected onCancel() {
+  public onCancel(): void {
     this.router.navigate(this.getBackUrl());
   }
 
-  protected getBackUrl() {
+  public getBackUrl(): string[] {
     return this.route.snapshot.parent.url.map((urlSegment: UrlSegment) => {
       return urlSegment.path;
     });

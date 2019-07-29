@@ -30,7 +30,7 @@ export class ProductDeleteComponent implements OnInit, OnDestroy {
     }
   }
 
-  protected onDelete() {
+  public onDelete(): void {
     this.deleteProductSubscription = this.productService
       .deleteProduct(this.product)
       .subscribe((resp) => {
@@ -39,7 +39,7 @@ export class ProductDeleteComponent implements OnInit, OnDestroy {
       });
   }
 
-  protected onCancel() {
+  public onCancel(): void {
     const backUrl = this.route.snapshot.parent.url.map(
       (urlSegment: UrlSegment) => {
         return urlSegment.path;

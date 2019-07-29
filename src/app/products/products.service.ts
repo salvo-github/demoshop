@@ -21,14 +21,14 @@ export class ProductsService {
 
   private onDeleteSubject: Subject<Product> = new Subject<Product>();
 
-  constructor(private http: HttpClient, private route: ActivatedRoute) {}
+  public constructor(private http: HttpClient, private route: ActivatedRoute) {}
 
   /**
    * @description
    * Retrieve the product from the server and store it in [currentProduct]
    * @param id the product id to fetch
    */
-  fetchProduct(id: number) {
+  public fetchProduct(id: number) {
     return this.http
       .get<Product>(`http://localhost:3000/api/products/${id}`)
       .pipe(
@@ -45,7 +45,7 @@ export class ProductsService {
    * (used to performe eg edit without retrieve the same product from the server)
    * @param product the product to set
    */
-  setCurrentProduct(product: Product) {
+  public setCurrentProduct(product: Product) {
     this.currentProduct = product;
   }
 
@@ -53,7 +53,7 @@ export class ProductsService {
    * @description
    * Retrieve the current product without fetch it from the server
    */
-  getCurrentProduct(): Product {
+  public getCurrentProduct(): Product {
     return this.currentProduct;
   }
 
@@ -69,7 +69,7 @@ export class ProductsService {
    *
    * @
    */
-  fetchProducts(
+  public fetchProducts(
     valuesForFiltering: { [s: string]: any } = {},
     url: string = 'http://localhost:3000/api/products',
     page: string = '1',
@@ -118,13 +118,13 @@ export class ProductsService {
       );
   }
 
-  fetchCategoryById(id: number): Observable<Category> {
+  public fetchCategoryById(id: number): Observable<Category> {
     return this.http.get<Category>(
       `http://localhost:3000/api/categories/${id}`
     );
   }
 
-  fetchCategories(): Observable<Category[]> {
+  public fetchCategories(): Observable<Category[]> {
     return this.http.get<Category[]>('http://localhost:3000/api/categories');
   }
 
@@ -135,7 +135,7 @@ export class ProductsService {
    *
    * @param product the product to update or add
    */
-  saveProduct(product: Product): Observable<Product> {
+  public saveProduct(product: Product): Observable<Product> {
     if (product.id === undefined) {
       return this.http.post<Product>(
         `http://localhost:3000/api/products`,
@@ -148,7 +148,7 @@ export class ProductsService {
     );
   }
 
-  deleteProduct(product: Product): Observable<{}> {
+  public deleteProduct(product: Product): Observable<{}> {
     return this.http.delete<{}>(
       `http://localhost:3000/api/products/${product.id}`
     );
@@ -165,7 +165,7 @@ export class ProductsService {
    * _page=1&_limit=5&_page=1&_limit=5&_page=1&_limit=5&_page=1&_limit=5>; rel="first",
    * <http://loc...
    */
-  setPaginationLinks(headerLink: string) {
+  private setPaginationLinks(headerLink: string) {
     const links = headerLink.split(', ');
 
     for (const key in this.paginationLinks) {
@@ -188,7 +188,7 @@ export class ProductsService {
    * @description
    * A behavior subject is used because independently from when it is subscribed the last value emitted is recovered
    */
-  getPaginationLinksSubject(): BehaviorSubject<{ [s: string]: string }> {
+  public getPaginationLinksSubject(): BehaviorSubject<{ [s: string]: string }> {
     return this.paginationLinksSubject;
   }
 
@@ -196,7 +196,7 @@ export class ProductsService {
    * @description
    * It is used to manage the removal of the card from the list of products when the associated product is deleted
    */
-  getOnDeleteSubject(): Subject<Product> {
+  public getOnDeleteSubject(): Subject<Product> {
     return this.onDeleteSubject;
   }
 }

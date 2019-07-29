@@ -9,11 +9,11 @@ import { UserService } from '../user/user.service';
 export class HeaderComponent {
   public constructor(private userService: UserService) {}
 
-  protected getUsername(): string | null {
+  public getUsername(): string | null {
     return this.userService.getCurrentUserUsername();
   }
 
-  protected onLogout(): void {
+  public onLogout(): void {
     this.userService.logout();
   }
 }

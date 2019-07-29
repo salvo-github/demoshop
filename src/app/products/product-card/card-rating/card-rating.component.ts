@@ -11,9 +11,9 @@ export class CardRatingComponent implements OnInit {
   @Input() public rating: number;
   public maxRatingArray: number[];
 
-  constructor() {}
+  public constructor() {}
 
-  ngOnInit() {
+  public ngOnInit() {
     this.maxRatingArray = new Array(this.maxRating);
   }
 }

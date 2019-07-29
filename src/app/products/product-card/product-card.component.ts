@@ -12,19 +12,19 @@ export class ProductCardComponent {
   @Input() protected product: Product;
   protected isCurrentUserAdmin = false;
 
-  constructor(
+  public constructor(
     protected userService: UserService,
     protected productService: ProductsService
   ) {
     this.getCurrentUserRole();
   }
 
-  getCurrentUserRole(): void {
+  public getCurrentUserRole(): void {
     this.isCurrentUserAdmin = this.userService.isCurrentUserAdmin();
   }
 
   // used to delete a product from product list page
-  onDeleteHandler($event: MouseEvent): void {
+  public onDeleteHandler($event: MouseEvent): void {
     this.productService.setCurrentProduct(this.product);
     $event.stopPropagation();
   }

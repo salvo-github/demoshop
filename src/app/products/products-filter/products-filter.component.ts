@@ -56,7 +56,7 @@ export class ProductsFilterComponent implements OnInit, OnDestroy {
     }
   }
 
-  private initForm() {
+  private initForm(): void {
     this.filtersForm = new FormGroup(
       {
         [FilterFormFields.availability]: new FormControl(
@@ -95,7 +95,7 @@ export class ProductsFilterComponent implements OnInit, OnDestroy {
     );
   }
 
-  protected onApplyFilters() {
+  public onApplyFilters(): boolean | void {
     if (this.filtersForm.invalid) {
       return false;
     }
@@ -109,13 +109,13 @@ export class ProductsFilterComponent implements OnInit, OnDestroy {
     this.showFilters = false;
   }
 
-  onResetFilters() {
+  onResetFilters(): void {
     this.filtersForm.reset(this.initialFiltersFormValue);
 
     this.onApplyFilters();
   }
 
-  private cleanEmptyValues(filtersFormValues) {
+  private cleanEmptyValues(filtersFormValues): void {
     for (const key in filtersFormValues) {
       if (filtersFormValues.hasOwnProperty(key) && !filtersFormValues[key]) {
         delete filtersFormValues[key];
@@ -142,7 +142,7 @@ export class ProductsFilterComponent implements OnInit, OnDestroy {
     return null;
   }
 
-  protected toggleFilters(): void {
+  public toggleFilters(): void {
     this.showFilters = !this.showFilters;
   }
 }
