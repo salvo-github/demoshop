@@ -17,21 +17,21 @@ export class ProductDetailHeaderComponent
   public category: Category;
   private fetchCategoryByIdSubscription: Subscription;
 
-  constructor(
+  public constructor(
     private router: Router,
     private productService: ProductsService
   ) {}
 
-  ngOnInit() {}
+  public ngOnInit() {}
 
-  ngOnDestroy() {
+  public ngOnDestroy() {
     if (this.fetchCategoryByIdSubscription) {
       this.fetchCategoryByIdSubscription.unsubscribe();
     }
   }
 
   // update the cateogry after a product is edited
-  ngDoCheck() {
+  public ngDoCheck() {
     if (
       this.product &&
       (this.category === undefined ||
@@ -41,7 +41,7 @@ export class ProductDetailHeaderComponent
     }
   }
 
-  getProductCategory(): void {
+  protected getProductCategory(): void {
     this.fetchCategoryByIdSubscription = this.productService
       .fetchCategoryById(this.product.categoryId)
       .subscribe((categoryResponse) => {
@@ -49,7 +49,7 @@ export class ProductDetailHeaderComponent
       });
   }
 
-  onGoBack(): void {
+  protected onGoBack(): void {
     this.router.navigate([RoutesRef.products]);
   }
 }

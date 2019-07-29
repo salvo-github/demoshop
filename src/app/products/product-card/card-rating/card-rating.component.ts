@@ -6,8 +6,9 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./card-rating.component.scss']
 })
 export class CardRatingComponent implements OnInit {
+  @Input() private maxRating: number;
+
   @Input() public rating: number;
-  @Input() public maxRating: number;
   public maxRatingArray: number[];
 
   constructor() {}

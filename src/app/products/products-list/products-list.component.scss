@@ -1,3 +1,5 @@
+@import 'palettes';
+
 .product-list__nav {
   display: flex;
   justify-content: flex-end;
@@ -30,3 +32,5 @@
   display: flex;
   justify-content: space-between;
 }
+
+@import 'mediaqueries';

@@ -17,9 +17,12 @@ export class LoginComponent implements OnInit, OnDestroy {
   public loginFormFields = LoginFormFields;
   private loginSubscription: Subscription;
 
-  constructor(private userService: UserService, private router: Router) {}
+  public constructor(
+    private userService: UserService,
+    private router: Router
+  ) {}
 
-  ngOnInit() {
+  public ngOnInit() {
     this.loginForm = new FormGroup({
       [this.loginFormFields.username]: new FormControl(null, [
         Validators.required,
@@ -32,13 +35,13 @@ export class LoginComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy() {
+  public ngOnDestroy() {
     if (this.loginSubscription) {
       this.loginSubscription.unsubscribe();
     }
   }
 
-  public onSubmit() {
+  protected onSubmit() {
     const username = this.loginForm.get(this.loginFormFields.username).value;
     const password = this.loginForm.get(this.loginFormFields.password).value;
 
@@ -60,7 +63,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       );
   }
 
-  public controlHasError(control: string, error: string): boolean {
+  protected controlHasError(control: string, error: string): boolean {
     return (
       this.loginForm.get(control).touched &&
       this.loginForm.get(control).hasError(error)

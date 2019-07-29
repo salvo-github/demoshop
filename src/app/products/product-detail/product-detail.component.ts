@@ -8,11 +8,11 @@ import { Product } from '../product.model';
   styleUrls: ['./product-detail.component.scss']
 })
 export class ProductDetailComponent implements OnInit {
-  product: Product;
+  protected product: Product;
 
-  constructor(private route: ActivatedRoute, private router: Router) {}
+  public constructor(private route: ActivatedRoute, private router: Router) {}
 
-  ngOnInit() {
+  public ngOnInit() {
     if (this.route.snapshot.data.product === null) {
       return this.router.navigate(['/page-not-found'], {
         skipLocationChange: true

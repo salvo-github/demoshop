@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { UserService } from 'src/app/user/user.service';
 import { Product } from '../product.model';
 import { ProductsService } from '../products.service';
@@ -8,8 +8,8 @@ import { ProductsService } from '../products.service';
   templateUrl: './product-card.component.html',
   styleUrls: ['./product-card.component.scss']
 })
-export class ProductCardComponent implements OnInit {
-  protected product: Product;
+export class ProductCardComponent {
+  @Input() protected product: Product;
   protected isCurrentUserAdmin = false;
 
   constructor(
@@ -18,8 +18,6 @@ export class ProductCardComponent implements OnInit {
   ) {
     this.getCurrentUserRole();
   }
-
-  ngOnInit() {}
 
   getCurrentUserRole(): void {
     this.isCurrentUserAdmin = this.userService.isCurrentUserAdmin();

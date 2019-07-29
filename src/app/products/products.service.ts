@@ -118,7 +118,7 @@ export class ProductsService {
       );
   }
 
-  fetchCategoryById(id: number) {
+  fetchCategoryById(id: number): Observable<Category> {
     return this.http.get<Category>(
       `http://localhost:3000/api/categories/${id}`
     );
@@ -135,18 +135,23 @@ export class ProductsService {
    *
    * @param product the product to update or add
    */
-  saveProduct(product: Product) {
+  saveProduct(product: Product): Observable<Product> {
     if (product.id === undefined) {
-      return this.http.post(`http://localhost:3000/api/products`, product);
+      return this.http.post<Product>(
+        `http://localhost:3000/api/products`,
+        product
+      );
     }
-    return this.http.patch(
+    return this.http.patch<Product>(
       `http://localhost:3000/api/products/${product.id}`,
       product
     );
   }
 
-  deleteProduct(product: Product) {
-    return this.http.delete(`http://localhost:3000/api/products/${product.id}`);
+  deleteProduct(product: Product): Observable<{}> {
+    return this.http.delete<{}>(
+      `http://localhost:3000/api/products/${product.id}`
+    );
   }
   /**
    * @description

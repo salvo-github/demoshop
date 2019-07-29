@@ -14,21 +14,22 @@ import { EditFormFields } from './edit-form-fields.model';
   styleUrls: ['./product-edit.component.scss']
 })
 export class ProductEditComponent implements OnInit, OnDestroy {
-  editForm: FormGroup;
-  public editFormFields = EditFormFields;
-  genders = ['Man', 'Woman', 'Unisex'];
-  categories: Category[];
-  product: Product;
   private fetchCategoriesSubscription: Subscription;
   private saveProductSubscription: Subscription;
 
-  constructor(
+  public editForm: FormGroup;
+  public editFormFields = EditFormFields;
+  public genders = ['Man', 'Woman', 'Unisex'];
+  public categories: Category[];
+  public product: Product;
+
+  public constructor(
     private productsService: ProductsService,
     private route: ActivatedRoute,
     private router: Router
   ) {}
 
-  ngOnInit() {
+  public ngOnInit() {
     this.product = this.route.snapshot.data.product || new Product();
 
     this.editForm = new FormGroup({
@@ -67,7 +68,7 @@ export class ProductEditComponent implements OnInit, OnDestroy {
       });
   }
 
-  ngOnDestroy() {
+  public ngOnDestroy() {
     if (this.saveProductSubscription) {
       this.saveProductSubscription.unsubscribe();
     }
@@ -76,7 +77,7 @@ export class ProductEditComponent implements OnInit, OnDestroy {
     }
   }
 
-  toNumber(control: FormControl): { [s: string]: boolean } {
+  private toNumber(control: FormControl): { [s: string]: boolean } {
     if (typeof control.value !== 'number') {
       const value = parseFloat(control.value);
       control.setValue(value);
@@ -84,7 +85,7 @@ export class ProductEditComponent implements OnInit, OnDestroy {
     return null;
   }
 
-  onSubmit() {
+  protected onSubmit() {
     const editedProduct: Product = Object.assign(
       this.product,
       this.editForm.value
@@ -96,7 +97,7 @@ export class ProductEditComponent implements OnInit, OnDestroy {
       });
   }
 
-  onCancel() {
+  protected onCancel(): void {
     if (this.product.id) {
       this.router.navigate(['../'], { relativeTo: this.route });
     } else {
@@ -104,12 +105,12 @@ export class ProductEditComponent implements OnInit, OnDestroy {
     }
   }
 
-  getUrlPattern() {
+  protected getUrlPattern() {
     const expression = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
     return new RegExp(expression);
   }
 
-  controlHasError(control: string, error: string): boolean {
+  protected controlHasError(control: string, error: string): boolean {
     return (
       this.editForm.get(control).touched &&
       this.editForm.get(control).hasError(error)

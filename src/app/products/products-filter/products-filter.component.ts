@@ -18,29 +18,29 @@ export class ProductsFilterComponent implements OnInit, OnDestroy {
 
   public filtersForm: FormGroup;
   public genders = ['None', 'Man', 'Woman', 'Unisex'];
+  public filterFormFields = FilterFormFields;
 
   // all the params map the query string for the api
   private initialFiltersFormValue = {
-    availability: false,
-    gender: '',
-    categoryId: '',
-    cost_gte: null,
-    cost_lte: null,
-    rating: '',
+    [FilterFormFields.availability]: false,
+    [FilterFormFields.gender]: '',
+    [FilterFormFields.categoryId]: '',
+    [FilterFormFields.cost_gte]: null,
+    [FilterFormFields.cost_lte]: null,
+    [FilterFormFields.rating]: '',
     // q: api param for full text search
-    q: null
+    [FilterFormFields.q]: null
   };
-  public filterFormFields = FilterFormFields;
 
   private fetchCategoriesSubscription: Subscription;
 
-  constructor(
+  public constructor(
     private route: ActivatedRoute,
     private productsService: ProductsService,
     private router: Router
   ) {}
 
-  ngOnInit() {
+  public ngOnInit() {
     this.fetchCategoriesSubscription = this.productsService
       .fetchCategories()
       .subscribe((categoriesData) => {
@@ -50,46 +50,43 @@ export class ProductsFilterComponent implements OnInit, OnDestroy {
     this.initForm();
   }
 
-  ngOnDestroy() {
+  public ngOnDestroy() {
     if (this.fetchCategoriesSubscription) {
       this.fetchCategoriesSubscription.unsubscribe();
     }
   }
 
-  initForm() {
+  private initForm() {
     this.filtersForm = new FormGroup(
       {
-        [this.filterFormFields.availability]: new FormControl(
+        [FilterFormFields.availability]: new FormControl(
           this.route.snapshot.queryParamMap.get(
-            this.filterFormFields.availability
-          ) || this.initialFiltersFormValue[this.filterFormFields.availability]
+            FilterFormFields.availability
+          ) || this.initialFiltersFormValue[FilterFormFields.availability]
         ),
-        [this.filterFormFields.gender]: new FormControl(
-          this.route.snapshot.queryParamMap.get(this.filterFormFields.gender) ||
-            this.initialFiltersFormValue[this.filterFormFields.gender]
+        [FilterFormFields.gender]: new FormControl(
+          this.route.snapshot.queryParamMap.get(FilterFormFields.gender) ||
+            this.initialFiltersFormValue[FilterFormFields.gender]
         ),
-        [this.filterFormFields.categoryId]: new FormControl(
-          this.route.snapshot.queryParamMap.get(
-            this.filterFormFields.categoryId
-          ) || this.initialFiltersFormValue[this.filterFormFields.categoryId]
+        [FilterFormFields.categoryId]: new FormControl(
+          this.route.snapshot.queryParamMap.get(FilterFormFields.categoryId) ||
+            this.initialFiltersFormValue[FilterFormFields.categoryId]
         ),
-        [this.filterFormFields.q]: new FormControl(
-          this.route.snapshot.queryParamMap.get(this.filterFormFields.q) ||
-            this.initialFiltersFormValue[this.filterFormFields.q]
+        [FilterFormFields.q]: new FormControl(
+          this.route.snapshot.queryParamMap.get(FilterFormFields.q) ||
+            this.initialFiltersFormValue[FilterFormFields.q]
         ),
-        [this.filterFormFields.rating]: new FormControl(
-          this.route.snapshot.queryParamMap.get(this.filterFormFields.rating) ||
-            this.initialFiltersFormValue[this.filterFormFields.rating]
+        [FilterFormFields.rating]: new FormControl(
+          this.route.snapshot.queryParamMap.get(FilterFormFields.rating) ||
+            this.initialFiltersFormValue[FilterFormFields.rating]
         ),
-        [this.filterFormFields.cost_gte]: new FormControl(
-          this.route.snapshot.queryParamMap.get(
-            this.filterFormFields.cost_gte
-          ) || this.initialFiltersFormValue[this.filterFormFields.cost_gte]
+        [FilterFormFields.cost_gte]: new FormControl(
+          this.route.snapshot.queryParamMap.get(FilterFormFields.cost_gte) ||
+            this.initialFiltersFormValue[FilterFormFields.cost_gte]
         ),
-        [this.filterFormFields.cost_lte]: new FormControl(
-          this.route.snapshot.queryParamMap.get(
-            this.filterFormFields.cost_lte
-          ) || this.initialFiltersFormValue[this.filterFormFields.cost_lte]
+        [FilterFormFields.cost_lte]: new FormControl(
+          this.route.snapshot.queryParamMap.get(FilterFormFields.cost_lte) ||
+            this.initialFiltersFormValue[FilterFormFields.cost_lte]
         )
       },
       {
@@ -98,7 +95,7 @@ export class ProductsFilterComponent implements OnInit, OnDestroy {
     );
   }
 
-  onApplyFilters() {
+  protected onApplyFilters() {
     if (this.filtersForm.invalid) {
       return false;
     }
@@ -118,7 +115,7 @@ export class ProductsFilterComponent implements OnInit, OnDestroy {
     this.onApplyFilters();
   }
 
-  cleanEmptyValues(filtersFormValues) {
+  private cleanEmptyValues(filtersFormValues) {
     for (const key in filtersFormValues) {
       if (filtersFormValues.hasOwnProperty(key) && !filtersFormValues[key]) {
         delete filtersFormValues[key];
@@ -126,7 +123,7 @@ export class ProductsFilterComponent implements OnInit, OnDestroy {
     }
   }
 
-  costValidator(group: FormGroup): { [s: string]: boolean } | null {
+  private costValidator(group: FormGroup): { [s: string]: boolean } | null {
     if (
       group.value.cost_lte !== null &&
       group.value.cost_gte !== null &&
@@ -145,7 +142,7 @@ export class ProductsFilterComponent implements OnInit, OnDestroy {
     return null;
   }
 
-  toggleFilters(): void {
+  protected toggleFilters(): void {
     this.showFilters = !this.showFilters;
   }
 }

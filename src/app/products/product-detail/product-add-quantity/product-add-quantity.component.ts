@@ -1,9 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Product } from '../../product.model';
-import { RoutesRef } from 'src/app/routes-ref.model';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, UrlSegment } from '@angular/router';
-import { ProductsService } from '../../products.service';
 import { Subscription } from 'rxjs';
+import { Product } from '../../product.model';
+import { ProductsService } from '../../products.service';
 
 @Component({
   selector: 'app-product-add-quantity',
@@ -11,27 +10,26 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./product-add-quantity.component.scss']
 })
 export class ProductAddQuantityComponent implements OnInit, OnDestroy {
-  product: Product;
-  RoutesRef = RoutesRef;
+  private product: Product;
   private saveProductSubscription: Subscription;
 
-  constructor(
+  public constructor(
     private route: ActivatedRoute,
     private productService: ProductsService,
     private router: Router
   ) {}
 
-  ngOnInit() {
+  public ngOnInit() {
     this.product = this.route.snapshot.data.product;
   }
 
-  ngOnDestroy() {
+  public ngOnDestroy() {
     if (this.saveProductSubscription) {
       this.saveProductSubscription.unsubscribe();
     }
   }
 
-  onUpdate() {
+  protected onUpdate() {
     this.product.count += 5;
     this.saveProductSubscription = this.productService
       .saveProduct(this.product)
@@ -40,11 +38,11 @@ export class ProductAddQuantityComponent implements OnInit, OnDestroy {
       });
   }
 
-  onCancel() {
+  protected onCancel() {
     this.router.navigate(this.getBackUrl());
   }
 
-  getBackUrl() {
+  protected getBackUrl() {
     return this.route.snapshot.parent.url.map((urlSegment: UrlSegment) => {
       return urlSegment.path;
     });

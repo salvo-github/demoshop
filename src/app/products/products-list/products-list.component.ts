@@ -12,26 +12,22 @@ import { RoutesRef } from 'src/app/routes-ref.model';
   styleUrls: ['./products-list.component.scss']
 })
 export class ProductsListComponent implements OnInit, OnDestroy {
-  products: Product[];
-
   private paginationLinksSubject: BehaviorSubject<{ [s: string]: string }>;
   private paginationLinksSubscription: Subscription;
   private fetchProductsSubscription: Subscription;
-  paginationLinks: { [s: string]: string };
+  private onDeleteSubjectSubscription;
 
-  onDeleteSubjectSubscription;
+  public products: Product[];
+  public paginationLinks: { [s: string]: string };
+  public isCurrentUserAdmin = false;
 
-  isCurrentUserAdmin = false;
-
-  RoutesRef = RoutesRef;
-
-  constructor(
+  public constructor(
     private route: ActivatedRoute,
     private productsService: ProductsService,
     private userService: UserService
   ) {}
 
-  ngOnInit() {
+  public ngOnInit() {
     if (this.route.snapshot.data.products.length) {
       this.products = this.route.snapshot.data.products;
     }
@@ -61,7 +57,7 @@ export class ProductsListComponent implements OnInit, OnDestroy {
       });
   }
 
-  ngOnDestroy() {
+  public ngOnDestroy() {
     if (this.paginationLinksSubscription) {
       this.paginationLinksSubscription.unsubscribe();
     }
@@ -73,7 +69,7 @@ export class ProductsListComponent implements OnInit, OnDestroy {
     }
   }
 
-  fetchFilteredProducts(
+  private fetchFilteredProducts(
     valuesForFiltering: { [s: string]: any },
     url?: string
   ) {
@@ -84,7 +80,7 @@ export class ProductsListComponent implements OnInit, OnDestroy {
       });
   }
 
-  getPaginationLinks() {
+  public getPaginationLinks() {
     this.paginationLinksSubject = this.productsService.getPaginationLinksSubject();
 
     this.paginationLinksSubscription = this.paginationLinksSubject.subscribe(
@@ -94,7 +90,11 @@ export class ProductsListComponent implements OnInit, OnDestroy {
     );
   }
 
-  getCurrentUserRole(): void {
+  protected getCurrentUserRole(): void {
     this.isCurrentUserAdmin = this.userService.isCurrentUserAdmin();
+  }
+
+  private getNewProductRoute(): string[] {
+    return [RoutesRef.product, 'new'];
   }
 }

@@ -1,10 +1,14 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpResponse
+} from '@angular/common/http';
 import { tap } from 'rxjs/operators';
 import { User } from './user.model';
 import { UserRole } from './user-role.model';
 import { Router } from '@angular/router';
-import { EMPTY } from 'rxjs';
+import { EMPTY, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -66,7 +70,7 @@ export class UserService {
     return localStorage.getItem(this.currentUserUsernameSessionId);
   }
 
-  getSessionTokenId() {
+  getSessionTokenId(): string {
     return this.sessionTokenSessionId;
   }
 
@@ -108,8 +112,8 @@ export class UserService {
    * If the current user token it's not valid the serve returns 401.
    * Based on that the user will be redirect to login page, otherwise he will be able to continue to the route
    */
-  validateToken() {
+  validateToken(): Observable<UserRole> {
     // I use the `roles` endpoint to validate the token because the server doesn't have the proper endpoint
-    return this.http.get('http://localhost:3000/api/roles/0');
+    return this.http.get<UserRole>('http://localhost:3000/api/roles/0');
   }
 }

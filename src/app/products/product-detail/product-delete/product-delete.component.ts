@@ -11,27 +11,26 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./product-delete.component.scss']
 })
 export class ProductDeleteComponent implements OnInit, OnDestroy {
-  product: Product;
-  RoutesRef = RoutesRef;
+  private product: Product;
   private deleteProductSubscription: Subscription;
 
-  constructor(
+  public constructor(
     private route: ActivatedRoute,
     private productService: ProductsService,
     private router: Router
   ) {}
 
-  ngOnInit() {
+  public ngOnInit() {
     this.product = this.route.snapshot.data.product;
   }
 
-  ngOnDestroy() {
+  public ngOnDestroy() {
     if (this.deleteProductSubscription) {
       this.deleteProductSubscription.unsubscribe();
     }
   }
 
-  onDelete() {
+  protected onDelete() {
     this.deleteProductSubscription = this.productService
       .deleteProduct(this.product)
       .subscribe((resp) => {
@@ -40,7 +39,7 @@ export class ProductDeleteComponent implements OnInit, OnDestroy {
       });
   }
 
-  onCancel() {
+  protected onCancel() {
     const backUrl = this.route.snapshot.parent.url.map(
       (urlSegment: UrlSegment) => {
         return urlSegment.path;

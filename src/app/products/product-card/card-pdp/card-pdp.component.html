@@ -1,7 +1,10 @@
 <article *ngIf="product" class="card card--pdp">
   <figure class="card__figure">
     <img class="figure__image" src="{{ product.image }}" appPlaceholder />
-    <app-card-rating [rating]="3" [maxRating]="5"></app-card-rating>
+    <app-card-rating
+      [rating]="product.rating"
+      [maxRating]="5"
+    ></app-card-rating>
   </figure>
   <section class="card__info">
     <div class="card__info-group">
