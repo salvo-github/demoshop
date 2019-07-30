@@ -1,0 +1,10 @@
+<div>
+  <br class="h3" />
+  <span class="h3">You can </span>
+  <a
+    *ngFor="let action of getActionsKeys(); let i = index"
+    (click)="execute($event, action)"
+    >{{ action }}<span *ngIf="i < getActionsMaxIndex()">, </span
+    ><span *ngIf="i >= getActionsMaxIndex()">.</span></a
+  >
+</div>

@@ -16,4 +16,12 @@ export class CardPdpComponent extends ProductCardComponent {
   protected getProductAvailability(): number {
     return this.product.count - this.product.soldCount;
   }
+
+  protected getActions() {
+    return {
+      edit: this.getLink.bind(this, 'edit'),
+      ['add five product']: this.getLink.bind(this, 'add'),
+      delete: this.getLink.bind(this, 'delete')
+    };
+  }
 }

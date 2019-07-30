@@ -199,4 +199,8 @@ export class ProductsService {
   public getOnDeleteSubject(): Subject<Product> {
     return this.onDeleteSubject;
   }
+
+  public getProductMaxRating(): number {
+    return 5;
+  }
 }

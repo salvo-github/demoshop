@@ -24,6 +24,9 @@ import { ServerErrorComponent } from './server-error/server-error.component';
 import { ImagePlaceholderDirective } from './shared/image-placeholder.directive';
 import { LoginComponent } from './user/login/login.component';
 import { UserAuthInterceptorService } from './user/user-auth-interceptor.service';
+import { CardFigureComponent } from './products/product-card/card-figure/card-figure.component';
+import { CardInfoGroupComponent } from './products/product-card/card-info-group/card-info-group.component';
+import { CardActionsComponent } from './products/product-card/card-actions/card-actions.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +48,10 @@ import { UserAuthInterceptorService } from './user/user-auth-interceptor.service
     CardRatingComponent,
     CardListComponent,
     CardPdpComponent,
-    ProductDetailHeaderComponent
+    ProductDetailHeaderComponent,
+    CardFigureComponent,
+    CardInfoGroupComponent,
+    CardActionsComponent
   ],
   imports: [
     BrowserModule,

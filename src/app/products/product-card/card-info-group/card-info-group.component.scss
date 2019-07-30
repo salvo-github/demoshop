@@ -1,0 +1,12 @@
+@import 'palettes';
+
+.card__info-group {
+  flex: 1;
+  padding-bottom: 1.88em;
+}
+
+.card__info-title {
+  padding-bottom: 0.5em;
+  border-bottom: 0.111em solid $border-main;
+  margin-bottom: 0.5em;
+}

@@ -8,14 +8,6 @@
   background-repeat: repeat;
 }
 
-.figure__image {
-  display: block;
-  max-width: 100%;
-  width: auto;
-  height: auto;
-  margin: 0 auto 0;
-}
-
 .card__info {
   flex-grow: 1;
   color: $default-black;
@@ -24,23 +16,6 @@
   flex-direction: column;
   justify-content: space-between;
   padding: 0.88em 1.25em;
-}
-
-.card__info-group {
-  flex: 1;
-  padding-bottom: 1.88em;
-}
-
-.card__info-title {
-  padding-bottom: 0.5em;
-  border-bottom: 0.111em solid $border-main;
-  margin-bottom: 0.5em;
-}
-
-.card__info-desc {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
 }
 
 .card__cta {

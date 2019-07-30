@@ -1,31 +1,22 @@
 <article *ngIf="product" class="card card--pdp">
-  <figure class="card__figure">
-    <img class="figure__image" src="{{ product.image }}" appPlaceholder />
-    <app-card-rating
-      [rating]="product.rating"
-      [maxRating]="5"
-    ></app-card-rating>
-  </figure>
+  <app-card-figure
+    class="card__figure"
+    [imageSrc]="product.image"
+    [rating]="product.rating"
+    [maxRating]="getProductMaxRating()"
+  ></app-card-figure>
+
   <section class="card__info">
-    <div class="card__info-group">
-      <h2 class="h2 font__style--weight-bold card__info-title">
-        {{ product.name }}
-      </h2>
-      <p class="h5">
-        {{ product.description }}
-      </p>
-      <div *ngIf="isCurrentUserAdmin">
-        <br class="h3" />
-        <p class="h3 card__admin-action">
-          You can
-          <a [routerLink]="['add']">add 5 more</a>. You can also
-          <a [routerLink]="['edit']">edit</a>
-          details or
-          <a [routerLink]="['delete']">delete</a>
-          them.
-        </p>
-      </div>
-    </div>
+    <app-card-info-group
+      [title]="product.name"
+      [description]="product.description"
+    ></app-card-info-group>
+
+    <app-card-actions
+      *ngIf="isCurrentUserAdmin"
+      [actions]="getActions()"
+    ></app-card-actions>
+
     <div class="card__cta">
       <p class="h1 font__style--weight-bold  card__info-price">
         {{ product.cost

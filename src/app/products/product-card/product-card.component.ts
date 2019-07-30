@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { UserService } from 'src/app/user/user.service';
 import { Product } from '../product.model';
 import { ProductsService } from '../products.service';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-product-card',
@@ -14,7 +15,9 @@ export class ProductCardComponent {
 
   public constructor(
     protected userService: UserService,
-    protected productService: ProductsService
+    protected productService: ProductsService,
+    protected router: Router,
+    protected activatedRoute: ActivatedRoute
   ) {
     this.getCurrentUserRole();
   }
@@ -23,9 +26,11 @@ export class ProductCardComponent {
     this.isCurrentUserAdmin = this.userService.isCurrentUserAdmin();
   }
 
-  // used to delete a product from product list page
-  public onDeleteHandler($event: MouseEvent): void {
-    this.productService.setCurrentProduct(this.product);
-    $event.stopPropagation();
+  public getProductMaxRating(): number {
+    return this.productService.getProductMaxRating();
+  }
+
+  protected getLink(...routeParams: (string | number)[]): void {
+    this.router.navigate(routeParams, { relativeTo: this.activatedRoute });
   }
 }
