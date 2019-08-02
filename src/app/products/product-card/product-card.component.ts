@@ -30,7 +30,7 @@ export class ProductCardComponent {
     return this.productService.getProductMaxRating();
   }
 
-  protected getLink(...routeParams: (string | number)[]): void {
+  protected navigateTo(...routeParams: (string | number)[]): void {
     this.router.navigate(routeParams, { relativeTo: this.activatedRoute });
   }
 }

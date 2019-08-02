@@ -1,4 +1,4 @@
-<article *ngIf="product" class="card" (click)="getLinkToDetailPage($event)">
+<article *ngIf="product" class="card" (click)="navigateToDetailPage($event)">
   <app-card-figure
     [imageSrc]="product.image"
     [rating]="product.rating"
@@ -23,7 +23,7 @@
       </p>
       <button
         class="button button--primary button--regular"
-        (click)="getLinkToDetailPage($event)"
+        (click)="navigateToDetailPage($event)"
       >
         <span class="h5">Show More</span>
       </button>

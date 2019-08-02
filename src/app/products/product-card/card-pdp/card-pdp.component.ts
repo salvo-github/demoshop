@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ProductCardComponent } from '../product-card.component';
+import { AdminActions } from '../admin-actions.model';
 
 @Component({
   selector: 'app-card-pdp',
@@ -19,9 +20,9 @@ export class CardPdpComponent extends ProductCardComponent {
 
   protected getActions() {
     return {
-      edit: this.getLink.bind(this, 'edit'),
-      ['add five product']: this.getLink.bind(this, 'add'),
-      delete: this.getLink.bind(this, 'delete')
+      [AdminActions.edit]: () => this.navigateTo(AdminActions.edit),
+      [AdminActions.add]: () => this.navigateTo(AdminActions.add),
+      [AdminActions.delete]: () => this.navigateTo(AdminActions.delete)
     };
   }
 }
