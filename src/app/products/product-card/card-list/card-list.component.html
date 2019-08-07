@@ -18,15 +18,11 @@
     ></app-card-actions>
 
     <div class="card__cta">
-      <p class="h1 font__style--weight-bold  card__info-price">
-        {{ product.cost }}
-      </p>
-      <button
-        class="button button--primary button--regular"
-        (click)="navigateToDetailPage($event)"
+      <app-card-price [price]="product.cost"></app-card-price>
+
+      <app-button primary regular (click)="navigateToDetailPage($event)"
+        >Show More</app-button
       >
-        <span class="h5">Show More</span>
-      </button>
     </div>
   </section>
 </article>

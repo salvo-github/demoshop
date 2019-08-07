@@ -1,0 +1,12 @@
+<button
+  class="h5 button"
+  [ngClass]="{
+    'button--primary': getState('primary'),
+    'button--secondary': getState('secondary'),
+    'button--regular': getState('regular'),
+    'button--big': getState('big')
+  }"
+  [disabled]="disabled"
+>
+  <ng-content></ng-content>
+</button>

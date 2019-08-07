@@ -13,12 +13,8 @@
       </p>
     </div>
     <div class="modal__cta">
-      <button class="button button--secondary button--big" (click)="onCancel()">
-        Cancel
-      </button>
-      <button class="button button--primary button--big" (click)="onDelete()">
-        Submit
-      </button>
+      <app-button secondary big (click)="onCancel()">Cancel</app-button>
+      <app-button primary big (click)="onDelete()">Submit</app-button>
     </div>
   </div>
 </div>

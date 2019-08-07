@@ -57,14 +57,13 @@
             *ngIf="loginForm.invalid && isSubmitted"
             >Wrong login or password</span
           >
-          <button
-            class="button button--primary button--big"
-            type="submit"
+          <app-button
+            primary
+            big
             [disabled]="loginForm.invalid"
             (click)="onSubmit()"
+            >Submit</app-button
           >
-            Submit
-          </button>
         </div>
       </form>
     </div>

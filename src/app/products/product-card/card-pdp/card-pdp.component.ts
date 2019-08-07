@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ProductCardComponent } from '../product-card.component';
 import { AdminActions } from '../admin-actions.model';
+import { ButtonsLabels } from 'src/app/shared/buttons/buttons-labels-model';
 
 @Component({
   selector: 'app-card-pdp',
@@ -24,5 +25,9 @@ export class CardPdpComponent extends ProductCardComponent {
       [AdminActions.add]: () => this.navigateTo(AdminActions.add),
       [AdminActions.delete]: () => this.navigateTo(AdminActions.delete)
     };
+  }
+
+  protected getBuyLabel() {
+    return ButtonsLabels.buy;
   }
 }

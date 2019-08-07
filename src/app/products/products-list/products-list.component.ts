@@ -5,6 +5,7 @@ import { Product } from '../product.model';
 import { ProductsService } from '../products.service';
 import { UserService } from 'src/app/user/user.service';
 import { RoutesRef } from 'src/app/routes-ref.model';
+import { PaginationProperties } from '../product-list/pagination/pagination-properties.model';
 
 @Component({
   selector: 'app-products-list',
@@ -96,5 +97,25 @@ export class ProductsListComponent implements OnInit, OnDestroy {
 
   public getNewProductRoute(): string[] {
     return [RoutesRef.product, 'new'];
+  }
+
+  public onChangePage($event: string): void {
+    const pageLink: string = this.paginationLinks[$event];
+    this.fetchFilteredProducts({}, pageLink);
+  }
+
+  /**
+   * @description
+   * If the url is present the action will be true
+   */
+  public getPaginationActions(): { [s: string]: boolean } {
+    return {
+      [PaginationProperties.prev]: !!this.paginationLinks[
+        PaginationProperties.prev
+      ],
+      [PaginationProperties.next]: !!this.paginationLinks[
+        PaginationProperties.next
+      ]
+    };
   }
 }

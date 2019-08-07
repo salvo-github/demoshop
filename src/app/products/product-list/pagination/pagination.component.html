@@ -1,0 +1,11 @@
+<div class="paginations__cta">
+  <app-button
+    primary
+    regular
+    *ngFor="let action of paginationActions | keyvalue"
+    [disabled]="!action.value"
+    (click)="onClick(action.key)"
+  >
+    {{ action.key }}
+  </app-button>
+</div>

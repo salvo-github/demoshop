@@ -1,11 +1,9 @@
 <section class="filters" [formGroup]="filtersForm">
   <div class="filters__buttons">
-    <button
-      class="h5 button button--primary button--regular"
-      (click)="toggleFilters()"
+    <app-button primary regular (click)="toggleFilters()"
+      >Filter options</app-button
     >
-      Filter options
-    </button>
+
     <input
       class="h5 textinput textinput-icon filters__icon--fbt textinput--narrower"
       type="text"
@@ -103,27 +101,23 @@
         </span>
       </div>
       <div class="filters__field-wrapper filters__field-wrapper--buttons">
-        <button
-          type="button"
-          class="h5 button button--secondary button--regular"
-          (click)="onResetFilters()"
-        >
-          Reset filters
-        </button>
-        <button
-          type="button"
-          class="h5 button button--primary button--regular"
+        <app-button
+          secondary
+          regular
           (click)="onApplyFilters()"
           [disabled]="filtersForm.invalid"
+          >Reset Filters</app-button
         >
-          Apply filters
-        </button>
+        <app-button
+          secondary
+          regular
+          class="filter__submit-button"
+          (click)="onResetFilters()"
+          *ngIf="filtersForm.valid"
+          type="submit"
+          >Reset Filters</app-button
+        >
       </div>
-      <button
-        *ngIf="filtersForm.valid"
-        type="submit"
-        class="h5 button button--primary button--regular filter__submit-button"
-      ></button>
     </form>
   </div>
 </section>

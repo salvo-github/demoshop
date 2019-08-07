@@ -1,0 +1,6 @@
+@import 'palettes';
+
+.card__info-price::before {
+  content: '$';
+  color: $theme-seconday-color;
+}

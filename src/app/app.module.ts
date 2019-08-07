@@ -27,6 +27,9 @@ import { UserAuthInterceptorService } from './user/user-auth-interceptor.service
 import { CardFigureComponent } from './products/product-card/card-figure/card-figure.component';
 import { CardInfoGroupComponent } from './products/product-card/card-info-group/card-info-group.component';
 import { CardActionsComponent } from './products/product-card/card-actions/card-actions.component';
+import { CardPriceComponent } from './products/product-card/card-price/card-price.component';
+import { ButtonComponent } from './shared/buttons/button/button.component';
+import { PaginationComponent } from './products/product-list/pagination/pagination.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +54,10 @@ import { CardActionsComponent } from './products/product-card/card-actions/card-
     ProductDetailHeaderComponent,
     CardFigureComponent,
     CardInfoGroupComponent,
-    CardActionsComponent
+    CardActionsComponent,
+    CardPriceComponent,
+    ButtonComponent,
+    PaginationComponent
   ],
   imports: [
     BrowserModule,

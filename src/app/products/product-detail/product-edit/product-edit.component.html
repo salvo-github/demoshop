@@ -127,20 +127,15 @@
           </div>
         </section>
         <div class="modal__cta">
-          <button
-            type="button"
-            class="button button--secondary button--big"
-            (click)="onCancel()"
-          >
-            Cancel
-          </button>
-          <button
-            class="button button--primary button--big"
+          <app-button secondary big (click)="onCancel()">Cancel</app-button>
+          <app-button
             type="submit"
+            primary
+            big
+            (click)="onCancel()"
             [disabled]="editForm.invalid"
+            >Submit</app-button
           >
-            Submit
-          </button>
         </div>
       </form>
     </div>

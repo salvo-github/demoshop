@@ -18,25 +18,18 @@
     ></app-card-actions>
 
     <div class="card__cta">
-      <p class="h1 font__style--weight-bold  card__info-price">
-        {{ product.cost
-        }}<span
-          class="font__style--weight-lighter font__style--smaller card__info-price--extra"
-        >
-          ({{
-            getProductAvailability() > 0
-              ? getProductAvailability() + ' items left'
-              : 'Sold Out'
-          }})</span
-        >
-      </p>
-      <button
-        class="button button--primary button--regular"
-        (click)="toggleModal()"
-        [disabled]="getProductAvailability() < 1"
+      <app-card-price
+        [price]="product.cost"
+        [quantity]="getProductAvailability()"
       >
-        <span class="h5">Buy</span>
-      </button>
+      </app-card-price>
+      <app-button
+        primary
+        regular
+        (click)="toggleModal()"
+        [disabled]="!getProductAvailability()"
+        >Buy</app-button
+      >
     </div>
     <app-product-buy
       *ngIf="onBuying"

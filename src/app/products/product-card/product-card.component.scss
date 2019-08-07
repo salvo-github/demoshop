@@ -23,9 +23,4 @@
   justify-content: space-between;
 }
 
-.card__info-price::before {
-  content: '$';
-  color: $theme-seconday-color;
-}
-
 @import 'mediaqueries';

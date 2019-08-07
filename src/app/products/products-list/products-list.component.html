@@ -1,34 +1,27 @@
 <nav class="product-list__nav">
-  <button
-    class="h5 button button--primary button--regular product-list__add-product"
+  <app-button
+    primary
+    regular
+    class="product-list__add-product"
     *ngIf="isCurrentUserAdmin"
     [routerLink]="getNewProductRoute()"
   >
     Add product
-  </button>
+  </app-button>
   <app-products-filter></app-products-filter>
 </nav>
+
 <div class="cards" *ngIf="products && products.length; else noProducts">
   <div class="main__card" *ngFor="let product of products">
     <app-card-list [product]="product"></app-card-list>
   </div>
 </div>
-<div class="product-list__pages-navigation">
-  <button
-    class="h5 button button--primary button--regular"
-    [disabled]="paginationLinks['prev'] === null"
-    (click)="fetchFilteredProducts({}, paginationLinks['prev'])"
-  >
-    Previous Page
-  </button>
-  <button
-    class="h5 button button--primary button--regular"
-    [disabled]="paginationLinks['next'] === null"
-    (click)="fetchFilteredProducts({}, paginationLinks['next'])"
-  >
-    Next Page
-  </button>
-</div>
+
+<app-pagination
+  [paginationActions]="getPaginationActions()"
+  (changePage)="onChangePage($event)"
+></app-pagination>
+
 <ng-template #noProducts
   ><h1 class="h1 font__style--weight-bold font__style--center">
     No products available!

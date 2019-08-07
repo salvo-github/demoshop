@@ -5,15 +5,16 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { Category } from './category.model';
 import { Product } from './product.model';
+import { PaginationProperties } from '../products/product-list/pagination/pagination-properties.model';
 
 @Injectable({ providedIn: 'root' })
 export class ProductsService {
   private currentProduct: Product;
   private paginationLinks = {
-    next: null,
-    prev: null,
-    first: null,
-    last: null
+    [PaginationProperties.next]: null,
+    [PaginationProperties.prev]: null,
+    [PaginationProperties.first]: null,
+    [PaginationProperties.last]: null
   };
   private paginationLinksSubject = new BehaviorSubject<{ [s: string]: string }>(
     this.paginationLinks
@@ -153,6 +154,7 @@ export class ProductsService {
       `http://localhost:3000/api/products/${product.id}`
     );
   }
+
   /**
    * @description
    * This function recover the pagination link set by the server in the 'Link' property
