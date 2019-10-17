@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { RoutesRef } from 'src/app/routes-ref.model';
+import { RoutesRef } from 'src/app/shared/models/routes-ref.model';
 import { ProductCardComponent } from '../product-card.component';
-import { AdminActions } from '../admin-actions.model';
+import { AdminActions } from '../../../shared/models/admin-actions.model';
 
 @Component({
   selector: 'app-card-list',

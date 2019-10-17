@@ -6,10 +6,10 @@ import {
   EventEmitter,
   OnDestroy
 } from '@angular/core';
-import { Product } from '../../product.model';
-import { ProductsService } from '../../products.service';
+import { Product } from '../../../shared/models/product.model';
+import { ProductsService } from '../../../services/products.service';
 import { Subscription } from 'rxjs';
-import { BuyingMessages } from './buying-message.model';
+import { BuyingMessages } from '../../../shared/models/buying-message.model';
 
 @Component({
   selector: 'app-product-buy',

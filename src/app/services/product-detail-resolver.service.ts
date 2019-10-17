@@ -7,8 +7,8 @@ import {
 import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
-import { Product } from '../product.model';
-import { ProductsService } from '../products.service';
+import { Product } from '../shared/models/product.model';
+import { ProductsService } from './products.service';
 
 @Injectable({ providedIn: 'root' })
 export class ProductDetailResolver implements Resolve<Product | null> {
@@ -28,7 +28,7 @@ export class ProductDetailResolver implements Resolve<Product | null> {
     }
 
     return this.productService.fetchProduct(paramProductId).pipe(
-      catchError((err) => {
+      catchError(err => {
         return of(null);
       })
     );

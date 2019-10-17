@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { UserRole } from './user-role.model';
-import { User } from './user.model';
+import { UserRole } from '../shared/models/user-role.model';
+import { User } from '../shared/models/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -37,7 +37,7 @@ export class UserService {
         }
       )
       .pipe(
-        tap((res) => {
+        tap(res => {
           console.log(res);
           const sessionToken = res.headers.get(this.sessionTokenSessionId);
 
@@ -47,7 +47,7 @@ export class UserService {
           /** Used to retrieve the user role id because the login API returns only the session token */
           this.http
             .get<User[]>(`http://localhost:3000/api/users?login=${login}`)
-            .subscribe((userData) => {
+            .subscribe(userData => {
               localStorage.setItem(
                 this.currentUserRoleIdSessionId,
                 '' + userData[0].roleId
@@ -81,7 +81,7 @@ export class UserService {
           responseType: 'text'
         }
       )
-      .subscribe((resp) => {
+      .subscribe(resp => {
         this.invalidateUserInfoFromLocalStorage();
         this.router.navigate(['/login']);
       });

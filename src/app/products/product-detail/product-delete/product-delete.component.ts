@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router, UrlSegment } from '@angular/router';
-import { RoutesRef } from 'src/app/routes-ref.model';
-import { Product } from '../../product.model';
-import { ProductsService } from '../../products.service';
+import { RoutesRef } from 'src/app/shared/models/routes-ref.model';
+import { Product } from '../../../shared/models/product.model';
+import { ProductsService } from '../../../services/products.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -33,7 +33,7 @@ export class ProductDeleteComponent implements OnInit, OnDestroy {
   public onDelete(): void {
     this.deleteProductSubscription = this.productService
       .deleteProduct(this.product)
-      .subscribe((resp) => {
+      .subscribe(resp => {
         this.router.navigate([RoutesRef.products]);
         this.productService.getOnDeleteSubject().next(this.product);
       });

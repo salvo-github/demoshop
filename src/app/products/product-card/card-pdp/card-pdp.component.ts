@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ProductCardComponent } from '../product-card.component';
-import { AdminActions } from '../admin-actions.model';
+import { AdminActions } from '../../../shared/models/admin-actions.model';
 
 @Component({
   selector: 'app-card-pdp',

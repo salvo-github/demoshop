@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Category } from '../category.model';
-import { ProductsService } from '../products.service';
+import { Category } from '../../shared/models/category.model';
+import { ProductsService } from '../../services/products.service';
 import { Subscription } from 'rxjs';
 import { FilterFormFields } from './filter-form-fields.model';
 
@@ -43,7 +43,7 @@ export class ProductsFilterComponent implements OnInit, OnDestroy {
   public ngOnInit() {
     this.fetchCategoriesSubscription = this.productsService
       .fetchCategories()
-      .subscribe((categoriesData) => {
+      .subscribe(categoriesData => {
         this.categories = categoriesData;
       });
 

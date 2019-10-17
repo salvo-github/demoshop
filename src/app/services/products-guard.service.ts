@@ -1,31 +1,32 @@
 import { Injectable } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
-  CanActivate,
+  CanLoad,
   Router,
   RouterStateSnapshot,
-  UrlSegment,
-  UrlTree
+  UrlSegment
 } from '@angular/router';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { UserService } from '../user/user.service';
+import { Observable, of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+import { UserService } from './user.service';
 
 @Injectable({ providedIn: 'root' })
-export class ProductsGuardService implements CanActivate {
-  constructor(private userService: UserService, private router: Router) {}
+export class ProductsGuardService implements CanLoad {
+  constructor(private userService: UserService, private router: Router) {
+    console.log('guard created');
+  }
 
   /**
    * @description
    * If the token it's invalid for the server a 404 error will be throw and managed in @see ErrorInterceptorService
    */
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ): Observable<boolean | UrlTree> | boolean | UrlTree {
+  canLoad(): Observable<boolean> {
     return this.userService.validateToken().pipe(
-      map((resp) => {
+      map(resp => {
         return true;
+      }),
+      catchError(error => {
+        return of(false);
       })
     );
   }

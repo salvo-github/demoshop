@@ -1,10 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { UserService } from '../user.service';
+import { UserService } from '../services/user.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { throwError, Subscription } from 'rxjs';
-import { LoginFormFields } from './login-form-fields.model';
+import { LoginFormFields } from '../shared/models/login-form-fields.model';
 
 @Component({
   selector: 'app-login',
@@ -48,10 +48,10 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.loginSubscription = this.userService
       .login(username, password)
       .subscribe(
-        (res) => {
+        res => {
           this.router.navigate(['/']);
         },
-        (err) => {
+        err => {
           if (err instanceof HttpErrorResponse && err.status === 400) {
             this.loginForm.reset();
             this.loginForm.markAllAsTouched();

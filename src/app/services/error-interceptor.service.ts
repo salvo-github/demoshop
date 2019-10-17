@@ -9,7 +9,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { EMPTY, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { UserService } from './user/user.service';
+import { UserService } from './user.service';
 
 @Injectable({ providedIn: 'root' })
 export class ErrorInterceptorService implements HttpInterceptor {
@@ -22,7 +22,7 @@ export class ErrorInterceptorService implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
     return next.handle(req).pipe(
-      catchError((err) => {
+      catchError(err => {
         const path = this.location.path();
 
         if (err instanceof HttpErrorResponse) {

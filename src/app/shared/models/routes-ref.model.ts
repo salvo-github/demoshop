@@ -1,4 +1,4 @@
 export enum RoutesRef {
   products = '/products',
-  product = '/product'
+  product = '/products/detail'
 }

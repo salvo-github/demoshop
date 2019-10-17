@@ -1,9 +1,9 @@
 import { Component, OnInit, Input, DoCheck, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { RoutesRef } from 'src/app/routes-ref.model';
-import { Product } from '../../product.model';
-import { Category } from '../../category.model';
-import { ProductsService } from '../../products.service';
+import { RoutesRef } from 'src/app/shared/models/routes-ref.model';
+import { Product } from '../../../shared/models/product.model';
+import { Category } from '../../../shared/models/category.model';
+import { ProductsService } from '../../../services/products.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -44,7 +44,7 @@ export class ProductDetailHeaderComponent
   public getProductCategory(): void {
     this.fetchCategoryByIdSubscription = this.productService
       .fetchCategoryById(this.product.categoryId)
-      .subscribe((categoryResponse) => {
+      .subscribe(categoryResponse => {
         this.category = categoryResponse;
       });
   }

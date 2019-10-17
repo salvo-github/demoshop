@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
-import { Category } from './category.model';
-import { Product } from './product.model';
+import { Category } from '../shared/models/category.model';
+import { Product } from '../shared/models/product.model';
 
 @Injectable({ providedIn: 'root' })
 export class ProductsService {
@@ -32,7 +32,7 @@ export class ProductsService {
     return this.http
       .get<Product>(`http://localhost:3000/api/products/${id}`)
       .pipe(
-        tap((value) => {
+        tap(value => {
           // when the user is in edit page the current product will be referenced
           this.setCurrentProduct(value);
         })
@@ -97,24 +97,20 @@ export class ProductsService {
         params
       })
       .pipe(
-        tap(
-          (responseData: HttpResponse<Product[]>): void => {
-            this.setPaginationLinks(responseData.headers.get('Link'));
-          }
-        ),
-        map(
-          (responseData: HttpResponse<Product[]>): Product[] => {
-            const productsFiltered = responseData.body.filter(
-              (product: Product) => {
-                if (onlyAvailable === true) {
-                  return product.count - product.soldCount > 0;
-                }
-                return true;
+        tap((responseData: HttpResponse<Product[]>): void => {
+          this.setPaginationLinks(responseData.headers.get('Link'));
+        }),
+        map((responseData: HttpResponse<Product[]>): Product[] => {
+          const productsFiltered = responseData.body.filter(
+            (product: Product) => {
+              if (onlyAvailable === true) {
+                return product.count - product.soldCount > 0;
               }
-            );
-            return productsFiltered;
-          }
-        )
+              return true;
+            }
+          );
+          return productsFiltered;
+        })
       );
   }
 

@@ -1,10 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { BehaviorSubject, Subject, Subscription } from 'rxjs';
-import { Product } from '../product.model';
-import { ProductsService } from '../products.service';
-import { UserService } from 'src/app/user/user.service';
-import { RoutesRef } from 'src/app/routes-ref.model';
+import { Product } from '../../shared/models/product.model';
+import { ProductsService } from '../../services/products.service';
+import { UserService } from 'src/app/services/user.service';
+import { RoutesRef } from 'src/app/shared/models/routes-ref.model';
 
 @Component({
   selector: 'app-products-list',
@@ -25,7 +25,9 @@ export class ProductsListComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private productsService: ProductsService,
     private userService: UserService
-  ) {}
+  ) {
+    console.log('list created');
+  }
 
   public ngOnInit() {
     if (this.route.snapshot.data.products.length) {
@@ -84,7 +86,7 @@ export class ProductsListComponent implements OnInit, OnDestroy {
     this.paginationLinksSubject = this.productsService.getPaginationLinksSubject();
 
     this.paginationLinksSubscription = this.paginationLinksSubject.subscribe(
-      (paginationLinks) => {
+      paginationLinks => {
         this.paginationLinks = paginationLinks;
       }
     );

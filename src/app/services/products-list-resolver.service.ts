@@ -6,8 +6,8 @@ import {
 } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { Product } from '../product.model';
-import { ProductsService } from '../products.service';
+import { Product } from '../shared/models/product.model';
+import { ProductsService } from './products.service';
 
 @Injectable({ providedIn: 'root' })
 export class ProductsListResolver implements Resolve<Product[] | []> {
@@ -23,7 +23,7 @@ export class ProductsListResolver implements Resolve<Product[] | []> {
     }
 
     return this.productsService.fetchProducts(valuesForFiltering).pipe(
-      catchError((err) => {
+      catchError(err => {
         return of([]);
       })
     );

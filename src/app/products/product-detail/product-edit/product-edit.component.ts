@@ -2,11 +2,11 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { RoutesRef } from 'src/app/routes-ref.model';
-import { Category } from '../../category.model';
-import { Product } from '../../product.model';
-import { ProductsService } from '../../products.service';
-import { EditFormFields } from './edit-form-fields.model';
+import { RoutesRef } from 'src/app/shared/models/routes-ref.model';
+import { Category } from '../../../shared/models/category.model';
+import { Product } from '../../../shared/models/product.model';
+import { ProductsService } from '../../../services/products.service';
+import { EditFormFields } from '../../../shared/models/edit-form-fields.model';
 
 @Component({
   selector: 'app-product-edit',
@@ -63,7 +63,7 @@ export class ProductEditComponent implements OnInit, OnDestroy {
 
     this.fetchCategoriesSubscription = this.productsService
       .fetchCategories()
-      .subscribe((categoriesData) => {
+      .subscribe(categoriesData => {
         this.categories = categoriesData;
       });
   }

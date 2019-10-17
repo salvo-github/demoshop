@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, UrlSegment } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Product } from '../../product.model';
-import { ProductsService } from '../../products.service';
+import { Product } from '../../../shared/models/product.model';
+import { ProductsService } from '../../../services/products.service';
 
 @Component({
   selector: 'app-product-add-quantity',
@@ -33,7 +33,7 @@ export class ProductAddQuantityComponent implements OnInit, OnDestroy {
     this.product.count += 5;
     this.saveProductSubscription = this.productService
       .saveProduct(this.product)
-      .subscribe((resp) => {
+      .subscribe(resp => {
         this.router.navigate(this.getBackUrl());
       });
   }
