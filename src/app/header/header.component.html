@@ -4,11 +4,11 @@
     <div class="header__login">
       <p
         class="h4 header__login-status header__login-status--logged"
-        *ngIf="getUsername()"
+        *ngIf="currentUserUsername$ | async"
       >
         Hello,
         <span class="font__style--font-family--caption">{{
-          getUsername()
+          currentUserUsername$ | async
         }}</span>
       </p>
       <span (click)="onLogout()"></span>

@@ -31,7 +31,7 @@ export class ErrorInterceptorService implements HttpInterceptor {
             throwError(err);
           }
           if (err.status === 401) {
-            this.userService.invalidateUserInfoFromLocalStorage();
+            this.userService.invalidateUserInfo();
             this.router.navigate(['/login']);
             return EMPTY;
           }

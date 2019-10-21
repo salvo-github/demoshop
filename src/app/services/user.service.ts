@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { map, switchMap, tap } from 'rxjs/operators';
 import { UserRole } from '../shared/models/user-role.model';
 import { User } from '../shared/models/user.model';
 
@@ -16,6 +16,10 @@ export class UserService {
   private currentUserUsernameSessionId = 'current-user-username';
   /** Used as key */
   private currentUserRoleIdSessionId = 'current-user-role';
+
+  private currentUserUsername$ = new BehaviorSubject<string | null>(
+    localStorage.getItem(this.currentUserUsernameSessionId)
+  );
 
   public constructor(private http: HttpClient, private router: Router) {}
 
@@ -38,22 +42,25 @@ export class UserService {
       )
       .pipe(
         tap(res => {
-          console.log(res);
           const sessionToken = res.headers.get(this.sessionTokenSessionId);
-
           localStorage.setItem(this.sessionTokenSessionId, sessionToken);
           localStorage.setItem(this.currentUserUsernameSessionId, login);
-
-          /** Used to retrieve the user role id because the login API returns only the session token */
+          this.currentUserUsername$.next(login);
+        }),
+        switchMap(res =>
           this.http
             .get<User[]>(`http://localhost:3000/api/users?login=${login}`)
-            .subscribe(userData => {
-              localStorage.setItem(
-                this.currentUserRoleIdSessionId,
-                '' + userData[0].roleId
-              );
-            });
-        })
+            .pipe(
+              map(userData => {
+                localStorage.setItem(
+                  this.currentUserRoleIdSessionId,
+                  String(userData[0].roleId)
+                );
+
+                return res;
+              })
+            )
+        )
       );
   }
 
@@ -61,30 +68,45 @@ export class UserService {
     return localStorage.getItem(this.sessionTokenSessionId);
   }
 
-  public getCurrentUserUsername(): string | null {
-    return localStorage.getItem(this.currentUserUsernameSessionId);
+  public getCurrentUserUsername(): Observable<string | null> {
+    return this.currentUserUsername$.asObservable();
   }
 
   public getSessionTokenId(): string {
     return this.sessionTokenSessionId;
   }
 
-  public logout(): void {
-    this.http
-      .post(
-        'http://localhost:3000/api/logout',
-        {
-          login: this.getCurrentUserUsername()
-        },
-        {
-          observe: 'response',
-          responseType: 'text'
-        }
-      )
-      .subscribe(resp => {
-        this.invalidateUserInfoFromLocalStorage();
-        this.router.navigate(['/login']);
-      });
+  public logout(): Promise<void> {
+    const login = this.currentUserUsername$.getValue();
+
+    if (!login) {
+      this.invalidateUserInfo();
+      return Promise.resolve();
+    }
+
+    return new Promise((resolve, reject) => {
+      this.http
+        .post(
+          'http://localhost:3000/api/logout',
+          {
+            login
+          },
+          {
+            observe: 'response',
+            responseType: 'text'
+          }
+        )
+        .toPromise()
+        .then(resp => {
+          this.invalidateUserInfo();
+          resolve();
+        });
+    });
+  }
+
+  public invalidateUserInfo(): void {
+    this.currentUserUsername$.next(null);
+    this.invalidateUserInfoFromLocalStorage();
   }
 
   public invalidateUserInfoFromLocalStorage(): void {

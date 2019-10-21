@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { UserService } from '../services/user.service';
 
 @Component({
@@ -6,14 +8,21 @@ import { UserService } from '../services/user.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent {
-  public constructor(private userService: UserService) {}
+export class HeaderComponent implements OnInit {
+  public currentUserUsername$: Observable<string>;
 
-  public getUsername(): string | null {
-    return this.userService.getCurrentUserUsername();
+  public constructor(
+    private userService: UserService,
+    private router: Router
+  ) {}
+
+  public ngOnInit() {
+    this.currentUserUsername$ = this.userService.getCurrentUserUsername();
   }
 
   public onLogout(): void {
-    this.userService.logout();
+    this.userService.logout().then(() => {
+      this.router.navigate(['/login']);
+    });
   }
 }
