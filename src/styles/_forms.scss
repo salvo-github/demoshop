@@ -21,8 +21,3 @@
 .form__error-message {
   color: $border-error;
 }
-
-input:focus ~ .form__error-message,
-textarea:focus ~ .form__error-message {
-  display: none;
-}

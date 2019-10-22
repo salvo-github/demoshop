@@ -1,0 +1,9 @@
+@import 'palettes';
+
+.form__error-message {
+  color: $border-error;
+}
+
+.form__error-message--hide {
+  display: none;
+}
