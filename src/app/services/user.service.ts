@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { map, switchMap, tap } from 'rxjs/operators';
+import { map, shareReplay, tap } from 'rxjs/operators';
 import { UserRole } from '../shared/models/user-role.model';
 import { User } from '../shared/models/user.model';
 
@@ -20,6 +20,8 @@ export class UserService {
   private currentUserUsername$ = new BehaviorSubject<string | null>(
     localStorage.getItem(this.currentUserUsernameSessionId)
   );
+
+  private cacheRole$: Observable<boolean>;
 
   public constructor(private http: HttpClient, private router: Router) {}
 
@@ -42,25 +44,13 @@ export class UserService {
       )
       .pipe(
         tap(res => {
+          this.invalidateUserInfo();
+
           const sessionToken = res.headers.get(this.sessionTokenSessionId);
           localStorage.setItem(this.sessionTokenSessionId, sessionToken);
           localStorage.setItem(this.currentUserUsernameSessionId, login);
           this.currentUserUsername$.next(login);
-        }),
-        switchMap(res =>
-          this.http
-            .get<User[]>(`http://localhost:3000/api/users?login=${login}`)
-            .pipe(
-              map(userData => {
-                localStorage.setItem(
-                  this.currentUserRoleIdSessionId,
-                  String(userData[0].roleId)
-                );
-
-                return res;
-              })
-            )
-        )
+        })
       );
   }
 
@@ -106,6 +96,7 @@ export class UserService {
 
   public invalidateUserInfo(): void {
     this.currentUserUsername$.next(null);
+    this.cacheRole$ = null;
     this.invalidateUserInfoFromLocalStorage();
   }
 
@@ -115,12 +106,23 @@ export class UserService {
     localStorage.removeItem(this.currentUserRoleIdSessionId);
   }
 
-  public isCurrentUserAdmin(): boolean {
-    const currentUserRoleId = parseFloat(
-      localStorage.getItem(this.currentUserRoleIdSessionId)
-    );
+  public isCurrentUserAdmin(): Observable<boolean> {
+    if (!this.cacheRole$) {
+      const currentUserUsername = this.currentUserUsername$.getValue();
 
-    return currentUserRoleId === UserRole.admin;
+      this.cacheRole$ = this.http
+        .get<User[]>(
+          `http://localhost:3000/api/users?login=${currentUserUsername}`
+        )
+        .pipe(
+          map(userData => {
+            return userData[0].roleId === UserRole.admin;
+          }),
+          shareReplay(1)
+        );
+    }
+
+    return this.cacheRole$;
   }
 
   /**
