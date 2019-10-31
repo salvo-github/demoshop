@@ -17,6 +17,11 @@ import { ProductEditComponent } from './product-detail/product-edit/product-edit
 import { ProductsFilterComponent } from './products-filter/products-filter.component';
 import { ProductsListComponent } from './products-list/products-list.component';
 import { ProductsRoutingModule } from './products-routing.module';
+import { ProductsListNavigationComponent } from './products-list/products-list-navigation/products-list-navigation.component';
+import { StoreModule } from '@ngrx/store';
+import { productsReducer } from './store/products.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { ProductsEffects } from './store/products.effects';
 
 @NgModule({
   declarations: [
@@ -34,8 +39,15 @@ import { ProductsRoutingModule } from './products-routing.module';
     ProductDetailHeaderComponent,
     CardFigureComponent,
     CardInfoGroupComponent,
-    CardActionsComponent
+    CardActionsComponent,
+    ProductsListNavigationComponent
   ],
-  imports: [CommonModule, ProductsRoutingModule, SharedModule]
+  imports: [
+    CommonModule,
+    ProductsRoutingModule,
+    SharedModule,
+    StoreModule.forFeature('productsState', productsReducer),
+    EffectsModule.forFeature([ProductsEffects])
+  ]
 })
 export class ProductsModule {}
