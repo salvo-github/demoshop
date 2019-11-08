@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
+import { ProductInteractionType } from 'src/app/shared/models/product-interaction-type.model';
+import { Product } from 'src/app/shared/models/product.model';
 import { RoutesRef } from 'src/app/shared/models/routes-ref.model';
-import { ProductCardComponent } from '../product-card.component';
 import { AdminActions } from '../../../shared/models/admin-actions.model';
+import { ProductCardComponent } from '../product-card.component';
 
 @Component({
   selector: 'app-card-list',
@@ -9,6 +11,9 @@ import { AdminActions } from '../../../shared/models/admin-actions.model';
   styleUrls: ['./card-list.component.scss']
 })
 export class CardListComponent extends ProductCardComponent {
+  @Output() private productToDelete = new EventEmitter<Product>();
+  @Output() private setProductInteractionType = new EventEmitter<{}>();
+
   protected navigateToDetailPage($event: MouseEvent): void {
     if (!$event.defaultPrevented) {
       this.router.navigate([RoutesRef.product, this.product.id]);
@@ -23,7 +28,7 @@ export class CardListComponent extends ProductCardComponent {
 
   // used to delete a product from product list page
   public onDeleteHandler(): void {
-    this.productService.setCurrentProduct(this.product);
-    this.navigateTo('delete', this.product.id);
+    this.productToDelete.emit(this.product);
+    this.setProductInteractionType.emit(ProductInteractionType.delete);
   }
 }

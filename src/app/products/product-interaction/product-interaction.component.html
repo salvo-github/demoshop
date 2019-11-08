@@ -1,0 +1,31 @@
+<div class="modal" [ngSwitch]="productInteractionType">
+  <ng-container *ngSwitchCase="productInteractionTypeModel.addQuantity">
+    <app-product-add-quantity
+      [product]="product"
+      (appClickOutside)="onCloseModal()"
+      (closeModal)="onCloseModal()"
+    ></app-product-add-quantity>
+  </ng-container>
+  <ng-container *ngSwitchCase="productInteractionTypeModel.buy">
+    <app-product-buy
+      [product]="product"
+      (appClickOutside)="onCloseModal()"
+      (closeModal)="onCloseModal()"
+    ></app-product-buy>
+  </ng-container>
+  <ng-container *ngSwitchCase="productInteractionTypeModel.edit">
+    <app-product-edit
+      [product]="product"
+      (appClickOutside)="onCloseModal()"
+      (closeModal)="onCloseModal()"
+    ></app-product-edit>
+  </ng-container>
+  <ng-container *ngSwitchCase="productInteractionTypeModel.delete">
+    <app-product-delete
+      [product]="product"
+      (appClickOutside)="onCloseModal()"
+      (closeModal)="onCloseModal()"
+    ></app-product-delete
+  ></ng-container>
+</div>
+<div class="modal-overlay" *ngIf="productInteractionType !== null"></div>

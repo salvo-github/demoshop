@@ -5,7 +5,6 @@ export const defaultErrors = {
   minlength: ({ requiredLength, actualLength }) =>
     `The field must contains at least ${requiredLength} letters`,
   pattern: ({ requiredPattern, actualValue }) => {
-    console.log(requiredPattern);
     switch (requiredPattern) {
       case '^[A-Za-z]+$':
         return 'The field must contains only English letters';

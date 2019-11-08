@@ -4,28 +4,21 @@ import {
   Resolve,
   RouterStateSnapshot
 } from '@angular/router';
-import { Observable, of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
-import { Product } from '../shared/models/product.model';
-import { ProductsService } from './products.service';
+import { Store } from '@ngrx/store';
+import * as ProductsActions from '../products/store/products.actions';
+import { AppState } from '../reducer';
 
 @Injectable({ providedIn: 'root' })
-export class ProductsListResolver implements Resolve<Product[] | []> {
-  constructor(private productsService: ProductsService) {}
+export class ProductsListResolver implements Resolve<void> {
+  constructor(private store: Store<AppState>) {}
 
-  resolve(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ): Observable<Product[] | []> {
-    const valuesForFiltering: { [s: string]: any } = {};
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): void {
+    const params: { [s: string]: any } = {};
     for (const key of route.queryParamMap.keys) {
-      valuesForFiltering[key] = route.queryParamMap.get(key);
+      params[key] = route.queryParamMap.get(key);
     }
 
-    return this.productsService.fetchProducts(valuesForFiltering).pipe(
-      catchError(err => {
-        return of([]);
-      })
-    );
+    this.store.dispatch(ProductsActions.fetchProducts({ params }));
+    return;
   }
 }

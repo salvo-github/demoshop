@@ -31,4 +31,12 @@ export class Product {
     this.rating = rating;
     this.soldCount = soldCount;
   }
+
+  public static getProductMaxRating(): number {
+    return 5;
+  }
+
+  public static getDefaultQuantityToAdd(): number {
+    return 5;
+  }
 }

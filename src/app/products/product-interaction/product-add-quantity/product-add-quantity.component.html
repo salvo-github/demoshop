@@ -1,0 +1,23 @@
+<div class="modal__header">
+  <h2
+    class="h2--bigger font__style--weight-bold font__style--font-family--caption modal__title--elipsis"
+  >
+    Are you sure?
+  </h2>
+</div>
+<div class="modal__body">
+  <div class="modal__main">
+    <p class="h1 font__style--font-family--caption font__style--center">
+      You are increasing the quantity of products by 5.<br />Are you sure you
+      want this?
+    </p>
+  </div>
+  <div class="modal__cta">
+    <button class="button button--secondary button--big" (click)="onCancel()">
+      Cancel
+    </button>
+    <button class="button button--primary button--big" (click)="onUpdate()">
+      Submit
+    </button>
+  </div>
+</div>

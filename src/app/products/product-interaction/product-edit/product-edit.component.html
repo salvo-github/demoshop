@@ -1,4 +1,4 @@
-<div class="modal modal__edit">
+<div class="modal__edit">
   <div class="modal__header">
     <h2
       class="h2--bigger font__style--weight-bold font__style--font-family--caption modal__title--elipsis"
@@ -36,7 +36,7 @@
               [formControlName]="editFormFields.categoryId"
               id="categoryId"
               ><option
-                *ngFor="let category of categories"
+                *ngFor="let category of categories$ | async"
                 [value]="+category.id"
                 >{{ category.name }}</option
               >
@@ -146,5 +146,3 @@
     </div>
   </div>
 </div>
-
-<div class="modal-overlay"></div>

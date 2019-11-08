@@ -1,5 +1,8 @@
-<app-product-detail-header [product]="product"></app-product-detail-header>
-<div class="pdp__card" *ngIf="product">
-  <app-card-pdp [product]="product"></app-card-pdp>
-</div>
-<router-outlet></router-outlet>
+<ng-container *ngIf="product$ | async as product">
+  <app-product-detail-header
+    [category]="category$ | async"
+  ></app-product-detail-header>
+  <div class="pdp__card">
+    <app-card-pdp [product]="product"></app-card-pdp>
+  </div>
+</ng-container>

@@ -2,7 +2,7 @@
   <app-card-figure
     [imageSrc]="product.image"
     [rating]="product.rating"
-    [maxRating]="getProductMaxRating()"
+    [maxRating]="productMaxRating"
   ></app-card-figure>
 
   <section class="card__info">
@@ -13,7 +13,7 @@
     ></app-card-info-group>
 
     <app-card-actions
-      *ngIf="isCurrentUserAdmin"
+      *ngIf="isCurrentUserAdmin$ | async"
       [actions]="getActions()"
     ></app-card-actions>
 

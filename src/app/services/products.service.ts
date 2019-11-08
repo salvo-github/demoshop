@@ -1,60 +1,25 @@
 import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Category } from '../shared/models/category.model';
+import { PaginationLinks } from '../shared/models/pagination-links.model';
 import { Product } from '../shared/models/product.model';
 
 @Injectable({ providedIn: 'root' })
 export class ProductsService {
-  private currentProduct: Product;
-  private paginationLinks = {
-    next: null,
-    prev: null,
-    first: null,
-    last: null
-  };
-  private paginationLinksSubject = new BehaviorSubject<{ [s: string]: string }>(
-    this.paginationLinks
-  );
-
-  private onDeleteSubject: Subject<Product> = new Subject<Product>();
-
   public constructor(private http: HttpClient, private route: ActivatedRoute) {}
 
   /**
    * @description
    * Retrieve the product from the server and store it in [currentProduct]
-   * @param id the product id to fetch
+   * @param productId the product id to fetch
    */
-  public fetchProduct(id: number) {
-    return this.http
-      .get<Product>(`http://localhost:3000/api/products/${id}`)
-      .pipe(
-        tap(value => {
-          // when the user is in edit page the current product will be referenced
-          this.setCurrentProduct(value);
-        })
-      );
-  }
-
-  /**
-   * @description
-   * When detail page it's loaded the current product it's saved
-   * (used to performe eg edit without retrieve the same product from the server)
-   * @param product the product to set
-   */
-  public setCurrentProduct(product: Product) {
-    this.currentProduct = product;
-  }
-
-  /**
-   * @description
-   * Retrieve the current product without fetch it from the server
-   */
-  public getCurrentProduct(): Product {
-    return this.currentProduct;
+  public fetchProduct(productId: number): Observable<Product> {
+    return this.http.get<Product>(
+      `http://localhost:3000/api/products/${productId}`
+    );
   }
 
   /**
@@ -69,12 +34,12 @@ export class ProductsService {
    *
    * @
    */
-  public fetchProducts(
-    valuesForFiltering: { [s: string]: any } = {},
-    url: string = 'http://localhost:3000/api/products',
-    page: string = '1',
-    limit: string = '5'
-  ): Observable<Product[]> {
+  public fetchProducts({
+    valuesForFiltering = {} as { [s: string]: any },
+    url = 'http://localhost:3000/api/products',
+    page = '1',
+    limit = '5'
+  } = {}): Observable<HttpResponse<Product[]>> {
     let params = new HttpParams();
 
     params = params.append('_page', page);
@@ -97,26 +62,28 @@ export class ProductsService {
         params
       })
       .pipe(
-        tap((responseData: HttpResponse<Product[]>): void => {
-          this.setPaginationLinks(responseData.headers.get('Link'));
-        }),
-        map((responseData: HttpResponse<Product[]>): Product[] => {
-          const productsFiltered = responseData.body.filter(
-            (product: Product) => {
-              if (onlyAvailable === true) {
-                return product.count - product.soldCount > 0;
+        map(
+          (responseData: HttpResponse<Product[]>): HttpResponse<Product[]> => {
+            const productsFiltered = responseData.body.filter(
+              (product: Product) => {
+                if (onlyAvailable === true) {
+                  return product.count - product.soldCount > 0;
+                }
+                return true;
               }
-              return true;
-            }
-          );
-          return productsFiltered;
-        })
+            );
+            const responseDataFiltered = responseData.clone({
+              body: productsFiltered
+            });
+            return responseDataFiltered;
+          }
+        )
       );
   }
 
-  public fetchCategoryById(id: number): Observable<Category> {
+  public fetchCategoryById(categoryId: number): Observable<Category> {
     return this.http.get<Category>(
-      `http://localhost:3000/api/categories/${id}`
+      `http://localhost:3000/api/categories/${categoryId}`
     );
   }
 
@@ -161,42 +128,27 @@ export class ProductsService {
    * _page=1&_limit=5&_page=1&_limit=5&_page=1&_limit=5&_page=1&_limit=5>; rel="first",
    * <http://loc...
    */
-  private setPaginationLinks(headerLink: string) {
+  public setPaginationLinks(headerLink: string): PaginationLinks {
+    const paginationLinks = new PaginationLinks();
+
     const links = headerLink.split(', ');
 
-    for (const key in this.paginationLinks) {
-      if (this.paginationLinks.hasOwnProperty(key)) {
-        this.paginationLinks[key] = null;
+    for (const key in paginationLinks) {
+      if (paginationLinks.hasOwnProperty(key)) {
         for (const link of links) {
           const regExp = new RegExp(`<(.*)>; rel="${key}"`);
           const $match = link.match(regExp);
           if ($match !== null) {
-            this.paginationLinks[key] = $match[1];
+            paginationLinks[key] = $match[1];
           }
         }
       }
     }
 
-    this.getPaginationLinksSubject().next(this.paginationLinks);
-  }
-
-  /**
-   * @description
-   * A behavior subject is used because independently from when it is subscribed the last value emitted is recovered
-   */
-  public getPaginationLinksSubject(): BehaviorSubject<{ [s: string]: string }> {
-    return this.paginationLinksSubject;
-  }
-
-  /**
-   * @description
-   * It is used to manage the removal of the card from the list of products when the associated product is deleted
-   */
-  public getOnDeleteSubject(): Subject<Product> {
-    return this.onDeleteSubject;
+    return paginationLinks;
   }
 
   public getProductMaxRating(): number {
-    return 5;
+    return Product.getProductMaxRating();
   }
 }

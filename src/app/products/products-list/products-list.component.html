@@ -1,37 +1,38 @@
 <nav class="product-list__nav">
   <button
     class="h5 button button--primary button--regular product-list__add-product"
-    *ngIf="isCurrentUserAdmin"
-    [routerLink]="getNewProductRoute()"
+    *ngIf="isCurrentUserAdmin$ | async"
+    (click)="createNewProduct()"
   >
     Add product
   </button>
   <app-products-filter></app-products-filter>
 </nav>
-<div class="cards" *ngIf="products && products.length; else noProducts">
-  <div class="main__card" *ngFor="let product of products">
-    <app-card-list [product]="product"></app-card-list>
-  </div>
-</div>
-<div class="product-list__pages-navigation">
-  <button
-    class="h5 button button--primary button--regular"
-    [disabled]="paginationLinks['prev'] === null"
-    (click)="fetchFilteredProducts({}, paginationLinks['prev'])"
-  >
-    Previous Page
-  </button>
-  <button
-    class="h5 button button--primary button--regular"
-    [disabled]="paginationLinks['next'] === null"
-    (click)="fetchFilteredProducts({}, paginationLinks['next'])"
-  >
-    Next Page
-  </button>
-</div>
+
+<ng-container *ngIf="products$ | async as products; else noProducts">
+  <ng-container *ngIf="products.length; else noProducts">
+    <div class="cards">
+      <div class="main__card" *ngFor="let product of products">
+        <app-card-list
+          [product]="product"
+          (productToDelete)="onProductToDelete($event)"
+          (setProductInteractionType)="onSetProductInteractionType($event)"
+        ></app-card-list>
+      </div>
+    </div>
+    <app-products-list-navigation></app-products-list-navigation>
+  </ng-container>
+</ng-container>
+
 <ng-template #noProducts
   ><h1 class="h1 font__style--weight-bold font__style--center">
     No products available!
   </h1></ng-template
 >
-<router-outlet></router-outlet>
+
+<app-product-interaction
+  *ngIf="product"
+  [product]="product"
+  [productInteractionType]="productInteractionType"
+  (clearProductInteractionType)="onClearProductInteractionType()"
+></app-product-interaction>

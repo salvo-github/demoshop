@@ -1,102 +1,71 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
-import { BehaviorSubject, Subject, Subscription } from 'rxjs';
-import { Product } from '../../shared/models/product.model';
-import { ProductsService } from '../../services/products.service';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { select, Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { AppState } from 'src/app/reducer';
 import { UserService } from 'src/app/services/user.service';
+import { ProductInteractionType } from 'src/app/shared/models/product-interaction-type.model';
 import { RoutesRef } from 'src/app/shared/models/routes-ref.model';
+import { Product } from '../../shared/models/product.model';
+import { getProductsList } from '../store/products.reducer';
+import * as ProductsActions from '../store/products.actions';
 
 @Component({
   selector: 'app-products-list',
   templateUrl: './products-list.component.html',
   styleUrls: ['./products-list.component.scss']
 })
-export class ProductsListComponent implements OnInit, OnDestroy {
-  private paginationLinksSubject: BehaviorSubject<{ [s: string]: string }>;
-  private paginationLinksSubscription: Subscription;
-  private fetchProductsSubscription: Subscription;
-  private onDeleteSubjectSubscription;
-
-  public products: Product[];
-  public paginationLinks: { [s: string]: string };
-  public isCurrentUserAdmin = false;
+export class ProductsListComponent implements OnInit {
+  public paginationLinks$: Observable<{ [s: string]: string }>;
+  public products$: Observable<Product[]>;
+  public isCurrentUserAdmin$: Observable<boolean>;
+  public product: null | Product = null;
+  public productInteractionType: null | number = null;
 
   public constructor(
     private route: ActivatedRoute,
-    private productsService: ProductsService,
-    private userService: UserService
-  ) {
-    console.log('list created');
-  }
+    private userService: UserService,
+    private store: Store<AppState>
+  ) {}
 
   public ngOnInit() {
-    if (this.route.snapshot.data.products.length) {
-      this.products = this.route.snapshot.data.products;
-    }
+    this.products$ = this.store.pipe(select(getProductsList));
 
-    this.route.queryParamMap.subscribe((queryParamMap: ParamMap) => {
-      const valuesForFiltering: { [s: string]: any } = {};
-      for (const key of queryParamMap.keys) {
-        valuesForFiltering[key] = queryParamMap.get(key);
-      }
+    this.isCurrentUserAdmin$ = this.userService.isCurrentUserAdmin();
 
-      this.fetchFilteredProducts(valuesForFiltering);
-    });
+    // this.route.queryParamMap.subscribe((queryParamMap: ParamMap) => {
+    //   const valuesForFiltering: { [s: string]: any } = {};
+    //   for (const key of queryParamMap.keys) {
+    //     valuesForFiltering[key] = queryParamMap.get(key);
+    //   }
 
-    this.getPaginationLinks();
-
-    this.getCurrentUserRole();
-
-    this.onDeleteSubjectSubscription = this.productsService
-      .getOnDeleteSubject()
-      .subscribe((deletedProduct: Product) => {
-        this.products = this.products.filter((product: Product) => {
-          if (product.id === deletedProduct.id) {
-            return false;
-          }
-          return true;
-        });
-      });
-  }
-
-  public ngOnDestroy() {
-    if (this.paginationLinksSubscription) {
-      this.paginationLinksSubscription.unsubscribe();
-    }
-    if (this.onDeleteSubjectSubscription) {
-      this.onDeleteSubjectSubscription.unsubscribe();
-    }
-    if (this.fetchProductsSubscription) {
-      this.fetchProductsSubscription.unsubscribe();
-    }
-  }
-
-  public fetchFilteredProducts(
-    valuesForFiltering: { [s: string]: any },
-    url?: string
-  ): void {
-    this.fetchProductsSubscription = this.productsService
-      .fetchProducts(valuesForFiltering, url)
-      .subscribe((productsData: Product[]) => {
-        this.products = productsData;
-      });
-  }
-
-  public getPaginationLinks(): void {
-    this.paginationLinksSubject = this.productsService.getPaginationLinksSubject();
-
-    this.paginationLinksSubscription = this.paginationLinksSubject.subscribe(
-      paginationLinks => {
-        this.paginationLinks = paginationLinks;
-      }
-    );
-  }
-
-  public getCurrentUserRole(): void {
-    this.isCurrentUserAdmin = this.userService.isCurrentUserAdmin();
+    //   this.fetchFilteredProducts(valuesForFiltering);
+    // });
   }
 
   public getNewProductRoute(): string[] {
     return [RoutesRef.product, 'new'];
+  }
+
+  public createNewProduct(): void {
+    this.product = new Product();
+    this.productInteractionType = ProductInteractionType.edit;
+  }
+
+  public onProductToDelete(product: Product): void {
+    this.product = product;
+  }
+
+  public onClearProductInteractionType(): void {
+    if (this.productInteractionType === ProductInteractionType.delete) {
+      this.store.dispatch(ProductsActions.fetchProducts({ params: {} }));
+    }
+    this.productInteractionType = null;
+  }
+
+  public onSetProductInteractionType(
+    productInteractionType: null | number
+  ): void {
+    this.productInteractionType = productInteractionType;
   }
 }

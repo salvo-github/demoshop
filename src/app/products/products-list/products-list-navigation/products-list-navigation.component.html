@@ -1,0 +1,18 @@
+<ng-container *ngIf="paginationLinks$ | async as paginationLinks">
+  <div class="product-list__pages-navigation">
+    <button
+      class="h5 button button--primary button--regular"
+      [disabled]="paginationLinks['prev'] === null"
+      (click)="fetchFilteredProducts(paginationLinks['prev'])"
+    >
+      Previous Page
+    </button>
+    <button
+      class="h5 button button--primary button--regular"
+      [disabled]="paginationLinks['next'] === null"
+      (click)="fetchFilteredProducts(paginationLinks['next'])"
+    >
+      Next Page
+    </button>
+  </div>
+</ng-container>

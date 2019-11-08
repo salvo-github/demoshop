@@ -7,9 +7,14 @@ import {
 } from '@ngrx/store';
 import { Product } from 'src/app/shared/models/product.model';
 import * as ProductsActions from '../store/products.actions';
+import { PaginationLinks } from 'src/app/shared/models/pagination-links.model';
 
 export interface ProductsState {
   productsList: Product[];
+  paginationLinks: PaginationLinks;
+  productInteractionType: number | null;
+  currentProduct: Product;
+  currentProductCategory: string;
 }
 
 export const getProductsState = createFeatureSelector<ProductsState>(
@@ -21,7 +26,33 @@ export const getProductsList = createSelector(
   state => state.productsList
 );
 
-const initialState: ProductsState = { productsList: [] };
+export const getCurrentProduct = createSelector(
+  getProductsState,
+  state => state.currentProduct
+);
+
+export const getPaginationLinks = createSelector(
+  getProductsState,
+  state => state.paginationLinks
+);
+
+export const getProductInteractionType = createSelector(
+  getProductsState,
+  state => state.productInteractionType
+);
+
+export const getCurrentProductCategory = createSelector(
+  getProductsState,
+  state => state.currentProductCategory
+);
+
+const initialState: ProductsState = {
+  productsList: [],
+  paginationLinks: new PaginationLinks(),
+  productInteractionType: null,
+  currentProduct: null,
+  currentProductCategory: ''
+};
 
 export function productsReducer(
   productsState: ProductsState | undefined,
@@ -32,6 +63,18 @@ export function productsReducer(
     on(ProductsActions.setProductsList, (state, action) => ({
       ...state,
       productsList: [...action.productsList]
+    })),
+    on(ProductsActions.setCurrentProduct, (state, action) => ({
+      ...state,
+      currentProduct: { ...action.product }
+    })),
+    on(ProductsActions.setCurrentProductCategory, (state, action) => ({
+      ...state,
+      currentProductCategory: action.category
+    })),
+    on(ProductsActions.setPaginationLinks, (state, action) => ({
+      ...state,
+      paginationLinks: { ...action.paginationLinks }
     }))
   )(productsState, productsAction);
 }

@@ -3,7 +3,7 @@
     class="card__figure"
     [imageSrc]="product.image"
     [rating]="product.rating"
-    [maxRating]="getProductMaxRating()"
+    [maxRating]="productMaxRating"
   ></app-card-figure>
 
   <section class="card__info">
@@ -13,8 +13,8 @@
     ></app-card-info-group>
 
     <app-card-actions
-      *ngIf="isCurrentUserAdmin"
-      [actions]="getActions()"
+      *ngIf="isCurrentUserAdmin$ | async"
+      [actions]="getAdminActions()"
     ></app-card-actions>
 
     <div class="card__cta">
@@ -32,16 +32,17 @@
       </p>
       <button
         class="button button--primary button--regular"
-        (click)="toggleModal()"
         [disabled]="getProductAvailability() < 1"
+        (click)="onBuy()"
       >
         <span class="h5">Buy</span>
       </button>
     </div>
-    <app-product-buy
-      *ngIf="onBuying"
-      [product]="product"
-      (closeModal)="toggleModal($event)"
-    ></app-product-buy>
   </section>
+
+  <app-product-interaction
+    [product]="product"
+    [productInteractionType]="productInteractionType"
+    (clearProductInteractionType)="onClearProductInteractionType()"
+  ></app-product-interaction>
 </article>

@@ -1,5 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
 import { SharedModule } from '../shared/shared.module';
 import { CardActionsComponent } from './product-card/card-actions/card-actions.component';
 import { CardFigureComponent } from './product-card/card-figure/card-figure.component';
@@ -8,20 +10,19 @@ import { CardListComponent } from './product-card/card-list/card-list.component'
 import { CardPdpComponent } from './product-card/card-pdp/card-pdp.component';
 import { CardRatingComponent } from './product-card/card-rating/card-rating.component';
 import { ProductCardComponent } from './product-card/product-card.component';
-import { ProductAddQuantityComponent } from './product-detail/product-add-quantity/product-add-quantity.component';
-import { ProductBuyComponent } from './product-detail/product-buy/product-buy.component';
-import { ProductDeleteComponent } from './product-detail/product-delete/product-delete.component';
 import { ProductDetailHeaderComponent } from './product-detail/product-detail-header/product-detail-header.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
-import { ProductEditComponent } from './product-detail/product-edit/product-edit.component';
+import { ProductAddQuantityComponent } from './product-interaction/product-add-quantity/product-add-quantity.component';
+import { ProductBuyComponent } from './product-interaction/product-buy/product-buy.component';
+import { ProductDeleteComponent } from './product-interaction/product-delete/product-delete.component';
+import { ProductEditComponent } from './product-interaction/product-edit/product-edit.component';
 import { ProductsFilterComponent } from './products-filter/products-filter.component';
+import { ProductsListNavigationComponent } from './products-list/products-list-navigation/products-list-navigation.component';
 import { ProductsListComponent } from './products-list/products-list.component';
 import { ProductsRoutingModule } from './products-routing.module';
-import { ProductsListNavigationComponent } from './products-list/products-list-navigation/products-list-navigation.component';
-import { StoreModule } from '@ngrx/store';
-import { productsReducer } from './store/products.reducer';
-import { EffectsModule } from '@ngrx/effects';
 import { ProductsEffects } from './store/products.effects';
+import { productsReducer } from './store/products.reducer';
+import { ProductInteractionComponent } from './product-interaction/product-interaction.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { ProductsEffects } from './store/products.effects';
     CardFigureComponent,
     CardInfoGroupComponent,
     CardActionsComponent,
-    ProductsListNavigationComponent
+    ProductsListNavigationComponent,
+    ProductInteractionComponent
   ],
   imports: [
     CommonModule,

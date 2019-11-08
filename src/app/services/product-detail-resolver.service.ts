@@ -1,36 +1,24 @@
 import { Injectable } from '@angular/core';
 import {
-  Resolve,
   ActivatedRouteSnapshot,
+  Resolve,
   RouterStateSnapshot
 } from '@angular/router';
-import { Observable, of } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
-
-import { Product } from '../shared/models/product.model';
-import { ProductsService } from './products.service';
+import { Store } from '@ngrx/store';
+import * as ProductsActions from '../products/store/products.actions';
+import { AppState } from '../reducer';
 
 @Injectable({ providedIn: 'root' })
-export class ProductDetailResolver implements Resolve<Product | null> {
-  constructor(private productService: ProductsService) {}
+export class ProductDetailResolver implements Resolve<void> {
+  constructor(private store: Store<AppState>) {}
 
-  resolve(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ): Product | Observable<Product | null> {
-    const currentProduct = this.productService.getCurrentProduct();
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): void {
     const paramProductId = parseFloat(
       route.paramMap.get('id') || route.parent.paramMap.get('id')
     );
 
-    if (currentProduct !== undefined && paramProductId === currentProduct.id) {
-      return currentProduct;
-    }
-
-    return this.productService.fetchProduct(paramProductId).pipe(
-      catchError(err => {
-        return of(null);
-      })
+    this.store.dispatch(
+      ProductsActions.fetchCurrentProduct({ productId: paramProductId })
     );
   }
 }

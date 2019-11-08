@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { select, Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { AppState } from 'src/app/reducer';
 import { Product } from '../../shared/models/product.model';
+import {
+  getCurrentProduct,
+  getCurrentProductCategory
+} from '../store/products.reducer';
 
 @Component({
   selector: 'app-product-detail',
@@ -8,16 +14,13 @@ import { Product } from '../../shared/models/product.model';
   styleUrls: ['./product-detail.component.scss']
 })
 export class ProductDetailComponent implements OnInit {
-  protected product: Product;
+  public product$: Observable<Product>;
+  public category$: Observable<string>;
 
-  public constructor(private route: ActivatedRoute, private router: Router) {}
+  public constructor(private store: Store<AppState>) {}
 
   public ngOnInit() {
-    if (this.route.snapshot.data.product === null) {
-      return this.router.navigate(['/page-not-found'], {
-        skipLocationChange: true
-      });
-    }
-    this.product = this.route.snapshot.data.product;
+    this.product$ = this.store.pipe(select(getCurrentProduct));
+    this.category$ = this.store.pipe(select(getCurrentProductCategory));
   }
 }

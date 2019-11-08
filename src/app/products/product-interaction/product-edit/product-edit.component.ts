@@ -1,37 +1,25 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { RoutesRef } from 'src/app/shared/models/routes-ref.model';
+import { Observable } from 'rxjs';
 import { Category } from '../../../shared/models/category.model';
-import { Product } from '../../../shared/models/product.model';
-import { ProductsService } from '../../../services/products.service';
 import { EditFormFields } from '../../../shared/models/edit-form-fields.model';
+import { Product } from '../../../shared/models/product.model';
+import * as ProductsActions from '../../store/products.actions';
+import { ProductInteractionComponent } from '../product-interaction.component';
 
 @Component({
   selector: 'app-product-edit',
   templateUrl: './product-edit.component.html',
   styleUrls: ['./product-edit.component.scss']
 })
-export class ProductEditComponent implements OnInit, OnDestroy {
-  private fetchCategoriesSubscription: Subscription;
-  private saveProductSubscription: Subscription;
-
+export class ProductEditComponent extends ProductInteractionComponent
+  implements OnInit {
   public editForm: FormGroup;
   public editFormFields = EditFormFields;
   public genders = ['Man', 'Woman', 'Unisex'];
-  public categories: Category[];
-  public product: Product;
-
-  public constructor(
-    private productsService: ProductsService,
-    private route: ActivatedRoute,
-    private router: Router
-  ) {}
+  public categories$: Observable<Category[]>;
 
   public ngOnInit() {
-    this.product = this.route.snapshot.data.product || new Product();
-
     this.editForm = new FormGroup({
       [this.editFormFields.name]: new FormControl(this.product.name, [
         Validators.required
@@ -61,20 +49,7 @@ export class ProductEditComponent implements OnInit, OnDestroy {
       ])
     });
 
-    this.fetchCategoriesSubscription = this.productsService
-      .fetchCategories()
-      .subscribe(categoriesData => {
-        this.categories = categoriesData;
-      });
-  }
-
-  public ngOnDestroy() {
-    if (this.saveProductSubscription) {
-      this.saveProductSubscription.unsubscribe();
-    }
-    if (this.fetchCategoriesSubscription) {
-      this.fetchCategoriesSubscription.unsubscribe();
-    }
+    this.categories$ = this.productsService.fetchCategories();
   }
 
   private toNumber(control: FormControl): { [s: string]: boolean } {
@@ -90,19 +65,16 @@ export class ProductEditComponent implements OnInit, OnDestroy {
       this.product,
       this.editForm.value
     );
-    this.saveProductSubscription = this.productsService
-      .saveProduct(editedProduct)
-      .subscribe((productResponse: Product) => {
-        this.router.navigate([RoutesRef.product, productResponse.id]);
-      });
+
+    this.store.dispatch(
+      ProductsActions.saveCurrentProduct({ product: editedProduct })
+    );
+
+    super.closeModalHandler();
   }
 
   public onCancel(): void {
-    if (this.product.id) {
-      this.router.navigate(['../'], { relativeTo: this.route });
-    } else {
-      this.router.navigate([RoutesRef.products]);
-    }
+    super.closeModalHandler();
   }
 
   public getUrlPattern(): RegExp {
