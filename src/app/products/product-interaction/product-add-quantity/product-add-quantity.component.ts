@@ -18,8 +18,4 @@ export class ProductAddQuantityComponent extends ProductInteractionComponent {
     );
     this.closeModalHandler();
   }
-
-  public onCancel(): void {
-    this.closeModalHandler();
-  }
 }

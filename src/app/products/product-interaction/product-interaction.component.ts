@@ -42,6 +42,10 @@ export class ProductInteractionComponent implements OnDestroy {
     }
   }
 
+  protected onCancel(): void {
+    this.closeModalHandler();
+  }
+
   protected closeModalHandler(): void {
     this.closeModal.emit();
   }

@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { throwError, Subscription } from 'rxjs';
 import { LoginFormFields } from '../shared/models/login-form-fields.model';
+import { STRING_ENG_LETTERS } from '../services/form-errors.service';
 
 @Component({
   selector: 'app-login',
@@ -27,7 +28,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       [this.loginFormFields.username]: new FormControl(null, [
         Validators.required,
         Validators.minLength(3),
-        Validators.pattern('^[A-Za-z]+$')
+        Validators.pattern(STRING_ENG_LETTERS)
       ]),
       [this.loginFormFields.password]: new FormControl(null, [
         Validators.required
@@ -61,12 +62,5 @@ export class LoginComponent implements OnInit, OnDestroy {
           }
         }
       );
-  }
-
-  protected controlHasError(control: string, error: string): boolean {
-    return (
-      this.loginForm.get(control).touched &&
-      this.loginForm.get(control).hasError(error)
-    );
   }
 }

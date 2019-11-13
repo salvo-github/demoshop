@@ -14,8 +14,4 @@ export class ProductDeleteComponent extends ProductInteractionComponent {
     );
     this.closeModalHandler();
   }
-
-  public onCancel(): void {
-    this.closeModalHandler();
-  }
 }

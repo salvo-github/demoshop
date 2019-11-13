@@ -22,12 +22,6 @@
               [formControlName]="editFormFields.name"
               id="name"
             />
-            <p
-              class="h3 form__error-message"
-              *ngIf="controlHasError(editFormFields.name, 'required')"
-            >
-              This field is required
-            </p>
           </div>
           <div class="form__field">
             <p><label class="h3" for="categoryId">Category:</label></p>
@@ -67,12 +61,6 @@
               id="description"
               [formControlName]="editFormFields.description"
             ></textarea>
-            <p
-              class="h3 form__error-message"
-              *ngIf="controlHasError(editFormFields.description, 'required')"
-            >
-              This field is required
-            </p>
           </div>
         </section>
         <section class="column">
@@ -84,18 +72,6 @@
               id="image"
               [formControlName]="editFormFields.image"
             />
-            <p
-              class="h3 form__error-message"
-              *ngIf="controlHasError(editFormFields.image, 'required')"
-            >
-              This field is required
-            </p>
-            <p
-              class="h3 form__error-message"
-              *ngIf="controlHasError(editFormFields.image, 'pattern')"
-            >
-              This must be an url
-            </p>
             <img
               class="form_field--image"
               [src]="editForm.get(editFormFields.image).value"

@@ -14,7 +14,7 @@
 
     <app-card-actions
       *ngIf="isCurrentUserAdmin$ | async"
-      [actions]="getActions()"
+      [actions]="getAdminActions()"
     ></app-card-actions>
 
     <div class="card__cta">

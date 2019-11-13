@@ -7,6 +7,7 @@ import { FormSubmitDirective } from './directives/form-submit.directive';
 import { ControlErrorComponent } from './components/control-error/control-error.component';
 import { ControlErrorContainerDirective } from './directives/control-error-container.directive';
 import { ClickOutsideDirective } from './directives/click-outside.directive';
+import { ProductAvailabilityPipe } from './pipes/product-availability.pipe';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { ClickOutsideDirective } from './directives/click-outside.directive';
     FormSubmitDirective,
     ControlErrorComponent,
     ControlErrorContainerDirective,
-    ClickOutsideDirective
+    ClickOutsideDirective,
+    ProductAvailabilityPipe
   ],
   imports: [CommonModule, ReactiveFormsModule],
   exports: [
@@ -24,7 +26,8 @@ import { ClickOutsideDirective } from './directives/click-outside.directive';
     ControlErrorsDirective,
     FormSubmitDirective,
     ControlErrorContainerDirective,
-    ClickOutsideDirective
+    ClickOutsideDirective,
+    ProductAvailabilityPipe
   ],
   entryComponents: [ControlErrorComponent]
 })

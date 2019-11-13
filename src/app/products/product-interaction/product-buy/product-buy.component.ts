@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { BuyingMessages } from '../../../shared/models/buying-message.model';
 import * as ProductsActions from '../../store/products.actions';
 import { ProductInteractionComponent } from '../product-interaction.component';
+import { Product } from 'src/app/shared/models/product.model';
 
 @Component({
   selector: 'app-product-buy',
@@ -14,14 +15,11 @@ export class ProductBuyComponent extends ProductInteractionComponent
 
   public ngOnInit() {
     if (this.product.count - this.product.soldCount > 0) {
-      this.product.soldCount++;
+      const productToUpdate = { ...this.product };
+      ++productToUpdate.soldCount;
       this.store.dispatch(
-        ProductsActions.saveCurrentProduct({ product: this.product })
+        ProductsActions.saveCurrentProduct({ product: productToUpdate })
       );
     }
-  }
-
-  public onContinue(): void {
-    this.closeModalHandler();
   }
 }

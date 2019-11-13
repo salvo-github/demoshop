@@ -22,17 +22,19 @@
         {{ product.cost
         }}<span
           class="font__style--weight-lighter font__style--smaller card__info-price--extra"
+          *ngIf="
+            product.count | productAvailability: product.soldCount as prodAvai;
+            else soldOut
+          "
         >
-          ({{
-            getProductAvailability() > 0
-              ? getProductAvailability() + ' items left'
-              : 'Sold Out'
-          }})</span
+          ({{ prodAvai }} items left)</span
         >
       </p>
       <button
         class="button button--primary button--regular"
-        [disabled]="getProductAvailability() < 1"
+        [disabled]="
+          (product.count | productAvailability: product.soldCount) < 1
+        "
         (click)="onBuy()"
       >
         <span class="h5">Buy</span>
@@ -46,3 +48,11 @@
     (clearProductInteractionType)="onClearProductInteractionType()"
   ></app-product-interaction>
 </article>
+
+<ng-template #soldOut>
+  <span
+    class="font__style--weight-lighter font__style--smaller card__info-price--extra"
+  >
+    (Sold out)</span
+  >
+</ng-template>

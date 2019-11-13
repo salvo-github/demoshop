@@ -20,7 +20,7 @@ export class CardListComponent extends ProductCardComponent {
     }
   }
 
-  protected getActions() {
+  protected getAdminActions() {
     return {
       [AdminActions.delete]: () => this.onDeleteHandler()
     };

@@ -6,6 +6,7 @@ import { EditFormFields } from '../../../shared/models/edit-form-fields.model';
 import { Product } from '../../../shared/models/product.model';
 import * as ProductsActions from '../../store/products.actions';
 import { ProductInteractionComponent } from '../product-interaction.component';
+import { REG_EXP_URL } from 'src/app/services/form-errors.service';
 
 @Component({
   selector: 'app-product-edit',
@@ -70,22 +71,10 @@ export class ProductEditComponent extends ProductInteractionComponent
       ProductsActions.saveCurrentProduct({ product: editedProduct })
     );
 
-    super.closeModalHandler();
-  }
-
-  public onCancel(): void {
-    super.closeModalHandler();
+    this.closeModalHandler();
   }
 
   public getUrlPattern(): RegExp {
-    const expression = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
-    return new RegExp(expression);
-  }
-
-  public controlHasError(control: string, error: string): boolean {
-    return (
-      this.editForm.get(control).touched &&
-      this.editForm.get(control).hasError(error)
-    );
+    return REG_EXP_URL;
   }
 }
