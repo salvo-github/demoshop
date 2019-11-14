@@ -9,10 +9,6 @@ import { ProductCardComponent } from '../product-card.component';
   styleUrls: ['./card-pdp.component.scss']
 })
 export class CardPdpComponent extends ProductCardComponent {
-  protected getProductAvailability(): number {
-    return this.product.count - this.product.soldCount;
-  }
-
   protected getAdminActions() {
     return {
       [AdminActions.edit]: () => {
