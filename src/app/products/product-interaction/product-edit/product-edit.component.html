@@ -15,13 +15,11 @@
       <form class="form" [formGroup]="editForm" (ngSubmit)="onSubmit()">
         <section class="column">
           <div class="form__field">
-            <p><label class="h3" for="name">Name:</label></p>
-            <input
-              class="h5 textinput"
-              type="text"
-              [formControlName]="editFormFields.name"
-              id="name"
-            />
+            <app-input-field
+              [fieldName]="'Name'"
+              [validators]="{ required: true }"
+              (controllerCreated)="addFormControl('name', $event)"
+            ></app-input-field>
           </div>
           <div class="form__field">
             <p><label class="h3" for="categoryId">Category:</label></p>

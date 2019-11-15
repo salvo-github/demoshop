@@ -32,10 +32,10 @@ export class ProductEditComponent extends ProductInteractionComponent
       [this.editFormFields.gender]: new FormControl(this.product.gender, [
         Validators.required
       ]),
-      [this.editFormFields.description]: new FormControl(
-        this.product.description,
-        [Validators.required]
-      ),
+      [this.editFormFields
+        .description]: new FormControl(this.product.description, [
+        Validators.required
+      ]),
       [this.editFormFields.image]: new FormControl(this.product.image, [
         Validators.required,
         Validators.pattern(this.getUrlPattern())
@@ -51,6 +51,10 @@ export class ProductEditComponent extends ProductInteractionComponent
     });
 
     this.categories$ = this.productsService.fetchCategories();
+  }
+
+  addFormControl(controlName: string, formControl: FormControl): void {
+    this.editForm.addControl(controlName, formControl);
   }
 
   private toNumber(control: FormControl): { [s: string]: boolean } {

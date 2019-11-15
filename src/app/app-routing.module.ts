@@ -4,7 +4,6 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { ServerErrorComponent } from './server-error/server-error.component';
 import { LoginGuardService } from './services/login-guard.service';
 import { ProductsGuardService } from './services/products-guard.service';
-import { ProductsListResolver } from './services/products-list-resolver.service';
 
 const routes: Routes = [
   { path: '', redirectTo: 'products', pathMatch: 'full' },
