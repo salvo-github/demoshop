@@ -9,6 +9,9 @@ import { ControlErrorContainerDirective } from './directives/control-error-conta
 import { ClickOutsideDirective } from './directives/click-outside.directive';
 import { ProductAvailabilityPipe } from './pipes/product-availability.pipe';
 import { InputFieldComponent } from './components/form/input-field/input-field.component';
+import { SelectFieldComponent } from './components/form/select-field/select-field.component';
+import { RadioFieldComponent } from './components/form/radio-field/radio-field.component';
+import { TextareaFieldComponent } from './components/form/textarea-field/textarea-field.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +22,10 @@ import { InputFieldComponent } from './components/form/input-field/input-field.c
     ControlErrorContainerDirective,
     ClickOutsideDirective,
     ProductAvailabilityPipe,
-    InputFieldComponent
+    InputFieldComponent,
+    SelectFieldComponent,
+    RadioFieldComponent,
+    TextareaFieldComponent
   ],
   imports: [CommonModule, ReactiveFormsModule],
   exports: [
@@ -30,7 +36,10 @@ import { InputFieldComponent } from './components/form/input-field/input-field.c
     ControlErrorContainerDirective,
     ClickOutsideDirective,
     ProductAvailabilityPipe,
-    InputFieldComponent
+    InputFieldComponent,
+    SelectFieldComponent,
+    RadioFieldComponent,
+    TextareaFieldComponent
   ],
   entryComponents: [ControlErrorComponent]
 })

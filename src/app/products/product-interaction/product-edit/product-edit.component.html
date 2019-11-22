@@ -16,88 +16,78 @@
         <section class="column">
           <div class="form__field">
             <app-input-field
-              [fieldName]="'Name'"
+              [fieldName]="editFormFields.name | titlecase"
+              [initValue]="this.product.name"
               [validators]="{ required: true }"
-              (controllerCreated)="addFormControl('name', $event)"
+              (controllerCreated)="addFormControl(editFormFields.name, $event)"
             ></app-input-field>
           </div>
           <div class="form__field">
-            <p><label class="h3" for="categoryId">Category:</label></p>
-            <select
-              class="h5 select select--white select__arrow select__arrow--green"
-              [formControlName]="editFormFields.categoryId"
-              id="categoryId"
-              ><option
-                *ngFor="let category of categories$ | async"
-                [value]="+category.id"
-                >{{ category.name }}</option
-              >
-            </select>
+            <app-select-field
+              [fieldName]="editFormFields.categoryIdLabel"
+              [initValue]="this.product.categoryId"
+              [items]="categories$ | async"
+              [validators]="{ required: true, castToNumberValidator: true }"
+              (controllerCreated)="
+                addFormControl(editFormFields.categoryId, $event)
+              "
+            ></app-select-field>
           </div>
           <div class="form__field">
-            <p class="h3">Gender:</p>
-            <ul class="radio__wrapper">
-              <li *ngFor="let gender of genders">
-                <input
-                  class="radio"
-                  type="radio"
-                  id="{{ gender }}"
-                  [formControlName]="editFormFields.gender"
-                  [value]="gender"
-                />
-                <label class="h5 radio__label" for="{{ gender }}">{{
-                  gender
-                }}</label>
-              </li>
-            </ul>
+            <app-radio-field
+              [fieldName]="editFormFields.gender | titlecase"
+              [initValue]="this.product.gender"
+              [items]="genders"
+              [validators]="{ required: true }"
+              (controllerCreated)="
+                addFormControl(editFormFields.gender, $event)
+              "
+            ></app-radio-field>
           </div>
           <div class="form__field">
-            <p><label class="h3" for="description">Description:</label></p>
-            <textarea
-              class="h5 pdp__modal-textarea--height textarea"
-              rows="5"
-              id="description"
-              [formControlName]="editFormFields.description"
-            ></textarea>
+            <app-textarea-field
+              [fieldName]="editFormFields.description | titlecase"
+              [initValue]="this.product.description"
+              [validators]="{ required: true }"
+              (controllerCreated)="
+                addFormControl(editFormFields.description, $event)
+              "
+            ></app-textarea-field>
           </div>
         </section>
         <section class="column">
           <div class="form__field">
-            <p><label class="h3" for="image">Link to image:</label></p>
-            <input
-              class="h5 textinput"
+            <app-input-field
+              [fieldName]="editFormFields.image | titlecase"
+              [initValue]="this.product.image"
+              [validators]="{ required: true, pattern: urlPattern }"
+              (controllerCreated)="addFormControl(editFormFields.image, $event)"
               type="url"
-              id="image"
-              [formControlName]="editFormFields.image"
-            />
+            ></app-input-field>
             <img
               class="form_field--image"
               [src]="editForm.get(editFormFields.image).value"
             />
           </div>
           <div class="form__field">
-            <p><label class="h3" for="cost">Price:</label></p>
-            <input
-              class="h5 textinput"
+            <app-input-field
+              [fieldName]="editFormFields.costLabel"
+              [initValue]="this.product.cost"
               type="number"
-              step="any"
-              id="cost"
-              [formControlName]="editFormFields.cost"
-            />
+              [validators]="{ required: true, castToNumberValidator: true }"
+              (controllerCreated)="addFormControl(editFormFields.cost, $event)"
+            ></app-input-field>
           </div>
           <div class="form__field">
-            <p><label class="h3" for="rating">Rating:</label></p>
-            <select
-              class="h5 select select--white select__arrow select__arrow--green"
-              id="rating"
-              [formControlName]="editFormFields.rating"
-            >
-              <option
-                *ngFor="let rating of [0, 1, 2, 3, 4, 5]"
-                [value]="rating"
-                >{{ rating }}</option
-              >
-            </select>
+            <app-select-field
+              [fieldName]="editFormFields.rating | titlecase"
+              [initValue]="this.product.rating"
+              [items]="ratingItems"
+              [validators]="{ required: true, castToNumberValidator: true }"
+              (controllerCreated)="
+                addFormControl(editFormFields.rating, $event)
+              "
+            ></app-select-field>
           </div>
         </section>
         <div class="modal__cta">

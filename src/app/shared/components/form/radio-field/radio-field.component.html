@@ -1,0 +1,13 @@
+<p class="h3">{{ fieldName }}:</p>
+<ul class="radio__wrapper">
+  <li *ngFor="let item of items">
+    <input
+      class="radio"
+      type="radio"
+      id="{{ item }}"
+      [formControl]="fieldControl"
+      [value]="item"
+    />
+    <label class="h5 radio__label" for="{{ item }}">{{ item }}</label>
+  </li>
+</ul>

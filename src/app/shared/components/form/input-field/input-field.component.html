@@ -1,7 +1,9 @@
-<p><label class="h3" for="{{fieldName}}">{{fieldName}}:</label></p>
+<p>
+  <label class="h3" for="{{ fieldName }}">{{ fieldName }}:</label>
+</p>
 <input
   class="h5 textinput"
-  type="text"
+  type="{{ type }}"
   [formControl]="fieldControl"
-  id="{{fieldName}}"
+  id="{{ fieldName }}"
 />

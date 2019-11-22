@@ -17,52 +17,21 @@ export class ProductEditComponent extends ProductInteractionComponent
   implements OnInit {
   public editForm: FormGroup;
   public editFormFields = EditFormFields;
-  public genders = ['Man', 'Woman', 'Unisex'];
+
+  public genders = Product.getGendersList();
+  public ratingItems = Product.getRatingItemsForSelect();
   public categories$: Observable<Category[]>;
 
+  public urlPattern = REG_EXP_URL;
+
   public ngOnInit() {
-    this.editForm = new FormGroup({
-      [this.editFormFields.name]: new FormControl(this.product.name, [
-        Validators.required
-      ]),
-      [this.editFormFields.categoryId]: new FormControl(
-        this.product.categoryId,
-        this.toNumber
-      ),
-      [this.editFormFields.gender]: new FormControl(this.product.gender, [
-        Validators.required
-      ]),
-      [this.editFormFields
-        .description]: new FormControl(this.product.description, [
-        Validators.required
-      ]),
-      [this.editFormFields.image]: new FormControl(this.product.image, [
-        Validators.required,
-        Validators.pattern(this.getUrlPattern())
-      ]),
-      [this.editFormFields.cost]: new FormControl(this.product.cost, [
-        Validators.required,
-        this.toNumber
-      ]),
-      [this.editFormFields.rating]: new FormControl(this.product.rating, [
-        Validators.required,
-        this.toNumber
-      ])
-    });
+    this.editForm = new FormGroup({});
 
     this.categories$ = this.productsService.fetchCategories();
   }
 
   addFormControl(controlName: string, formControl: FormControl): void {
     this.editForm.addControl(controlName, formControl);
-  }
-
-  private toNumber(control: FormControl): { [s: string]: boolean } {
-    if (typeof control.value !== 'number') {
-      const value = parseFloat(control.value);
-      control.setValue(value);
-    }
-    return null;
   }
 
   public onSubmit() {
@@ -76,9 +45,5 @@ export class ProductEditComponent extends ProductInteractionComponent
     );
 
     this.closeModalHandler();
-  }
-
-  public getUrlPattern(): RegExp {
-    return REG_EXP_URL;
   }
 }

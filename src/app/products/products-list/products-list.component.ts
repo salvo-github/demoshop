@@ -43,10 +43,6 @@ export class ProductsListComponent implements OnInit {
     // });
   }
 
-  public getNewProductRoute(): string[] {
-    return [RoutesRef.product, 'new'];
-  }
-
   public createNewProduct(): void {
     this.product = new Product();
     this.productInteractionType = ProductInteractionType.edit;

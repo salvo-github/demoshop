@@ -1,3 +1,6 @@
+import { element } from 'protractor';
+import { map } from 'rxjs/operators';
+
 export class Product {
   id?: number;
   categoryId: number;
@@ -38,5 +41,21 @@ export class Product {
 
   public static getDefaultQuantityToAdd(): number {
     return 5;
+  }
+
+  public static getRatingItemsForSelect(): { id: number; name: number }[] {
+    const maxRating = this.getProductMaxRating();
+    const ratingItems: { id: number; name: number }[] = [];
+
+    for (let index = 0; index <= maxRating; index++) {
+      const el = { id: index, name: index };
+      ratingItems.push(el);
+    }
+
+    return ratingItems;
+  }
+
+  public static getGendersList(): string[] {
+    return ['Man', 'Woman', 'Unisex'];
   }
 }

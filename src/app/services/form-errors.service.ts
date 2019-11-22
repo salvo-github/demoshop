@@ -8,6 +8,7 @@ export const defaultErrors = {
   required: error => 'The field is required',
   minlength: ({ requiredLength, actualLength }) =>
     `The field must contains at least ${requiredLength} letters`,
+  mustBeNumber: error => 'The field must contains a number',
   pattern: ({ requiredPattern, actualValue }) => {
     switch (requiredPattern) {
       case STRING_ENG_LETTERS:
