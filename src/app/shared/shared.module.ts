@@ -13,34 +13,23 @@ import { SelectFieldComponent } from './components/form/select-field/select-fiel
 import { RadioFieldComponent } from './components/form/radio-field/radio-field.component';
 import { TextareaFieldComponent } from './components/form/textarea-field/textarea-field.component';
 
+const sharedComponents = [
+  ImagePlaceholderDirective,
+  ControlErrorsDirective,
+  FormSubmitDirective,
+  ControlErrorContainerDirective,
+  ClickOutsideDirective,
+  ProductAvailabilityPipe,
+  InputFieldComponent,
+  SelectFieldComponent,
+  RadioFieldComponent,
+  TextareaFieldComponent
+];
+
 @NgModule({
-  declarations: [
-    ImagePlaceholderDirective,
-    ControlErrorsDirective,
-    FormSubmitDirective,
-    ControlErrorComponent,
-    ControlErrorContainerDirective,
-    ClickOutsideDirective,
-    ProductAvailabilityPipe,
-    InputFieldComponent,
-    SelectFieldComponent,
-    RadioFieldComponent,
-    TextareaFieldComponent
-  ],
+  declarations: [sharedComponents, ControlErrorComponent],
   imports: [CommonModule, ReactiveFormsModule],
-  exports: [
-    ReactiveFormsModule,
-    ImagePlaceholderDirective,
-    ControlErrorsDirective,
-    FormSubmitDirective,
-    ControlErrorContainerDirective,
-    ClickOutsideDirective,
-    ProductAvailabilityPipe,
-    InputFieldComponent,
-    SelectFieldComponent,
-    RadioFieldComponent,
-    TextareaFieldComponent
-  ],
+  exports: [sharedComponents, ReactiveFormsModule],
   entryComponents: [ControlErrorComponent]
 })
 export class SharedModule {}

@@ -6,30 +6,33 @@ import {
   Validators
 } from '@angular/forms';
 
-export const getValidators = (validatorsConfig: {
-  [s: string]: boolean | string | RegExp;
-}): ((control: AbstractControl) => ValidationErrors | ValidatorFn | null)[] => {
-  const validatorsForInput: ((
-    control: AbstractControl
-  ) => ValidationErrors | ValidatorFn | null)[] = [];
+interface ValidatorsConfig {
+  validator: string;
+  validatorFlag: boolean | string | RegExp;
+}
+
+type ValidatorsTypes = ValidationErrors | ValidatorFn | null;
+
+type ValidatorsCb = (control: AbstractControl) => ValidatorsTypes;
+
+export const getValidators = (
+  validatorsConfig: ValidatorsConfig
+): ValidatorsCb[] => {
+  const validatorsForInput: ValidatorsCb[] = [];
 
   for (const validator in validatorsConfig) {
     if (validatorsConfig.hasOwnProperty(validator)) {
       const validatorFlag = validatorsConfig[validator];
 
-      if (validator === 'required' && validatorFlag === true) {
+      const validatorObj: ValidatorsConfig = { validator, validatorFlag };
+
+      if (isRequired(validatorObj)) {
         validatorsForInput.push(Validators.required);
-      } else if (
-        (validator === 'pattern' &&
-          validatorFlag &&
-          typeof validatorFlag === 'string') ||
-        validatorFlag instanceof RegExp
-      ) {
-        validatorsForInput.push(Validators.pattern(validatorFlag));
-      } else if (
-        validator === 'castToNumberValidator' &&
-        validatorFlag === true
-      ) {
+      } else if (isPattern(validatorObj)) {
+        validatorsForInput.push(
+          Validators.pattern(validatorObj.validatorFlag as string | RegExp)
+        );
+      } else if (isCastToNumber(validatorObj)) {
         validatorsForInput.push(castToNumberValidator);
       }
     }
@@ -37,7 +40,29 @@ export const getValidators = (validatorsConfig: {
   return validatorsForInput;
 };
 
-// transform the value
+function isRequired(validatorObj: ValidatorsConfig): boolean {
+  return (
+    validatorObj.validator === 'required' && validatorObj.validatorFlag === true
+  );
+}
+
+function isPattern(validatorObj: ValidatorsConfig): boolean {
+  return (
+    validatorObj.validator === 'pattern' &&
+    validatorObj.validatorFlag &&
+    (typeof validatorObj.validatorFlag === 'string' ||
+      validatorObj.validatorFlag instanceof RegExp)
+  );
+}
+
+function isCastToNumber(validatorObj: ValidatorsConfig): boolean {
+  return (
+    validatorObj.validator === 'castToNumberValidator' &&
+    validatorObj.validatorFlag === true
+  );
+}
+
+// check if a value can be parsed to float and transform it, otherwise throw an error
 function castToNumberValidator(
   control: AbstractControl
 ): ValidationErrors | null {
