@@ -7,10 +7,10 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { Product } from 'src/app/models/product.model';
 import { AppState } from 'src/app/reducer';
 import { ProductsService } from 'src/app/services/products.service';
-import { Product } from 'src/app/shared/models/product.model';
-import { ProductInteractionType } from '../../shared/models/product-interaction-type.model';
+import { ProductInteractionType } from '../../models/product-interaction-type.model';
 
 @Component({
   selector: 'app-product-interaction',

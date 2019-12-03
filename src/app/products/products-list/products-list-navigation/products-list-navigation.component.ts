@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { PaginationLinks } from 'src/app/models/pagination-links.model';
 import { AppState } from 'src/app/reducer';
-import { PaginationLinks } from 'src/app/shared/models/pagination-links.model';
 import * as ProductsActions from '../../store/products.actions';
 import { getPaginationLinks } from '../../store/products.reducer';
 

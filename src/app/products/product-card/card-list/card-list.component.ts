@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { ProductInteractionType } from 'src/app/shared/models/product-interaction-type.model';
-import { Product } from 'src/app/shared/models/product.model';
-import { RoutesRef } from 'src/app/shared/models/routes-ref.model';
-import { AdminActions } from '../../../shared/models/admin-actions.model';
+import { ProductInteractionType } from 'src/app/models/product-interaction-type.model';
+import { Product } from 'src/app/models/product.model';
+import { RoutesRef } from 'src/app/models/routes-ref.model';
+import { AdminActions } from '../../../models/admin-actions.model';
 import { ProductCardComponent } from '../product-card.component';
 
 @Component({

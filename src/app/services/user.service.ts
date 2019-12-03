@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map, shareReplay, tap } from 'rxjs/operators';
-import { UserRole } from '../shared/models/user-role.model';
-import { User } from '../shared/models/user.model';
+import { UserRole } from '../models/user-role.model';
+import { User } from '../models/user.model';
 
 @Injectable({
   providedIn: 'root'

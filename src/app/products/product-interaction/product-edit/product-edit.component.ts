@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { Category } from '../../../shared/models/category.model';
-import { EditFormFields } from '../../../shared/models/edit-form-fields.model';
-import { Product } from '../../../shared/models/product.model';
+import { REG_EXP_URL } from 'src/app/services/form-errors.service';
+import { Category } from '../../../models/category.model';
+import { EditFormFields } from '../../../models/edit-form-fields.model';
+import { Product } from '../../../models/product.model';
 import * as ProductsActions from '../../store/products.actions';
 import { ProductInteractionComponent } from '../product-interaction.component';
-import { REG_EXP_URL } from 'src/app/services/form-errors.service';
 
 @Component({
   selector: 'app-product-edit',

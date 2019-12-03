@@ -4,9 +4,9 @@ import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { EMPTY, of } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
+import { Category } from 'src/app/models/category.model';
+import { Product } from 'src/app/models/product.model';
 import { ProductsService } from 'src/app/services/products.service';
-import { Category } from 'src/app/shared/models/category.model';
-import { Product } from 'src/app/shared/models/product.model';
 import * as ProductsActions from '../store/products.actions';
 
 @Injectable()

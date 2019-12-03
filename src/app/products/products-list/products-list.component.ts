@@ -2,13 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { ProductInteractionType } from 'src/app/models/product-interaction-type.model';
 import { AppState } from 'src/app/reducer';
 import { UserService } from 'src/app/services/user.service';
-import { ProductInteractionType } from 'src/app/shared/models/product-interaction-type.model';
-import { RoutesRef } from 'src/app/shared/models/routes-ref.model';
-import { Product } from '../../shared/models/product.model';
-import { getProductsList } from '../store/products.reducer';
+import { Product } from '../../models/product.model';
 import * as ProductsActions from '../store/products.actions';
+import { getProductsList } from '../store/products.reducer';
 
 @Component({
   selector: 'app-products-list',

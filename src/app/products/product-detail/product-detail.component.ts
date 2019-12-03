@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AppState } from 'src/app/reducer';
-import { Product } from '../../shared/models/product.model';
+import { Product } from '../../models/product.model';
 import {
   getCurrentProduct,
   getCurrentProductCategory

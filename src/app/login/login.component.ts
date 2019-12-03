@@ -1,11 +1,11 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { UserService } from '../services/user.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { HttpErrorResponse } from '@angular/common/http';
-import { throwError, Subscription } from 'rxjs';
-import { LoginFormFields } from '../shared/models/login-form-fields.model';
+import { Subscription, throwError } from 'rxjs';
+import { LoginFormFields } from '../models/login-form-fields.model';
 import { STRING_ENG_LETTERS } from '../services/form-errors.service';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-login',

@@ -1,8 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { BuyingMessages } from '../../../shared/models/buying-message.model';
+import { Component, OnInit } from '@angular/core';
+import { BuyingMessages } from '../../../models/buying-message.model';
 import * as ProductsActions from '../../store/products.actions';
 import { ProductInteractionComponent } from '../product-interaction.component';
-import { Product } from 'src/app/shared/models/product.model';
 
 @Component({
   selector: 'app-product-buy',

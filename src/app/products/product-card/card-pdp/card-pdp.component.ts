@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { AdminActions } from '../../../shared/models/admin-actions.model';
-import { ProductInteractionType } from '../../../shared/models/product-interaction-type.model';
+import { AdminActions } from '../../../models/admin-actions.model';
+import { ProductInteractionType } from '../../../models/product-interaction-type.model';
 import { ProductCardComponent } from '../product-card.component';
 
 @Component({

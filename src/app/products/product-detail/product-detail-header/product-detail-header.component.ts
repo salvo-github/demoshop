@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { RoutesRef } from 'src/app/shared/models/routes-ref.model';
+import { RoutesRef } from 'src/app/models/routes-ref.model';
 
 @Component({
   selector: 'app-product-detail-header',

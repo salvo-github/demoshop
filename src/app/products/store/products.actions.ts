@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
-import { Product } from 'src/app/shared/models/product.model';
-import { PaginationLinks } from 'src/app/shared/models/pagination-links.model';
+import { PaginationLinks } from 'src/app/models/pagination-links.model';
+import { Product } from 'src/app/models/product.model';
 
 export const setProductsList = createAction(
   '[Products] Set Products List',

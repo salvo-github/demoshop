@@ -1,9 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Category } from '../../shared/models/category.model';
-import { ProductsService } from '../../services/products.service';
 import { Subscription } from 'rxjs';
+import { Category } from '../../models/category.model';
+import { ProductsService } from '../../services/products.service';
 import { FilterFormFields } from './filter-form-fields.model';
 
 @Component({

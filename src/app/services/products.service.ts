@@ -3,9 +3,9 @@ import { Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Category } from '../shared/models/category.model';
-import { PaginationLinks } from '../shared/models/pagination-links.model';
-import { Product } from '../shared/models/product.model';
+import { Category } from '../models/category.model';
+import { PaginationLinks } from '../models/pagination-links.model';
+import { Product } from '../models/product.model';
 
 @Injectable({ providedIn: 'root' })
 export class ProductsService {

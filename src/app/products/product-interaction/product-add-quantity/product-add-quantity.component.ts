@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Product } from '../../../shared/models/product.model';
+import { Product } from '../../../models/product.model';
 import * as ProductsActions from '../../store/products.actions';
 import { ProductInteractionComponent } from '../product-interaction.component';
 

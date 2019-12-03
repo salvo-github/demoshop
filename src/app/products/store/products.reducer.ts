@@ -5,9 +5,9 @@ import {
   createSelector,
   on
 } from '@ngrx/store';
-import { Product } from 'src/app/shared/models/product.model';
+import { PaginationLinks } from 'src/app/models/pagination-links.model';
+import { Product } from 'src/app/models/product.model';
 import * as ProductsActions from '../store/products.actions';
-import { PaginationLinks } from 'src/app/shared/models/pagination-links.model';
 
 export interface ProductsState {
   productsList: Product[];
