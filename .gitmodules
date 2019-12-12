@@ -1,0 +1,3 @@
+[submodule "node-server-demoshop"]
+	path = node-server-demoshop
+	url = https://github.com/salvo-github/node-server-demoshop.git
