@@ -2,16 +2,16 @@ import {
   ComponentFactoryResolver,
   ComponentRef,
   Directive,
+  ElementRef,
   Host,
   HostListener,
   Inject,
   OnInit,
   Optional,
-  ViewContainerRef,
-  ElementRef
+  ViewContainerRef
 } from '@angular/core';
 import { NgControl } from '@angular/forms';
-import { EMPTY, merge, Observable, fromEvent } from 'rxjs';
+import { EMPTY, fromEvent, merge, Observable } from 'rxjs';
 import { FORM_ERRORS } from 'src/app/services/form-errors.service';
 import { ControlErrorComponent } from '../components/control-error/control-error.component';
 import { ControlErrorContainerDirective } from './control-error-container.directive';
