@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "npm start --prefix node-server-demoshop > /dev/null | ng serve",
+    "start": "/Applications/Google\\ Chrome.app/Contents/MacOS/Google\\ Chrome --user-data-dir=/Users/scappuccino/Library/Application\\ Support/Google/Chrome/debugProfile --remote-debugging-port=9222 > /dev/null | npm start --prefix node-server-demoshop > /dev/null | ng serve",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",

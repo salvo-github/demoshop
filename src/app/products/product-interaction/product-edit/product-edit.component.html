@@ -24,7 +24,7 @@
           </div>
           <div class="form__field">
             <app-select-field
-              [fieldName]="editFormFields.categoryIdLabel"
+              [fieldName]="editFormFields.categoryIdLabel | titlecase"
               [initValue]="this.product.categoryId"
               [items]="categories$ | async"
               [validators]="{ required: true, castToNumberValidator: true }"
@@ -71,7 +71,7 @@
           </div>
           <div class="form__field">
             <app-input-field
-              [fieldName]="editFormFields.costLabel"
+              [fieldName]="editFormFields.costLabel | titlecase"
               [initValue]="this.product.cost"
               type="number"
               [validators]="{ required: true, castToNumberValidator: true }"
