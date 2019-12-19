@@ -7,8 +7,8 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/app.state';
 import { Product } from 'src/app/models/product.model';
-import { AppState } from 'src/app/reducer';
 import { ProductsService } from 'src/app/services/products.service';
 import { ProductInteractionType } from '../../models/product-interaction-type.model';
 

@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { AppState } from 'src/app/reducer';
+import { AppState } from 'src/app/app.state';
 import { UserService } from 'src/app/services/user.service';
 import { Product } from '../../models/product.model';
 import { ProductsService } from '../../services/products.service';

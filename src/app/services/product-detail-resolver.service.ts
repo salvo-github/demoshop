@@ -5,8 +5,8 @@ import {
   RouterStateSnapshot
 } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { AppState } from '../app.state';
 import * as ProductsActions from '../products/store/products.actions';
-import { AppState } from '../reducer';
 
 @Injectable({ providedIn: 'root' })
 export class ProductDetailResolver implements Resolve<void> {

@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map, shareReplay, tap } from 'rxjs/operators';
 import { UserRole } from '../models/user-role.model';
@@ -23,7 +22,7 @@ export class UserService {
 
   private cacheRole$: Observable<boolean>;
 
-  public constructor(private http: HttpClient, private router: Router) {}
+  public constructor(private http: HttpClient) {}
 
   /**
    * @description

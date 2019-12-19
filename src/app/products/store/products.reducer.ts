@@ -9,6 +9,8 @@ import { PaginationLinks } from 'src/app/models/pagination-links.model';
 import { Product } from 'src/app/models/product.model';
 import * as ProductsActions from '../store/products.actions';
 
+export const PRODUCTS_STATE_KEY = 'products';
+
 export interface ProductsState {
   productsList: Product[];
   paginationLinks: PaginationLinks;
@@ -16,35 +18,6 @@ export interface ProductsState {
   currentProduct: Product;
   currentProductCategory: string;
 }
-
-export const getProductsState = createFeatureSelector<ProductsState>(
-  'productsState'
-);
-
-export const getProductsList = createSelector(
-  getProductsState,
-  state => state.productsList
-);
-
-export const getCurrentProduct = createSelector(
-  getProductsState,
-  state => state.currentProduct
-);
-
-export const getPaginationLinks = createSelector(
-  getProductsState,
-  state => state.paginationLinks
-);
-
-export const getProductInteractionType = createSelector(
-  getProductsState,
-  state => state.productInteractionType
-);
-
-export const getCurrentProductCategory = createSelector(
-  getProductsState,
-  state => state.currentProductCategory
-);
 
 const initialState: ProductsState = {
   productsList: [],
@@ -78,3 +51,32 @@ export function productsReducer(
     }))
   )(productsState, productsAction);
 }
+
+export const getProductsState = createFeatureSelector<ProductsState>(
+  PRODUCTS_STATE_KEY
+);
+
+export const getProductsList = createSelector(
+  getProductsState,
+  state => state.productsList
+);
+
+export const getCurrentProduct = createSelector(
+  getProductsState,
+  state => state.currentProduct
+);
+
+export const getPaginationLinks = createSelector(
+  getProductsState,
+  state => state.paginationLinks
+);
+
+export const getProductInteractionType = createSelector(
+  getProductsState,
+  state => state.productInteractionType
+);
+
+export const getCurrentProductCategory = createSelector(
+  getProductsState,
+  state => state.currentProductCategory
+);

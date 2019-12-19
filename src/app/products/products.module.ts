@@ -16,13 +16,13 @@ import { ProductAddQuantityComponent } from './product-interaction/product-add-q
 import { ProductBuyComponent } from './product-interaction/product-buy/product-buy.component';
 import { ProductDeleteComponent } from './product-interaction/product-delete/product-delete.component';
 import { ProductEditComponent } from './product-interaction/product-edit/product-edit.component';
+import { ProductInteractionComponent } from './product-interaction/product-interaction.component';
 import { ProductsFilterComponent } from './products-filter/products-filter.component';
 import { ProductsListNavigationComponent } from './products-list/products-list-navigation/products-list-navigation.component';
 import { ProductsListComponent } from './products-list/products-list.component';
 import { ProductsRoutingModule } from './products-routing.module';
 import { ProductsEffects } from './store/products.effects';
-import { productsReducer } from './store/products.reducer';
-import { ProductInteractionComponent } from './product-interaction/product-interaction.component';
+import { productsReducer, PRODUCTS_STATE_KEY } from './store/products.reducer';
 
 @NgModule({
   declarations: [
@@ -48,7 +48,7 @@ import { ProductInteractionComponent } from './product-interaction/product-inter
     CommonModule,
     ProductsRoutingModule,
     SharedModule,
-    StoreModule.forFeature('productsState', productsReducer),
+    StoreModule.forFeature(PRODUCTS_STATE_KEY, productsReducer),
     EffectsModule.forFeature([ProductsEffects])
   ]
 })
