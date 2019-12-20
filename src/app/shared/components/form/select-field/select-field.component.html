@@ -2,7 +2,12 @@
   <label class="h3" for="{{ fieldName }}">{{ fieldName }}:</label>
 </p>
 <select
-  class="h5 select select--white select__arrow select__arrow--green"
+  class="h5 select select__arrow"
+  [ngClass]="
+    styleBackgroundColor === 'green'
+      ? 'select--green select__arrow--white'
+      : 'select--white select__arrow--green'
+  "
   [formControl]="fieldControl"
   id="{{ fieldName }}"
   ><option *ngFor="let item of items" [value]="item.id">{{ item.name }}</option>

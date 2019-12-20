@@ -21,7 +21,7 @@
       [formGroup]="filtersForm"
       (ngSubmit)="onApplyFilters()"
     >
-      <div class="filters__field-wrapper">
+      <!-- <div class="filters__field-wrapper">
         <p class="h3">Only available:</p>
         <input
           class="h5 tgl tgl-light"
@@ -47,21 +47,19 @@
             }}</label>
           </li>
         </ul>
-      </div>
+      </div> -->
       <div class="filters__field-wrapper">
-        <p><label class="h3" for="category">Category:</label></p>
-        <select
-          class="h5 select select__arrow select__arrow--white select--green"
-          [formControlName]="filterFormFields.categoryId"
-          id="category"
-        >
-          <option [value]="''">None</option>
-          <option *ngFor="let category of categories" [value]="+category.id">{{
-            category.name
-          }}</option>
-        </select>
+        <app-select-field
+          styleBackgroundColor="green"
+          [fieldName]="filterFormFields.categoryIdLabel | titlecase"
+          [initValue]="initialFiltersFormValue.categoryId"
+          [items]="categories$ | async"
+          (controllerCreated)="
+            addFormControl(filterFormFields.categoryId, $event)
+          "
+        ></app-select-field>
       </div>
-      <div class="filters__field-wrapper">
+      <!-- <div class="filters__field-wrapper">
         <p><label class="h3" for="rating">Rating:</label></p>
         <select
           class="h5 select select__arrow select__arrow--white select--green"
@@ -101,7 +99,7 @@
         >
           {{ filtersForm.get(filterFormFields.cost_lte).getError('lesser') }}
         </span>
-      </div>
+      </div> -->
       <div class="filters__field-wrapper filters__field-wrapper--buttons">
         <button
           type="button"

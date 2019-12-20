@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FieldComponent } from '../field.component';
 
 @Component({
@@ -8,4 +8,5 @@ import { FieldComponent } from '../field.component';
 })
 export class SelectFieldComponent extends FieldComponent {
   @Input() items: { id: number | string; name: number | string }[];
+  @Input() styleBackgroundColor: 'green' | 'white';
 }

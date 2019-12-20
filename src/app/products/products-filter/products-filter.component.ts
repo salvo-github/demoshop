@@ -1,7 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Category } from '../../models/category.model';
 import { ProductsService } from '../../services/products.service';
 import { FilterFormFields } from './filter-form-fields.model';
@@ -11,17 +12,17 @@ import { FilterFormFields } from './filter-form-fields.model';
   templateUrl: './products-filter.component.html',
   styleUrls: ['./products-filter.component.scss']
 })
-export class ProductsFilterComponent implements OnInit, OnDestroy {
+export class ProductsFilterComponent implements OnInit {
   public showFilters = false;
 
-  public categories: Category[];
+  public categories$: Observable<(Category | { id: string; name: string })[]>;
 
   public filtersForm: FormGroup;
   public genders = ['None', 'Man', 'Woman', 'Unisex'];
   public filterFormFields = FilterFormFields;
 
   // all the params map the query string for the api
-  private initialFiltersFormValue = {
+  public initialFiltersFormValue = {
     [FilterFormFields.availability]: false,
     [FilterFormFields.gender]: '',
     [FilterFormFields.categoryId]: '',
@@ -32,8 +33,6 @@ export class ProductsFilterComponent implements OnInit, OnDestroy {
     [FilterFormFields.q]: null
   };
 
-  private fetchCategoriesSubscription: Subscription;
-
   public constructor(
     private route: ActivatedRoute,
     private productsService: ProductsService,
@@ -41,19 +40,13 @@ export class ProductsFilterComponent implements OnInit, OnDestroy {
   ) {}
 
   public ngOnInit() {
-    this.fetchCategoriesSubscription = this.productsService
-      .fetchCategories()
-      .subscribe(categoriesData => {
-        this.categories = categoriesData;
-      });
+    this.categories$ = this.productsService.fetchCategories().pipe(
+      map(values => {
+        return [{ id: '', name: 'None' }, ...values];
+      })
+    );
 
-    this.initForm();
-  }
-
-  public ngOnDestroy() {
-    if (this.fetchCategoriesSubscription) {
-      this.fetchCategoriesSubscription.unsubscribe();
-    }
+    this.filtersForm = new FormGroup({});
   }
 
   private initForm(): void {
@@ -95,18 +88,24 @@ export class ProductsFilterComponent implements OnInit, OnDestroy {
     );
   }
 
+  public addFormControl(controlName: string, formControl: FormControl): void {
+    this.filtersForm.addControl(controlName, formControl);
+  }
+
   public onApplyFilters(): boolean | void {
-    if (this.filtersForm.invalid) {
-      return false;
-    }
+    console.log(this.filtersForm);
 
-    this.cleanEmptyValues(this.filtersForm.value);
+    // if (this.filtersForm.invalid) {
+    //   return false;
+    // }
 
-    this.router.navigate(this.route.snapshot.url, {
-      queryParams: this.filtersForm.value
-    });
+    // this.cleanEmptyValues(this.filtersForm.value);
 
-    this.showFilters = false;
+    // this.router.navigate(this.route.snapshot.url, {
+    //   queryParams: this.filtersForm.value
+    // });
+
+    // this.showFilters = false;
   }
 
   onResetFilters(): void {
