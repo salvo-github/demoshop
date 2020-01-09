@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FieldComponent } from '../field.component';
 
 @Component({
@@ -6,7 +6,15 @@ import { FieldComponent } from '../field.component';
   templateUrl: './select-field.component.html',
   styleUrls: ['./select-field.component.scss']
 })
-export class SelectFieldComponent extends FieldComponent {
+export class SelectFieldComponent extends FieldComponent implements OnInit {
   @Input() items: { id: number | string; name: number | string }[];
   @Input() styleBackgroundColor: 'green' | 'white';
+  public styleBackgroundColorClass = 'select--white select__arrow--green';
+
+  ngOnInit() {
+    if (this.styleBackgroundColor === 'green') {
+      this.styleBackgroundColorClass = 'select--green select__arrow--white';
+    }
+    super.ngOnInit();
+  }
 }

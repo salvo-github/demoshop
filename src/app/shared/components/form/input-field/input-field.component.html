@@ -1,9 +1,11 @@
-<p>
+<p *ngIf="fieldName">
   <label class="h3" for="{{ fieldName }}">{{ fieldName }}:</label>
 </p>
 <input
   class="h5 textinput"
+  [ngClass]="additionalInputClass"
   type="{{ type }}"
   [formControl]="fieldControl"
   id="{{ fieldName }}"
+  placeholder="{{ inputPlaceholder }}"
 />

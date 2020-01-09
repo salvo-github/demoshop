@@ -1,6 +1,3 @@
-import { element } from 'protractor';
-import { map } from 'rxjs/operators';
-
 export class Product {
   id?: number;
   categoryId: number;
@@ -55,7 +52,11 @@ export class Product {
     return ratingItems;
   }
 
-  public static getGendersList(): string[] {
-    return ['Man', 'Woman', 'Unisex'];
+  public static getGendersList(): { id: string; name: string }[] {
+    return [
+      { id: 'Man', name: 'Man' },
+      { id: 'Woman', name: 'Woman' },
+      { id: 'Unisex', name: 'Unisex' }
+    ];
   }
 }

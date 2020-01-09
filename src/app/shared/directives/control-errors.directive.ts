@@ -8,6 +8,7 @@ import {
   Inject,
   OnInit,
   Optional,
+  Self,
   ViewContainerRef
 } from '@angular/core';
 import { NgControl } from '@angular/forms';
@@ -39,7 +40,7 @@ export class ControlErrorsDirective implements OnInit {
   }
 
   public constructor(
-    private control: NgControl,
+    @Self() private control: NgControl,
     @Inject(FORM_ERRORS) private error: { [k: string]: (arg) => string },
     @Optional() @Host() private form: FormSubmitDirective,
     private vcr: ViewContainerRef,
@@ -69,12 +70,13 @@ export class ControlErrorsDirective implements OnInit {
       for (const key in controlErrors) {
         if (controlErrors.hasOwnProperty(key)) {
           const getError = this.error[key];
+          if (getError === undefined) {
+            continue;
+          }
           const text = getError(controlErrors[key]);
           this.setError(text, key);
         }
       }
-    } else if (this.ref) {
-      this.setError(null);
     }
   }
 

@@ -6,13 +6,15 @@
     >
       Filter options
     </button>
-    <input
-      class="h5 textinput textinput-icon filters__icon--fbt textinput--narrower"
-      type="text"
-      placeholder="Filter by text..."
-      [formControlName]="filterFormFields.q"
+    <app-input-field
+      [additionalInputClass]="
+        'textinput-icon filters__icon--fbt textinput--narrower'
+      "
+      [inputPlaceholder]="'Filter by text...'"
+      [initValue]="initialFiltersFormValue.q"
+      (controllerCreated)="addFormControl(filterFormFields.q, $event)"
       (keyup.enter)="onApplyFilters()"
-    />
+    ></app-input-field>
   </div>
   <div class="filters__content" *ngIf="showFilters">
     <form
@@ -21,36 +23,26 @@
       [formGroup]="filtersForm"
       (ngSubmit)="onApplyFilters()"
     >
-      <!-- <div class="filters__field-wrapper">
-        <p class="h3">Only available:</p>
-        <input
-          class="h5 tgl tgl-light"
-          type="checkbox"
-          id="availability"
-          [formControlName]="filterFormFields.availability"
-        />
-        <label class="h5 tgl-btn" for="availability"></label>
+      <div class="filters__field-wrapper">
+        <app-checkbox-field
+          [fieldName]="filterFormFields.availabilityLabel | titlecase"
+          [initValue]="initialFiltersFormValue.availability"
+          (controllerCreated)="
+            addFormControl(filterFormFields.availability, $event)
+          "
+        ></app-checkbox-field>
       </div>
       <div class="filters__field-wrapper filters__field-wrapper__radiobutton">
-        <p class="h3">Gender:</p>
-        <ul class="radio__wrapper">
-          <li *ngFor="let gender of genders">
-            <input
-              class="radio"
-              type="radio"
-              id="{{ gender }}"
-              [formControlName]="filterFormFields.gender"
-              [value]="gender === 'None' ? '' : gender"
-            />
-            <label class="h5 radio__label" for="{{ gender }}">{{
-              gender
-            }}</label>
-          </li>
-        </ul>
-      </div> -->
+        <app-radio-field
+          [fieldName]="filterFormFields.gender | titlecase"
+          [initValue]="initialFiltersFormValue.gender"
+          [items]="genderItems"
+          (controllerCreated)="addFormControl(filterFormFields.gender, $event)"
+        ></app-radio-field>
+      </div>
       <div class="filters__field-wrapper">
         <app-select-field
-          styleBackgroundColor="green"
+          [styleBackgroundColor]="'green'"
           [fieldName]="filterFormFields.categoryIdLabel | titlecase"
           [initValue]="initialFiltersFormValue.categoryId"
           [items]="categories$ | async"
@@ -59,26 +51,25 @@
           "
         ></app-select-field>
       </div>
-      <!-- <div class="filters__field-wrapper">
-        <p><label class="h3" for="rating">Rating:</label></p>
-        <select
-          class="h5 select select__arrow select__arrow--white select--green"
-          id="rating"
-          [formControlName]="filterFormFields.rating"
-        >
-          <option [value]="''">None</option>
-          <option *ngFor="let value of [0, 1, 2, 3, 4, 5]" [value]="value">{{
-            value
-          }}</option>
-        </select>
+      <div class="filters__field-wrapper">
+        <app-select-field
+          [styleBackgroundColor]="'green'"
+          [fieldName]="filterFormFields.rating | titlecase"
+          [initValue]="initialFiltersFormValue.rating"
+          [items]="ratingItems"
+          (controllerCreated)="addFormControl(filterFormFields.rating, $event)"
+        ></app-select-field>
       </div>
       <div class="filters__field-wrapper">
-        <p class="h3">Price from:</p>
-        <input
+        <app-input-field
+          class="filters__textinput"
+          [fieldName]="filterFormFields.cost_gteLabel | titlecase"
+          [initValue]="initialFiltersFormValue.cost_gte"
           type="number"
-          class="h5 textinput filters__textinput"
-          [formControlName]="filterFormFields.cost_gte"
-        />
+          (controllerCreated)="
+            addFormControl(filterFormFields.cost_gte, $event)
+          "
+        ></app-input-field>
         <span
           class="h3 form__error-message"
           *ngIf="filtersForm.get(filterFormFields.cost_gte).hasError('greater')"
@@ -87,19 +78,22 @@
         </span>
       </div>
       <div class="filters__field-wrapper">
-        <p class="h3">Price to:</p>
-        <input
+        <app-input-field
+          class="filters__textinput"
+          [fieldName]="filterFormFields.cost_lteLabel | titlecase"
+          [initValue]="initialFiltersFormValue.cost_lte"
           type="number"
-          class="h5 textinput filters__textinput"
-          [formControlName]="filterFormFields.cost_lte"
-        />
+          (controllerCreated)="
+            addFormControl(filterFormFields.cost_lte, $event)
+          "
+        ></app-input-field>
         <span
           class="h3 form__error-message"
           *ngIf="filtersForm.get(filterFormFields.cost_lte).hasError('lesser')"
         >
           {{ filtersForm.get(filterFormFields.cost_lte).getError('lesser') }}
         </span>
-      </div> -->
+      </div>
       <div class="filters__field-wrapper filters__field-wrapper--buttons">
         <button
           type="button"

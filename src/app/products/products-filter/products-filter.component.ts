@@ -1,11 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { AppState } from 'src/app/app.state';
+import { Product } from 'src/app/models/product.model';
 import { Category } from '../../models/category.model';
+import { FilterFormFields } from '../../models/filter-form-fields.model';
 import { ProductsService } from '../../services/products.service';
-import { FilterFormFields } from './filter-form-fields.model';
+import * as ProductsActions from '../store/products.actions';
 
 @Component({
   selector: 'app-products-filter',
@@ -15,11 +19,18 @@ import { FilterFormFields } from './filter-form-fields.model';
 export class ProductsFilterComponent implements OnInit {
   public showFilters = false;
 
-  public categories$: Observable<(Category | { id: string; name: string })[]>;
-
   public filtersForm: FormGroup;
-  public genders = ['None', 'Man', 'Woman', 'Unisex'];
   public filterFormFields = FilterFormFields;
+
+  public ratingItems: {
+    id: number | string;
+    name: number | string;
+  }[];
+  public categories$: Observable<(Category | { id: string; name: string })[]>;
+  public genderItems: {
+    id: string;
+    name: string;
+  }[];
 
   // all the params map the query string for the api
   public initialFiltersFormValue = {
@@ -34,78 +45,54 @@ export class ProductsFilterComponent implements OnInit {
   };
 
   public constructor(
-    private route: ActivatedRoute,
     private productsService: ProductsService,
-    private router: Router
+    private router: Router,
+    private store: Store<AppState>
   ) {}
 
   public ngOnInit() {
+    this.ratingItems = [
+      { id: '', name: 'None' },
+      ...Product.getRatingItemsForSelect()
+    ];
+
     this.categories$ = this.productsService.fetchCategories().pipe(
       map(values => {
         return [{ id: '', name: 'None' }, ...values];
       })
     );
 
-    this.filtersForm = new FormGroup({});
-  }
+    this.genderItems = [{ id: '', name: 'None' }, ...Product.getGendersList()];
 
-  private initForm(): void {
-    this.filtersForm = new FormGroup(
-      {
-        [FilterFormFields.availability]: new FormControl(
-          this.route.snapshot.queryParamMap.get(
-            FilterFormFields.availability
-          ) || this.initialFiltersFormValue[FilterFormFields.availability]
-        ),
-        [FilterFormFields.gender]: new FormControl(
-          this.route.snapshot.queryParamMap.get(FilterFormFields.gender) ||
-            this.initialFiltersFormValue[FilterFormFields.gender]
-        ),
-        [FilterFormFields.categoryId]: new FormControl(
-          this.route.snapshot.queryParamMap.get(FilterFormFields.categoryId) ||
-            this.initialFiltersFormValue[FilterFormFields.categoryId]
-        ),
-        [FilterFormFields.q]: new FormControl(
-          this.route.snapshot.queryParamMap.get(FilterFormFields.q) ||
-            this.initialFiltersFormValue[FilterFormFields.q]
-        ),
-        [FilterFormFields.rating]: new FormControl(
-          this.route.snapshot.queryParamMap.get(FilterFormFields.rating) ||
-            this.initialFiltersFormValue[FilterFormFields.rating]
-        ),
-        [FilterFormFields.cost_gte]: new FormControl(
-          this.route.snapshot.queryParamMap.get(FilterFormFields.cost_gte) ||
-            this.initialFiltersFormValue[FilterFormFields.cost_gte]
-        ),
-        [FilterFormFields.cost_lte]: new FormControl(
-          this.route.snapshot.queryParamMap.get(FilterFormFields.cost_lte) ||
-            this.initialFiltersFormValue[FilterFormFields.cost_lte]
-        )
-      },
-      {
-        validators: [this.costValidator]
-      }
-    );
+    this.filtersForm = new FormGroup({});
+    this.filtersForm.setValidators(this.costValidator);
   }
 
   public addFormControl(controlName: string, formControl: FormControl): void {
-    this.filtersForm.addControl(controlName, formControl);
+    this.filtersForm.setControl(controlName, formControl);
   }
 
   public onApplyFilters(): boolean | void {
-    console.log(this.filtersForm);
+    if (this.filtersForm.invalid) {
+      return false;
+    }
 
-    // if (this.filtersForm.invalid) {
-    //   return false;
-    // }
+    this.cleanEmptyValues(this.filtersForm.value);
 
-    // this.cleanEmptyValues(this.filtersForm.value);
+    const valuesForFiltering = this.filtersForm.value;
 
-    // this.router.navigate(this.route.snapshot.url, {
-    //   queryParams: this.filtersForm.value
-    // });
+    // adding to the url the params for filtering product (ex. copy link)
+    this.router.navigate([], {
+      queryParams: valuesForFiltering
+    });
 
-    // this.showFilters = false;
+    this.store.dispatch(
+      ProductsActions.fetchProducts({
+        params: { valuesForFiltering }
+      })
+    );
+
+    this.showFilters = false;
   }
 
   onResetFilters(): void {
@@ -124,6 +111,12 @@ export class ProductsFilterComponent implements OnInit {
 
   private costValidator(group: FormGroup): { [s: string]: boolean } | null {
     if (
+      group.value.cost_lte === undefined ||
+      group.value.cost_gte === undefined
+    ) {
+      return null;
+    }
+    if (
       group.value.cost_lte !== null &&
       group.value.cost_gte !== null &&
       +group.value.cost_gte > +group.value.cost_lte
@@ -134,7 +127,7 @@ export class ProductsFilterComponent implements OnInit {
       group.controls.cost_lte.setErrors({
         lesser: '"Price to" cannot be lesser then "Price from"'
       });
-      return { notvalid: true };
+      return { notValidPriceRange: true };
     }
     group.controls.cost_lte.setErrors(null);
     group.controls.cost_gte.setErrors(null);

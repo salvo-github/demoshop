@@ -13,12 +13,16 @@ export class ProductsListResolver implements Resolve<void> {
   constructor(private store: Store<AppState>) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): void {
-    const params: { [s: string]: any } = {};
+    const valuesForFiltering: { [s: string]: any } = {};
     for (const key of route.queryParamMap.keys) {
-      params[key] = route.queryParamMap.get(key);
+      valuesForFiltering[key] = route.queryParamMap.get(key);
     }
 
-    this.store.dispatch(ProductsActions.fetchProducts({ params }));
+    this.store.dispatch(
+      ProductsActions.fetchProducts({
+        params: { valuesForFiltering }
+      })
+    );
     return;
   }
 }

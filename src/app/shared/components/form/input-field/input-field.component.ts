@@ -8,4 +8,5 @@ import { FieldComponent } from '../field.component';
 })
 export class InputFieldComponent extends FieldComponent {
   @Input() public type = 'text';
+  @Input() public inputPlaceholder = '';
 }

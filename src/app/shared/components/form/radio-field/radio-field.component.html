@@ -4,10 +4,10 @@
     <input
       class="radio"
       type="radio"
-      id="{{ item }}"
+      id="{{ item.id }}"
       [formControl]="fieldControl"
-      [value]="item"
+      [value]="item.id"
     />
-    <label class="h5 radio__label" for="{{ item }}">{{ item }}</label>
+    <label class="h5 radio__label" for="{{ item.id }}">{{ item.name }}</label>
   </li>
 </ul>

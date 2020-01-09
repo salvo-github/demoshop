@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FieldComponent } from '../field.component';
 
 @Component({
@@ -7,5 +7,5 @@ import { FieldComponent } from '../field.component';
   styleUrls: ['./radio-field.component.scss']
 })
 export class RadioFieldComponent extends FieldComponent {
-  @Input() public items: (number | string)[];
+  @Input() public items: { id: number | string; name: number | string }[];
 }

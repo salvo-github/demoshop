@@ -3,11 +3,7 @@
 </p>
 <select
   class="h5 select select__arrow"
-  [ngClass]="
-    styleBackgroundColor === 'green'
-      ? 'select--green select__arrow--white'
-      : 'select--white select__arrow--green'
-  "
+  [ngClass]="styleBackgroundColorClass"
   [formControl]="fieldControl"
   id="{{ fieldName }}"
   ><option *ngFor="let item of items" [value]="item.id">{{ item.name }}</option>

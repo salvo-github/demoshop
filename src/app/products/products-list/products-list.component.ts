@@ -24,11 +24,11 @@ export class ProductsListComponent implements OnInit {
   public constructor(
     private route: ActivatedRoute,
     private userService: UserService,
-    private store: Store<AppState>
+    private store$: Store<AppState>
   ) {}
 
   public ngOnInit() {
-    this.products$ = this.store.pipe(select(getProductsList));
+    this.products$ = this.store$.pipe(select(getProductsList));
 
     this.isCurrentUserAdmin$ = this.userService.isCurrentUserAdmin();
 
@@ -53,7 +53,7 @@ export class ProductsListComponent implements OnInit {
 
   public onClearProductInteractionType(): void {
     if (this.productInteractionType === ProductInteractionType.delete) {
-      this.store.dispatch(ProductsActions.fetchProducts({ params: {} }));
+      this.store$.dispatch(ProductsActions.fetchProducts({ params: {} }));
     }
     this.productInteractionType = null;
   }

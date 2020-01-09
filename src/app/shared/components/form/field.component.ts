@@ -11,6 +11,7 @@ export class FieldComponent implements OnInit {
   @Input() initValue: any = null;
   @Input() fieldName: string;
   @Input() validators: { [s: string]: boolean | string | RegExp };
+  @Input() additionalInputClass: string;
 
   @Output() controllerCreated = new EventEmitter<FormControl>();
 
