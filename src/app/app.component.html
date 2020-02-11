@@ -1,5 +1,5 @@
 <div class="wrapper">
-  <app-header *ngIf="router.url !== '/login'"></app-header>
+  <app-header *ngIf="router?.url !== '/login'"></app-header>
 
   <div class="main">
     <div class="main__content">
@@ -7,5 +7,5 @@
     </div>
   </div>
 
-  <app-footer *ngIf="router.url !== '/login'"></app-footer>
+  <app-footer *ngIf="router?.url !== '/login'"></app-footer>
 </div>
