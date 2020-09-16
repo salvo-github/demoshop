@@ -1,4 +1,4 @@
-import { EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
+import { EventEmitter, Inject, Input, OnInit, Output, Directive } from '@angular/core';
 import {
   AbstractControl,
   FormControl,
@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 import { FOMR_VALIDATORS } from 'src/app/services/form-validators.service';
 
+@Directive()
 export class FieldComponent implements OnInit {
   @Input() initValue: any = null;
   @Input() fieldName: string;
