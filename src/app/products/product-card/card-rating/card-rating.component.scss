@@ -22,9 +22,9 @@
 }
 
 .vote--full::after {
-  content: url(src/assets/img/star-active.svg);
+  content: url(../../../../assets/img/star-active.svg);
 }
 
 .vote--empty::after {
-  content: url(src/assets/img/star-inactive.svg);
+  content: url(../../../../assets/img/star-inactive.svg);
 }
